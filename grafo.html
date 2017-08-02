@@ -1,0 +1,55 @@
+<html>
+	<canvas id="myCanvas" width="600" height="600" style="border:1px solid #000000;"></canvas>
+</html>
+
+<script type="text/javascript">
+
+	var c = document.getElementById("myCanvas");
+
+	function update(){
+		ctx.clearRect(0, 0, 500, 500);
+	}
+
+	//DESENHA LINHA
+	function drawLine(Ix,Iy,Ex,Ey){
+			ctx.moveTo(Ix,Iy);
+			ctx.lineTo(Ex,Ey);
+			ctx.fillStyle="red";
+			ctx.stroke();
+	}
+
+	function drawCircle(x,y){
+		ctx.beginPath();
+		ctx.arc(x,y,40,0,2*Math.PI);
+		ctx.lineWidth = 5;
+        ctx.strokeStyle = '#003300';
+        ctx.stroke();
+		ctx.fillStyle = 'green';
+		ctx.fill();
+	}
+
+	//INICIA 
+	function start(){
+		
+		document.querySelector('body').addEventListener('mousemove', function(event) {
+		  var posX = event.clientX, posY = event.clientY;		
+		  update();
+		  drawCircle(posX, posY); 
+		  drawLine(0,0,posX,posY);
+		});
+		  
+	} 	
+
+	//ACONTECE QUANDO CARREGA
+	window.onload = function () {
+
+	    canvas  = document.getElementById('myCanvas');
+	    ctx     = canvas.getContext('2d');
+
+	    canvas.width  = 500;
+	    canvas.height = 500;
+
+	    start();
+	};
+
+</script>
