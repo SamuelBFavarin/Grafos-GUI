@@ -7,7 +7,7 @@
 	var c = document.getElementById("myCanvas");
 
 	function update(){
-		ctx.clearRect(0, 0, 500, 500);
+		//ctx.clearRect(0, 0, 500, 500);
 	}
 
 	//DESENHA LINHA
@@ -30,12 +30,32 @@
 
 	//INICIA 
 	function start(){
-		
-		document.querySelector('body').addEventListener('mousemove', function(event) {
-		  var posX = event.clientX, posY = event.clientY;		
-		  update();
-		  drawCircle(posX, posY); 
-		  drawLine(0,0,posX,posY);
+		var cont = 0;
+
+		var circles =[];
+
+		document.querySelector('body').addEventListener('click', function(event) {
+			if(cont === 0){
+				
+				  var posX = event.clientX, posY = event.clientY;		
+				  update();
+				  drawCircle(posX, posY); 
+				  var circle = [posX,posY];
+				  circles.push(circle);
+				  cont++;
+			}else{				
+				  var posX = event.clientX, posY = event.clientY;		
+				  update();
+				  drawCircle(posX, posY); 
+				  var ant = circles[circles.length-1];
+				  //console.log(ant);
+				  posXant = ant[0];
+				  posYant = ant[1];
+				  drawLine(posXant,posYant,posX,posY);
+				  var circle = [posX,posY];
+				  circles.push(circle);
+				  cont++;			
+			}
 		});
 		  
 	} 	
@@ -51,5 +71,6 @@
 
 	    start();
 	};
+
 
 </script>
