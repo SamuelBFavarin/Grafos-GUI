@@ -26,9 +26,9 @@
     };
 
     //EXISTE VERTICE
-    Grafo.prototype.esxisteVertice = function (vertice) {
+    Grafo.prototype.existeVertice = function (vertice) {
         for(i=0; i<this.vertices.length; i++){
-            if(vertices[i] === vertice){
+            if(this.vertices[i] === vertice){
                 console.log('Existe vértice!!!');
                 return true;
             }
@@ -103,6 +103,10 @@
       }
     };
 
+    Grafo.prototype.retornarLigacoes = function (vertice) {
+        console.log(this.ligacao[vertice]);
+    };
+
     // DESENHA MATRIZ DE ADJACENCIA
     Grafo.prototype.desenharMatriz = function () {
         this.matriz = new Array();
@@ -129,9 +133,9 @@
     grafo.addVertice('q3');
     grafo.addAresta('q1','q3',2);
     grafo.addAresta('q1','q2',4);
-    grafo.existeLigacao('q2','q3');
+    //grafo.existeVertice('q4');
+    grafo.retornarLigacoes('q3');
 
-
-    grafo.desenharMatriz();
+    //grafo.desenharMatriz();
 
 </script>
