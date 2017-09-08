@@ -1,5 +1,11 @@
+
+<html>
+    <h1>Grafos.js</h1>
+    <p>Abra o console administrador para receber os resultados (F12)</p>
+</html>
 <script type="text/javascript">
 
+    //GRAFO
     function Grafo(_direcionado,_ponderado){
         this.vertices = new Array();
         this.ligacao = new Array();
@@ -7,72 +13,125 @@
         this.ponderado = _ponderado;
     };
 
+    // ADICIONA VERTICE PELO NOME
     Grafo.prototype.addVertice = function (vertice){
         this.vertices.push(vertice);
         this.ligacao[vertice] = new Array();
     };
 
-    Grafo.prototype.addLigacao = function (vertice1,vertice2) {
-        this.peso = 1;
-        this.addLigacao(vertice1,vertice2,this.peso);
+    //REMOVE VERTICE PELO NOME
+    Grafo.prototype.removeVertice = function (vertice) {
+        this.vertices.pop(vertice);
+        this.ligacao[vertice].pop();
     };
 
-    Grafo.prototype.addLigacao = function (vertice1,vertice2,_peso){
-        if(this.ponderado) {
-            if (this.direcionado) {
+    //EXISTE VERTICE
+    Grafo.prototype.esxisteVertice = function (vertice) {
+        for(i=0; i<this.vertices.length; i++){
+            if(vertices[i] === vertice){
+                console.log('Existe vértice!!!');
+                return true;
+            }
+        }
+        console.log('Vértice não encontrado');
+        return false;
+    };
 
-                this.ligacao[vertice1].push([vertice2, _peso]);
-                //this.ligacao[vertice1][0] = vertice2;
-                //this.ligacao[vertice1][1] = peso;
-            } else {
-                this.ligacao[vertice1] = new Array();
-                this.ligacao[vertice1][0] = vertice2;
-                this.ligacao[vertice1][1] = peso;
-                this.ligacao[vertice2] = new Array();
-                this.ligacao[vertice2][0] = vertice1;
-                this.ligacao[vertice2][1] = peso;           
-            }
-        } else{
-            if (this.direcionado) {
-                this.ligacao[vertice1].push(vertice2);
-            } else {
-                this.ligacao[vertice1].push(vertice2);
-                this.ligacao[vertice2].push(vertice1);
-            }
+    //ADICIONA ARCO NÃO PONDERADO
+    Grafo.prototype.addArco = function (vertice1,vertice2) {
+        if(this.direcionado) {
+            this.peso = 1;
+            this.addLigacao(vertice1, vertice2, this.peso);
+        }else{
+            console.log('Impossível adicionar Arco em grafos não direcionados');
         }
     };
 
+    //ADICIONA ARCO PONDERADO
+    Grafo.prototype.addArco = function (vertice1,vertice2,_peso){
+        if (this.direcionado) {
+            this.ligacao[vertice1].push([vertice2, _peso]);
+        } else {
+            console.log('Impossível adicionar Arco em grafos não direcionados');
+        }
+    };
+
+    //ADICIONA ARESTA NÃO PONDERADA
+    Grafo.prototype.addAresta = function (vertice1,vertice2) {
+        if(!this.direcionado) {
+            this.peso = 1;
+            this.addLigacao(vertice1, vertice2, this.peso);
+        }else{
+            console.log('Impossível adicionar Aresta em grafos direcionados');
+        }
+    };
+
+    //ADICIONA ARESTA PONDERADA
+    Grafo.prototype.addAresta = function (vertice1,vertice2,_peso){
+        if (!this.direcionado) {
+            this.ligacao[vertice1].push([vertice2, _peso]);
+            this.ligacao[vertice2].push([vertice1, _peso]);
+        } else {
+            console.log('Impossível adicionar Aresta em grafos direcionados');
+        }
+    };
+
+    // EXISTE LIGAÇÃO
+    Grafo.prototype.existeLigacao = function (origem,destino) {
+      if(this.direcionado){
+          for(i =0; i<this.igacao[origem].length; i++ ) {
+              if (this.ligacao[origem][i][0] === destino) {
+                  console.log('Existe Arco!!!');
+                  return true;
+              }
+          }
+          console.log('Arco não encontrado!!!');
+          return false;
+      }else{
+          for(i =0; i<this.ligacao[origem].length; i++ ) {
+              if (this.ligacao[origem][i][0] === destino) {
+                  for(j =0; j<this.ligacao[destino].length; j++){
+                      if(this.ligacao[destino][j][0] === origem){
+                          console.log('Existe Aresta!!!');
+                          return true;
+                      }
+                  }
+              }
+          }
+          console.log('Aresta não encontrada!!!');
+          return false;
+      }
+    };
+
+    // DESENHA MATRIZ DE ADJACENCIA
     Grafo.prototype.desenharMatriz = function () {
         this.matriz = new Array();
         for(i=0;i < this.vertices.length; i++) {
             this.matriz[i] = new Array();
             for(j=0; j < this.vertices.length; j++){
-                for(k=0; k< this.vertices.length; k++){
-                    
-                  if(this.ligacao[this.vertice[i]][k][verticeFim] != this.vertice[j] 
-                    || this.ligacao[this.vertice[i]][k][verticeFim] === undefined){
-                      this.matriz[i][j] = 0;
-                  }else{
-                      //this.matriz[i][j] = this.vertices[i][k][peso];
-                  }
+                this.matriz[i][j] = 0;
+                for(k=0; k< this.ligacao[this.vertices[i]].length; k++){
+                    if(this.ligacao[this.vertices[i]][k][0] === this.vertices[j]) {
+                        this.matriz[i][j] = this.ligacao[this.vertices[i]][k][1];
+                    }
                 }
             }
         }
-        console.log(this.ligacao[this.vertices[0]][1][0]);
-        //this.ligacao[this.vertice[i]][k][verticeFim] != this.vertice[j]
-        //console.log(this.vertices[0]);
-        //console.log(this.matriz);
-
+        console.log('Matriz de Adjacencia: ');
+        console.log(this.matriz);
+        console.log('Lista de Adjacencia: ');
+        console.log(this.ligacao);
     };
 
-    var grafo = new Grafo(true,true);
+    var grafo = new Grafo(false,true);
     grafo.addVertice('q1');
     grafo.addVertice('q2');
     grafo.addVertice('q3');
-    grafo.addLigacao('q1','q3',2);
-    grafo.addLigacao('q1','q2',4);
+    grafo.addAresta('q1','q3',2);
+    grafo.addAresta('q1','q2',4);
+    grafo.existeLigacao('q2','q3');
+
+
     grafo.desenharMatriz();
-    //grafo.aresta
-    //console.log(grafo.ligacao);
 
 </script>
