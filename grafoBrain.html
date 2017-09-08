@@ -155,7 +155,6 @@
                     this.ligacao[origem][i].pop();
                 }
             }
-            return false;
         }else{
             for(i =0; i<this.ligacao[origem].length; i++ ) {
                 if (this.ligacao[origem][i][0] === destino) {
@@ -169,16 +168,41 @@
                     }
                 }
             }
-            return false;
         }
     };
 
     //REMOVE VERTICE PELO NOME
-    Grafo.prototype.removeVertice = function (vertice) {
-        this.vertices.pop(vertice);
-        this.ligacao[vertice].pop();
+    // FUNÇÃO NÃO ESTÁ FUNCIONANDO A PARTE DE REMOVER NA LISTA DE ADJACENCIA
+    Grafo.prototype.removerVertice = function (vertice) {
+        for(pos=0;pos<this.vertices.length;pos++) {
+            this.removerLigacao(this.vertices[pos], vertice);
+        }
+        for(i=this.vertices.length-1;i--;){
+            if(this.vertices[i] === vertice){
+                this.vertices.splice(i,1);
+                this.ligacao.splice(this.vertices[i],1);
+            }
+        }
     };
 
+    Grafo.prototype.bfs = function (origem) {
+      // em breve
+    };
+    Grafo.prototype.dfs = function (origem) {
+        // em breve
+    };
+    Grafo.prototype.dijkstra = function (origem) {
+        // em breve
+    };
+    Grafo.prototype.bfs = function (origem,destino) {
+        // em breve
+    };
+    Grafo.prototype.dfs = function (origem,destino) {
+        // em breve
+    };
+    Grafo.prototype.dijkstra = function (origem,destino) {
+        // em breve
+    };
 
     var grafo = new Grafo(false,true);
     grafo.addVertice('q1');
@@ -188,8 +212,8 @@
     grafo.addAresta('q1','q2',4);
     //grafo.existeVertice('q4');
     //grafo.retornarLigacoes('q3');
-    grafo.removerLigacao('q1','q3');
-
+    //grafo.removerLigacao('q3','q1');
+    grafo.removerVertice('q1');
     grafo.desenharMatriz();
 
 </script>
