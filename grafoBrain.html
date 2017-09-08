@@ -1,0 +1,78 @@
+<script type="text/javascript">
+
+    function Grafo(_direcionado,_ponderado){
+        this.vertices = new Array();
+        this.ligacao = new Array();
+        this.direcionado = _direcionado;
+        this.ponderado = _ponderado;
+    };
+
+    Grafo.prototype.addVertice = function (vertice){
+        this.vertices.push(vertice);
+        this.ligacao[vertice] = new Array();
+    };
+
+    Grafo.prototype.addLigacao = function (vertice1,vertice2) {
+        this.peso = 1;
+        this.addLigacao(vertice1,vertice2,this.peso);
+    };
+
+    Grafo.prototype.addLigacao = function (vertice1,vertice2,_peso){
+        if(this.ponderado) {
+            if (this.direcionado) {
+
+                this.ligacao[vertice1].push([vertice2, _peso]);
+                //this.ligacao[vertice1][0] = vertice2;
+                //this.ligacao[vertice1][1] = peso;
+            } else {
+                this.ligacao[vertice1] = new Array();
+                this.ligacao[vertice1][0] = vertice2;
+                this.ligacao[vertice1][1] = peso;
+                this.ligacao[vertice2] = new Array();
+                this.ligacao[vertice2][0] = vertice1;
+                this.ligacao[vertice2][1] = peso;           
+            }
+        } else{
+            if (this.direcionado) {
+                this.ligacao[vertice1].push(vertice2);
+            } else {
+                this.ligacao[vertice1].push(vertice2);
+                this.ligacao[vertice2].push(vertice1);
+            }
+        }
+    };
+
+    Grafo.prototype.desenharMatriz = function () {
+        this.matriz = new Array();
+        for(i=0;i < this.vertices.length; i++) {
+            this.matriz[i] = new Array();
+            for(j=0; j < this.vertices.length; j++){
+                for(k=0; k< this.vertices.length; k++){
+                    
+                  if(this.ligacao[this.vertice[i]][k][verticeFim] != this.vertice[j] 
+                    || this.ligacao[this.vertice[i]][k][verticeFim] === undefined){
+                      this.matriz[i][j] = 0;
+                  }else{
+                      //this.matriz[i][j] = this.vertices[i][k][peso];
+                  }
+                }
+            }
+        }
+        console.log(this.ligacao[this.vertices[0]][1][0]);
+        //this.ligacao[this.vertice[i]][k][verticeFim] != this.vertice[j]
+        //console.log(this.vertices[0]);
+        //console.log(this.matriz);
+
+    };
+
+    var grafo = new Grafo(true,true);
+    grafo.addVertice('q1');
+    grafo.addVertice('q2');
+    grafo.addVertice('q3');
+    grafo.addLigacao('q1','q3',2);
+    grafo.addLigacao('q1','q2',4);
+    grafo.desenharMatriz();
+    //grafo.aresta
+    //console.log(grafo.ligacao);
+
+</script>
