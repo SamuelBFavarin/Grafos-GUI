@@ -1,6 +1,6 @@
-# grafos.js
+# grafos.js 
 
-### Entrega dia 15/09/2017
+### Entrega dia 15/09/2017 :v:
 
 - [x] criarGrafo(isOrientado, isPonderado) - Criar um grafo vazio.
 - [x] inserirVertice(nome) - Inserir um vértice no grafo.
@@ -22,6 +22,3 @@
 - [ ] bfs(verticeOrigem, verticeDestino) -Busca em largura com destino
 - [ ] dfs(verticeOrigem, verticeDestino) -Busca em profundidade com destino
 - [ ] dijkstra(verticeOrigem, verticeDestino) - Dijkstracom destino
-
-
-
