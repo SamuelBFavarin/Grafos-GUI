@@ -1,11 +1,13 @@
-
 <html>
     <h1>Grafos.js</h1>
     <p>Abra o console administrador para receber os resultados (F12)</p>
+    <p>Em breve uma interface gráfica aqui</p>
 </html>
 <script type="text/javascript">
 
     //GRAFO
+    // --GRAFO POSSUI UM CONJUNTO DE VÉRTICES E UM CONJUNTO DE LIGAÇÕES (ARESTAS OU ARCOS)
+    // --GRAFO PODE SER PONDERADO E/OU DIRECIONADO
     function Grafo(_direcionado,_ponderado){
         this.vertices = new Array();
         this.ligacao = new Array();
@@ -14,12 +16,15 @@
     };
 
     // ADICIONA VERTICE PELO NOME
+    // --INSERE O VERTICE NO CONJUNTO DE VERTICES
+    // --CRIA NO CONJUNTO DE LIGAÇÃO UM ARRAY ONDE RECEBERÁ TODAS AS LIGAÇÕES DO VÉRTICE
     Grafo.prototype.addVertice = function (vertice){
         this.vertices.push(vertice);
         this.ligacao[vertice] = new Array();
     };
 
     //EXISTE VERTICE
+    // --RECEBE O NOME DO VERTICE POR PARAMETRO, PROCURA NO OCNJUNTO DE VÉRTICES SE EXISTE
     Grafo.prototype.existeVertice = function (vertice) {
         for(i=0; i<this.vertices.length; i++){
             if(this.vertices[i] === vertice){
@@ -32,16 +37,20 @@
     };
 
     //ADICIONA ARCO NÃO PONDERADO
+    //--RECEBE UM VERTICE DE ORIGEM, E UM VÉRTICE DE DESTINO
+    //--ATRIBUI 1 AO PESO E CHAMA a função addArco() PONDERADO
     Grafo.prototype.addArco = function (vertice1,vertice2) {
         if(this.direcionado) {
             this.peso = 1;
-            this.addLigacao(vertice1, vertice2, this.peso);
+            this.addArco(vertice1, vertice2, this.peso);
         }else{
             console.log('Impossível adicionar Arco em grafos não direcionados');
         }
     };
 
     //ADICIONA ARCO PONDERADO
+    //--RECEBE O VERTICE DE ORIGEM, O VERTICE DE DESTINO E O PESO
+    //--INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE UM ARRAY COM O DESTINO E O PESO
     Grafo.prototype.addArco = function (vertice1,vertice2,_peso){
         if (this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
@@ -51,16 +60,21 @@
     };
 
     //ADICIONA ARESTA NÃO PONDERADA
+    //--RECEBE UM VERTICE DE ORIGEM, E UM VÉRTICE DE DESTINO
+    //--ATRIBUI 1 AO PESO E CHAMA a função addAresta() PONDERADA
     Grafo.prototype.addAresta = function (vertice1,vertice2) {
         if(!this.direcionado) {
             this.peso = 1;
-            this.addLigacao(vertice1, vertice2, this.peso);
+            this.addAresta(vertice1, vertice2, this.peso);
         }else{
             console.log('Impossível adicionar Aresta em grafos direcionados');
         }
     };
 
     //ADICIONA ARESTA PONDERADA
+    //--RECEBE O VERTICE DE ORIGEM, O VERTICE DE DESTINO E O PESO
+    //--INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE DE ORIGEM UM ARRAY COM O DESTINO NA POSIÇÃO 0 E O PESO NA POSIÇÃO 1
+    //--INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE DE DESTINO UM ARRAY COM O ORIGEM NA POSIÇÃO 0 E O PESO NA POSIÇÃO 1
     Grafo.prototype.addAresta = function (vertice1,vertice2,_peso){
         if (!this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
@@ -71,6 +85,9 @@
     };
 
     // EXISTE LIGAÇÃO
+    //-- SE FOR DIRECIONADO - PROCURA SE EXISTE O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES DO VERTICE ORIGEM
+    //-- SE NÃO FOR DIRECIONADO - PROCURA SE EXISTE O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES DO VERTICE ORIGEM E
+    //                            E SE  EXISTE O VERTICE ORIGEM NO CONJUNTO DE LIGAÇÕES DO VERTICE DESTINO
     Grafo.prototype.existeLigacao = function (origem,destino) {
       if(this.direcionado){
           for(i =0; i<this.ligacao[origem].length; i++ ) {
@@ -97,11 +114,16 @@
       }
     };
 
+    // RETORNAR LIGAÇÕES
+    // --RETORNA A LISTA DE TODAS AS LIGAÇÕES DE UM VERTICE
     Grafo.prototype.retornarLigacoes = function (vertice) {
         console.log(this.ligacao[vertice]);
     };
 
     // DESENHA MATRIZ DE ADJACENCIA
+    // --CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
+    //   SE NÃO FOR ENCONTRADO É ATRIBUIDO 0 A POSIÇÃO SEM PESO
+    // -- PRINTA A MATRIZ DE ADJACENCIA E A LISTA DE ADJACENCIA
     Grafo.prototype.desenharMatriz = function () {
         this.matriz = new Array();
         for(i=0;i < this.vertices.length; i++) {
@@ -122,6 +144,9 @@
     };
 
     // REMOVE ARESTA OU ARCO
+    //--SE FOR DIRECIONADO - BUSCA O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES ORIGEM E EXCLUI
+    //--SE NÃO FOR DIRECIONADO - BUSCA O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES ORIGEM E
+    //                           O VERTICE ORIGEM NO CONJUNTO DE LIGAÇÕES DESTINO E EXCLUI
     Grafo.prototype.removerLigacao = function (origem,destino) {
         if(this.direcionado){
             for(i =0; i<this.ligacao[origem].length; i++ ) {
