@@ -19,12 +19,6 @@
         this.ligacao[vertice] = new Array();
     };
 
-    //REMOVE VERTICE PELO NOME
-    Grafo.prototype.removeVertice = function (vertice) {
-        this.vertices.pop(vertice);
-        this.ligacao[vertice].pop();
-    };
-
     //EXISTE VERTICE
     Grafo.prototype.existeVertice = function (vertice) {
         for(i=0; i<this.vertices.length; i++){
@@ -79,7 +73,7 @@
     // EXISTE LIGAÇÃO
     Grafo.prototype.existeLigacao = function (origem,destino) {
       if(this.direcionado){
-          for(i =0; i<this.igacao[origem].length; i++ ) {
+          for(i =0; i<this.ligacao[origem].length; i++ ) {
               if (this.ligacao[origem][i][0] === destino) {
                   console.log('Existe Arco!!!');
                   return true;
@@ -127,6 +121,40 @@
         console.log(this.ligacao);
     };
 
+    // REMOVE ARESTA OU ARCO
+    Grafo.prototype.removerLigacao = function (origem,destino) {
+        if(this.direcionado){
+            for(i =0; i<this.ligacao[origem].length; i++ ) {
+                if (this.ligacao[origem][i][0] === destino) {
+                    this.ligacao[origem][i].pop();
+                    this.ligacao[origem][i].pop();
+                }
+            }
+            return false;
+        }else{
+            for(i =0; i<this.ligacao[origem].length; i++ ) {
+                if (this.ligacao[origem][i][0] === destino) {
+                    for(j =0; j<this.ligacao[destino].length; j++){
+                        if(this.ligacao[destino][j][0] === origem){
+                                this.ligacao[origem][i].pop();
+                                this.ligacao[origem][i].pop();
+                                this.ligacao[destino][j].pop();
+                                this.ligacao[destino][j].pop();
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+    };
+
+    //REMOVE VERTICE PELO NOME
+    Grafo.prototype.removeVertice = function (vertice) {
+        this.vertices.pop(vertice);
+        this.ligacao[vertice].pop();
+    };
+
+
     var grafo = new Grafo(false,true);
     grafo.addVertice('q1');
     grafo.addVertice('q2');
@@ -134,8 +162,9 @@
     grafo.addAresta('q1','q3',2);
     grafo.addAresta('q1','q2',4);
     //grafo.existeVertice('q4');
-    grafo.retornarLigacoes('q3');
+    //grafo.retornarLigacoes('q3');
+    grafo.removerLigacao('q1','q3');
 
-    //grafo.desenharMatriz();
+    grafo.desenharMatriz();
 
 </script>
