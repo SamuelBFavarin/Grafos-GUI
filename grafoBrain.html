@@ -1,8 +1,13 @@
 <html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
     <h1>Grafos.js</h1>
     <p>Abra o console administrador para receber os resultados (F12)</p>
     <p>Em breve uma interface gráfica aqui</p>
     <img src="http://i.imgur.com/kvUU7.gif">
+</body>
 </html>
 <script type="text/javascript">
 
@@ -175,15 +180,16 @@
     //REMOVE VERTICE PELO NOME
     // FUNÇÃO NÃO ESTÁ FUNCIONANDO A PARTE DE REMOVER NA LISTA DE ADJACENCIA
     Grafo.prototype.removerVertice = function (vertice) {
-        for(pos=0;pos<this.vertices.length;pos++) {
+        var index_vertice = this.vertices.indexOf(vertice);
+        if (index_vertice != -1){
+            this.vertices.splice(this.vertices[index_vertice], 1);
+        }
+
+        for(var pos=0; pos < this.vertices.length; pos++) {
             this.removerLigacao(this.vertices[pos], vertice);
         }
-        for(i=this.vertices.length-1;i--;){
-            if(this.vertices[i] === vertice){
-                this.vertices.splice(i,1);
-                this.ligacao.splice(this.vertices[i],1);
-            }
-        }
+
+        delete this.ligacao[vertice];
     };
 
     Grafo.prototype.bfs = function (origem) {
@@ -205,16 +211,16 @@
         // em breve
     };
 
-    var grafo = new Grafo(false,true);
-    grafo.addVertice('q1');
-    grafo.addVertice('q2');
-    grafo.addVertice('q3');
-    grafo.addAresta('q1','q3',2);
-    grafo.addAresta('q1','q2',4);
-    //grafo.existeVertice('q4');
-    //grafo.retornarLigacoes('q3');
-    //grafo.removerLigacao('q3','q1');
-    grafo.removerVertice('q1');
-    grafo.desenharMatriz();
+//    var grafo = new Grafo(false,true);
+//    grafo.addVertice('q1');
+//    grafo.addVertice('q2');
+//    grafo.addVertice('q3');
+//    grafo.addAresta('q1','q3',2);
+//    grafo.addAresta('q1','q2',4);
+//    //grafo.existeVertice('q4');
+//    //grafo.retornarLigacoes('q3');
+//    //grafo.removerLigacao('q3','q1');
+//    grafo.removerVertice('q1');
+//    grafo.desenharMatriz();
 
 </script>

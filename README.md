@@ -4,7 +4,7 @@
 
 - [x] criarGrafo(isOrientado, isPonderado) - Criar um grafo vazio.
 - [x] inserirVertice(nome) - Inserir um vértice no grafo.
-- [ ] removerVértice(nome) - Remover um vértice do grafo.
+- [x] removerVértice(nome) - Remover um vértice do grafo.
 - [x] inserirAresta(origem, destino) - Inserir uma aresta no grafo. 
 - [x] inserirArco(origem, destino) - Inserir um arco no grafo. 
 - [x] removerAresta(origem, destino): Remover uma aresta do grafo.
