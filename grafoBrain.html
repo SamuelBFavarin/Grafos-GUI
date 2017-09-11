@@ -202,12 +202,13 @@
         while(fila.length) {
             origem = fila.shift();
             for(var i = 0; i < this.ligacao[origem].length; i++) {
-                if(!visitado[this.ligacao[origem][i]]) {
-                    visitado[this.ligacao[origem][i]] = true;
-                    fila.push(this.ligacao[origem][i]);
+                if(!visitado[this.ligacao[origem][i][0]]) {
+                    visitado[this.ligacao[origem][i][0]] = true;
+                    fila.push(this.ligacao[origem][i][0]);
                 }
             }
         }
+        return visitado;
     };
     Grafo.prototype.dfs = function (origem) {
         // em breve
@@ -244,15 +245,15 @@
         grafo.addVertice('q6');
         grafo.addAresta('q0','q1');
         grafo.addAresta('q0','q2');
-        grafo.addAresta('q0','q3');
+        grafo.addAresta('q5','q3');
         grafo.addAresta('q1','q4');
         grafo.addAresta('q4','q6');
         grafo.addAresta('q4','q5');
-//        grafo.bfs("q0");
+        console.log(grafo.bfs("q3"));
         //grafo.existeVertice('q4');
         //grafo.retornarLigacoes('q3');
         //grafo.removerLigacao('q3','q1');
-        grafo.removerVertice("q4");
+//        grafo.removerVertice("q4");
 //        console.log(grafo.ligacao);
 //        console.log(grafo.vertices);
 //        grafo.desenharMatriz();
