@@ -193,7 +193,7 @@
         delete this.ligacao[vertice];
     };
 
-    Grafo.prototype.bfs = function (origem) {
+    Grafo.prototype._bfs = function (origem) {
         var fila = [];
         fila.push(origem);
         var visitado = [];
@@ -210,6 +210,32 @@
         }
         return visitado;
     };
+
+    Grafo.prototype.bfs = function (origem, destino) {
+        if (undefined === destino){
+            return this._bfs(origem);
+        }
+
+        var fila = [];
+        fila.push(origem);
+        var visitado = [];
+        visitado[origem] = true;
+
+        while(fila.length) {
+            origem = fila.shift();
+            for(var i = 0; i < this.ligacao[origem].length; i++) {
+                if(!visitado[this.ligacao[origem][i][0]]) {
+                    visitado[this.ligacao[origem][i][0]] = true;
+                    fila.push(this.ligacao[origem][i][0]);
+                }
+                if (this.ligacao[origem][i][0] === destino){
+                    return visitado;
+                }
+            }
+        }
+        console.log("Vertice não encontrado");
+    };
+
     Grafo.prototype.dfs = function (origem) {
         // em breve
     };
@@ -249,7 +275,7 @@
         grafo.addAresta('q1','q4');
         grafo.addAresta('q4','q6');
         grafo.addAresta('q4','q5');
-        console.log(grafo.bfs("q3"));
+        console.log(grafo.bfs("q0", "q3"));
         //grafo.existeVertice('q4');
         //grafo.retornarLigacoes('q3');
         //grafo.removerLigacao('q3','q1');

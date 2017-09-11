@@ -16,9 +16,9 @@
 - [x] existeAresta(origem, destino): Verificar se existe uma determinada aresta no grafo.
 - [x] existeAresta(origem, destino): Verificar se existe uma determinada aresta no grafo.
 - [x] existeAresta(origem, destino): Verificar se existe uma determinada aresta no grafo.
-- [ ] bfs(verticeOrigem) - Busca em Largura sem destino
+- [x] bfs(verticeOrigem) - Busca em Largura sem destino
 - [ ] dfs(verticeOrigem) -Busca em profundidade sem destino
 - [ ] dijkstra(verticeOrigem) - Dijkstra sem destino
-- [ ] bfs(verticeOrigem, verticeDestino) -Busca em largura com destino
+- [x] bfs(verticeOrigem, verticeDestino) -Busca em largura com destino
 - [ ] dfs(verticeOrigem, verticeDestino) -Busca em profundidade com destino
 - [ ] dijkstra(verticeOrigem, verticeDestino) - Dijkstracom destino
