@@ -15,8 +15,8 @@
     // --GRAFO POSSUI UM CONJUNTO DE VÉRTICES E UM CONJUNTO DE LIGAÇÕES (ARESTAS OU ARCOS)
     // --GRAFO PODE SER PONDERADO E/OU DIRECIONADO
     function Grafo(_direcionado,_ponderado){
-        this.vertices = new Array();
-        this.ligacao = new Array();
+        this.vertices = [];
+        this.ligacao  = [];
         this.direcionado = _direcionado;
         this.ponderado = _ponderado;
     };
@@ -26,7 +26,7 @@
     // --CRIA NO CONJUNTO DE LIGAÇÃO UM ARRAY ONDE RECEBERÁ TODAS AS LIGAÇÕES DO VÉRTICE
     Grafo.prototype.addVertice = function (vertice){
         this.vertices.push(vertice);
-        this.ligacao[vertice] = new Array();
+        this.ligacao[vertice] = [];
     };
 
     //EXISTE VERTICE
@@ -181,27 +181,38 @@
     // FUNÇÃO NÃO ESTÁ FUNCIONANDO A PARTE DE REMOVER NA LISTA DE ADJACENCIA
     Grafo.prototype.removerVertice = function (vertice) {
         var index_vertice = this.vertices.indexOf(vertice);
-        if (index_vertice != -1){
-            this.vertices.splice(this.vertices[index_vertice], 1);
+        if (index_vertice == -1){
+            console.log("Vértice não existe");
+            return null;
         }
 
+        this.vertices.splice(index_vertice, 1);
         for(var pos=0; pos < this.vertices.length; pos++) {
             this.removerLigacao(this.vertices[pos], vertice);
         }
-
         delete this.ligacao[vertice];
     };
 
     Grafo.prototype.bfs = function (origem) {
-      // em breve
+        var fila = [];
+        fila.push(origem);
+        var visitado = [];
+        visitado[origem] = true;
+
+        while(fila.length) {
+            origem = fila.shift();
+            for(var i = 0; i < this.ligacao[origem].length; i++) {
+                if(!visitado[this.ligacao[origem][i]]) {
+                    visitado[this.ligacao[origem][i]] = true;
+                    fila.push(this.ligacao[origem][i]);
+                }
+            }
+        }
     };
     Grafo.prototype.dfs = function (origem) {
         // em breve
     };
     Grafo.prototype.dijkstra = function (origem) {
-        // em breve
-    };
-    Grafo.prototype.bfs = function (origem,destino) {
         // em breve
     };
     Grafo.prototype.dfs = function (origem,destino) {
@@ -222,5 +233,28 @@
 //    //grafo.removerLigacao('q3','q1');
 //    grafo.removerVertice('q1');
 //    grafo.desenharMatriz();
+
+    var grafo = new Grafo(false, true);
+        grafo.addVertice('q0');
+        grafo.addVertice('q1');
+        grafo.addVertice('q2');
+        grafo.addVertice('q3');
+        grafo.addVertice('q4');
+        grafo.addVertice('q5');
+        grafo.addVertice('q6');
+        grafo.addAresta('q0','q1');
+        grafo.addAresta('q0','q2');
+        grafo.addAresta('q0','q3');
+        grafo.addAresta('q1','q4');
+        grafo.addAresta('q4','q6');
+        grafo.addAresta('q4','q5');
+//        grafo.bfs("q0");
+        //grafo.existeVertice('q4');
+        //grafo.retornarLigacoes('q3');
+        //grafo.removerLigacao('q3','q1');
+        grafo.removerVertice("q4");
+//        console.log(grafo.ligacao);
+//        console.log(grafo.vertices);
+//        grafo.desenharMatriz();
 
 </script>
