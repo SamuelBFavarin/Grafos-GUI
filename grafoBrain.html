@@ -85,6 +85,7 @@
         if (!this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
             this.ligacao[vertice2].push([vertice1, _peso]);
+            console.log(vertice1 + "—" + vertice2);
         } else {
             console.log('Impossível adicionar Aresta em grafos direcionados');
         }
@@ -221,6 +222,7 @@
         var visitado = [];
         visitado[origem] = true;
 
+        console.log("#### Procurando BFS ####")
         while(fila.length) {
             origem = fila.shift();
             for(var i = 0; i < this.ligacao[origem].length; i++) {
@@ -232,7 +234,7 @@
                     
                 }
                 if (this.ligacao[origem][i][0] === destino){
-                    return "Encontrado -> " + this.ligacao[origem][i][0];
+                    return "#### Encontrado " +  this.ligacao[origem][i][0] + " #### ";
                 }
             }
         }
