@@ -227,9 +227,12 @@
                 if(!visitado[this.ligacao[origem][i][0]]) {
                     visitado[this.ligacao[origem][i][0]] = true;
                     fila.push(this.ligacao[origem][i][0]);
+                    console.log(this.ligacao[origem][i][0]);
+                    console.log("↓");
+                    
                 }
                 if (this.ligacao[origem][i][0] === destino){
-                    return visitado;
+                    return "Encontrado -> " + this.ligacao[origem][i][0];
                 }
             }
         }
