@@ -6,7 +6,6 @@
     <h1>Grafos.js</h1>
     <p>Abra o console administrador para receber os resultados (F12)</p>
     <p>Em breve uma interface gráfica aqui</p>
-    <img src="http://i.imgur.com/kvUU7.gif">
 </body>
 </html>
 <script type="text/javascript">
@@ -48,7 +47,7 @@
     Grafo.prototype.addArco = function (vertice1,vertice2) {
         if(this.direcionado) {
             this.peso = 1;
-            this.addArco(vertice1, vertice2, this.peso);
+            this.addArcoPonderado(vertice1, vertice2, this.peso);
         }else{
             console.log('Impossível adicionar Arco em grafos não direcionados');
         }
@@ -57,7 +56,7 @@
     //ADICIONA ARCO PONDERADO
     //--RECEBE O VERTICE DE ORIGEM, O VERTICE DE DESTINO E O PESO
     //--INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE UM ARRAY COM O DESTINO E O PESO
-    Grafo.prototype.addArco = function (vertice1,vertice2,_peso){
+    Grafo.prototype.addArcoPonderado = function (vertice1,vertice2,_peso){
         if (this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
         } else {
@@ -71,7 +70,7 @@
     Grafo.prototype.addAresta = function (vertice1,vertice2) {
         if(!this.direcionado) {
             this.peso = 1;
-            this.addAresta(vertice1, vertice2, this.peso);
+            this.addArestaPonderada(vertice1, vertice2, this.peso);
         }else{
             console.log('Impossível adicionar Aresta em grafos direcionados');
         }
@@ -81,11 +80,10 @@
     //--RECEBE O VERTICE DE ORIGEM, O VERTICE DE DESTINO E O PESO
     //--INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE DE ORIGEM UM ARRAY COM O DESTINO NA POSIÇÃO 0 E O PESO NA POSIÇÃO 1
     //--INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE DE DESTINO UM ARRAY COM O ORIGEM NA POSIÇÃO 0 E O PESO NA POSIÇÃO 1
-    Grafo.prototype.addAresta = function (vertice1,vertice2,_peso){
+    Grafo.prototype.addArestaPonderada = function (vertice1,vertice2,_peso){
         if (!this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
             this.ligacao[vertice2].push([vertice1, _peso]);
-            console.log(vertice1 + "—" + vertice2);
         } else {
             console.log('Impossível adicionar Aresta em grafos direcionados');
         }
@@ -194,99 +192,15 @@
         delete this.ligacao[vertice];
     };
 
-    Grafo.prototype._bfs = function (origem) {
-        var fila = [];
-        fila.push(origem);
-        var visitado = [];
-        visitado[origem] = true;
-
-        while(fila.length) {
-            origem = fila.shift();
-            for(var i = 0; i < this.ligacao[origem].length; i++) {
-                if(!visitado[this.ligacao[origem][i][0]]) {
-                    visitado[this.ligacao[origem][i][0]] = true;
-                    fila.push(this.ligacao[origem][i][0]);
-                }
-            }
-        }
-        return visitado;
-    };
-
-    Grafo.prototype.bfs = function (origem, destino) {
-        if (undefined === destino){
-            return this._bfs(origem);
-        }
-
-        var fila = [];
-        fila.push(origem);
-        var visitado = [];
-        visitado[origem] = true;
-
-        console.log("#### Procurando BFS ####")
-        while(fila.length) {
-            origem = fila.shift();
-            for(var i = 0; i < this.ligacao[origem].length; i++) {
-                if(!visitado[this.ligacao[origem][i][0]]) {
-                    visitado[this.ligacao[origem][i][0]] = true;
-                    fila.push(this.ligacao[origem][i][0]);
-                    console.log(this.ligacao[origem][i][0]);
-                    console.log("↓");
-                    
-                }
-                if (this.ligacao[origem][i][0] === destino){
-                    return "#### Encontrado " +  this.ligacao[origem][i][0] + " #### ";
-                }
-            }
-        }
-        console.log("Vertice não encontrado");
-    };
-
-    Grafo.prototype.dfs = function (origem) {
-        // em breve
-    };
-    Grafo.prototype.dijkstra = function (origem) {
-        // em breve
-    };
-    Grafo.prototype.dfs = function (origem,destino) {
-        // em breve
-    };
-    Grafo.prototype.dijkstra = function (origem,destino) {
-        // em breve
-    };
-
-//    var grafo = new Grafo(false,true);
-//    grafo.addVertice('q1');
-//    grafo.addVertice('q2');
-//    grafo.addVertice('q3');
-//    grafo.addAresta('q1','q3',2);
-//    grafo.addAresta('q1','q2',4);
-//    //grafo.existeVertice('q4');
-//    //grafo.retornarLigacoes('q3');
-//    //grafo.removerLigacao('q3','q1');
-//    grafo.removerVertice('q1');
-//    grafo.desenharMatriz();
-
-    var grafo = new Grafo(false, true);
-        grafo.addVertice('q0');
+   var grafo = new Grafo(false,false);
         grafo.addVertice('q1');
         grafo.addVertice('q2');
         grafo.addVertice('q3');
         grafo.addVertice('q4');
-        grafo.addVertice('q5');
-        grafo.addVertice('q6');
-        grafo.addAresta('q0','q1');
-        grafo.addAresta('q0','q2');
-        grafo.addAresta('q5','q3');
-        grafo.addAresta('q1','q4');
-        grafo.addAresta('q4','q6');
-        grafo.addAresta('q4','q5');
-        console.log(grafo.bfs("q0", "q3"));
-        //grafo.existeVertice('q4');
-        //grafo.retornarLigacoes('q3');
-        //grafo.removerLigacao('q3','q1');
-//        grafo.removerVertice("q4");
-//        console.log(grafo.ligacao);
-//        console.log(grafo.vertices);
-//        grafo.desenharMatriz();
+        grafo.addAresta('q1','q2');
+        grafo.addAresta('q1','q3');
+        grafo.addAresta('q2','q3');
+        grafo.addAresta('q4','q3');
+        grafo.desenharMatriz();
 
 </script>
