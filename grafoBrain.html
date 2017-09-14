@@ -177,7 +177,6 @@
     };
 
     //REMOVE VERTICE PELO NOME
-    // FUNÇÃO NÃO ESTÁ FUNCIONANDO A PARTE DE REMOVER NA LISTA DE ADJACENCIA
     Grafo.prototype.removerVertice = function (vertice) {
         var index_vertice = this.vertices.indexOf(vertice);
         if (index_vertice == -1){
@@ -192,15 +191,88 @@
         delete this.ligacao[vertice];
     };
 
+    Grafo.prototype.bfsSemDestino = function (origem){
+    	var fila = [];
+        fila.push(origem);
+        var visitado = [];
+        var naoVisitado = [];
+
+        for(l=0;l<this.vertices.length;l++){
+            naoVisitado[this.vertices[l]] = true;
+        }
+
+        naoVisitado[origem] = false;
+        var percorreuTudo = false;
+
+        while(!percorreuTudo){
+            while(fila.length > 0) {
+                origem = fila.shift();
+                visitado.push(origem);
+                for(var i = 0; i < this.ligacao[origem].length; i++) {
+                    if(naoVisitado[this.ligacao[origem][i][0]]) {
+                        naoVisitado[this.ligacao[origem][i][0]] = false;
+                        fila.push(this.ligacao[origem][i][0]);
+                    }
+                }
+               
+            }
+            percorreuTudo = true;
+            var primeiroEncontrado = 0;
+            for(var k =0; k < this.vertices.length; k++){
+                if(naoVisitado[this.vertices[k]]){
+                    if(primeiroEncontrado<=0){
+                        fila.push(this.vertices[k]);
+                        naoVisitado[this.vertices[k]] = false;
+                    }
+                    percorreuTudo = false;
+                    primeiroEncontrado++;
+                }
+            }
+        }   
+
+        console.log(visitado);
+    };
+
+    Grafo.prototype.bfsComDestino = function(origem,destino){
+         var fila = [];
+         fila.push(origem);
+         var visitado = [];
+         visitado[origem] = true;
+ 
+         while(fila.length) {
+             origem = fila.shift();
+             for(var i = 0; i < this.ligacao[origem].length; i++) {
+                 if(!visitado[this.ligacao[origem][i][0]]) {
+                     visitado[this.ligacao[origem][i][0]] = true;
+                     fila.push(this.ligacao[origem][i][0]);
+                 }
+                 if (this.ligacao[origem][i][0] === destino){
+                     return visitado;
+                 }
+             }
+         }
+         console.log("Vertice não encontrado");
+    };
+
    var grafo = new Grafo(false,false);
         grafo.addVertice('q1');
         grafo.addVertice('q2');
         grafo.addVertice('q3');
         grafo.addVertice('q4');
+        grafo.addVertice('q5');
+        grafo.addVertice('q6');
+        grafo.addVertice('q7');
+        grafo.addVertice('q8');
         grafo.addAresta('q1','q2');
         grafo.addAresta('q1','q3');
         grafo.addAresta('q2','q3');
         grafo.addAresta('q4','q3');
+        grafo.addAresta('q5','q6');
+        grafo.addAresta('q5','q8');
+        grafo.addAresta('q8','q7');
+        //console.log(grafo.bfsComDestino('q1','q5'));
+        //console.log(this.ligacao);
         grafo.desenharMatriz();
+      
 
 </script>
