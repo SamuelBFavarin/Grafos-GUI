@@ -254,6 +254,45 @@
          console.log("Vertice não encontrado");
     };
 
+    //ainda não funcionando
+    Grafo.prototype.dfsComDestino = function(origem){
+        var pilha = [];
+        var naoVisitado = [];
+        var visitado = [];
+        var percorreuTudo = false;
+        
+        for(l=0;l<this.vertices.length;l++){
+            naoVisitado[this.vertices[l]] = true;
+        }
+        naoVisitado[origem] = false;
+
+        pilha.push(origem);
+        do{
+            origem = pilha[pilha.length-1];
+            console.log(visitado);
+            naoVisitado[origem] = false;
+            visitado.push(origem);
+
+            var temLigacao = 0;
+            for(i=0; i<this.ligacao[origem].length;i++){
+                for(j =0; j<pilha.length; j++){
+                    if(this.ligacao[origem][i][0] !== pilha[j]){
+                        if(naoVisitado[this.ligacao[origem][i][0]]){
+                            pilha.push(this.ligacao[origem][i][0]);
+                            temLigacao++;
+                        }
+                    }
+                }if(temLigacao = 0){
+                    console.log('aqui');
+                    pilha.pop();
+                }
+            } 
+        }while(pilha.length === 4);
+
+
+    
+    };
+
    var grafo = new Grafo(false,false);
         grafo.addVertice('q1');
         grafo.addVertice('q2');
@@ -270,6 +309,7 @@
         grafo.addAresta('q5','q6');
         grafo.addAresta('q5','q8');
         grafo.addAresta('q8','q7');
+        grafo.dfsComDestino('q1','q4');
         //console.log(grafo.bfsComDestino('q1','q5'));
         //console.log(this.ligacao);
         grafo.desenharMatriz();
