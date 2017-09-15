@@ -21,4 +21,4 @@
  ~~dijkstra(verticeOrigem) - Dijkstra sem destino~~
 - [x] bfs(verticeOrigem, verticeDestino) -Busca em largura com destino
 - [ ] dfs(verticeOrigem, verticeDestino) -Busca em profundidade com destino
- ~~dijkstra(verticeOrigem, verticeDestino) - Dijkstracom destino~~
+  ~~dijkstra(verticeOrigem, verticeDestino) - Dijkstracom destino~~
