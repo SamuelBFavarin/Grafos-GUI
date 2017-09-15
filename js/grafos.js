@@ -60,6 +60,13 @@
             this.addArcoPonderado(vertice1, vertice2, this.peso);
         }else{
             console.log('Impossível adicionar Arco em grafos não direcionados');
+
+            $.notify("Impossível adicionar Arco em grafos não direcionados!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
         }
     };
 
@@ -69,8 +76,23 @@
     Grafo.prototype.addArcoPonderado = function (vertice1,vertice2,_peso){
         if (this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
+            
+            $.notify("Arco adicionado com sucesso!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "success",
+                gap: 2
+            });
+
         } else {
             console.log('Impossível adicionar Arco em grafos não direcionados');
+
+            $.notify("Impossível adicionar Arco em grafos não direcionados!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
         }
     };
 
@@ -524,6 +546,27 @@
         }
     }
 
+     function adicionaArco(){
+
+        var vertice1 = document.getElementById('inputAddAresta1');
+        var vertice2 = document.getElementById('inputAddAresta2');
+
+        if(vertice1.value != '' && vertice2.value != ''){
+          
+          grafo.addArco(vertice1.value, vertice2.value);  
+          vertice1.value = '';
+          vertice2.value = '';
+
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        }
+    }
+
     function adicionaArestaPonderada(){
         
         var vertice1 = document.getElementById('inputAddArestaPond1');
@@ -719,7 +762,7 @@
         logger.innerHTML += grafo.vertices + '<br />'; 
     }
 
-    function imprimeArestas() {
+    function imprimeMatriz() {
         var logger = document.getElementById('log');  
         logger.innerHTML += '<br />';
 
