@@ -1,16 +1,15 @@
     .navbar {
-      margin-bottom: 0;
-      background-color: #2d2d30;
+      margin-bottom: 10;
+      background-color: #160A47;
       border: 0;
       font-size: 11px !important;
       letter-spacing: 4px;
-      opacity: 0.9;
-       border-radius: 0;
+      border-radius: 0;
     }
 
     .navbar li a,
     .navbar .navbar-brand {
-      color: #d5d5d5 !important;
+      color: #fff !important;
     }
 
     .navbar-nav li a:hover {
@@ -37,7 +36,7 @@
     }
 
     footer {
-      background-color: #2d2d30;
+      background-color: #160A47;
       color: white;
       padding: 15px;
       position: fixed; 
@@ -45,15 +44,30 @@
       width: 100%;
     }
     
-    .btn-outline {
-      color: inherit;
-      background-color: transparent;
-      transition: all .5s;
-    }
+  .well-block {
+    background-color: #fff;
+    border: 2px solid #160A47;
+    padding: 40px;
+    height: 650px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+  }
 
-    .panel-default>.panel-heading {
+  .botao-lindao{
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
     color: #fff;
-    background-color: #2d2d30;
-    opacity: 0.9;
-    border-color: #fff;
-    }
+    border-color: #29292c;
+    background-color: #160A47;
+    transition: all .5s;
+
+  }
+
+    
