@@ -499,6 +499,18 @@
  As funções a seguir são usadas para a interface WEB (Botões, inputs, console), chamando as funções da classe grafo acima.
  Evitem mexer pelos controles dos buttons etc
 ****************************************************************************************************************************/
+    function adicionaGrafo(opcao){
+        if(opcao === 1){
+            grafo =  new Grafo(true,true);
+        }else if(opcao === 2){
+            grafo =  new Grafo(true,false);
+        }else if(opcao === 3){
+            grafo =  new Grafo(false,true);
+        }else if(opcao === 4){
+            grafo =  new Grafo(false,false);
+        }
+    }
+
     function adicionaVertice(){
         
         var vertice = document.getElementById('inputAddVertice');
@@ -587,6 +599,30 @@
             });
         }
     }
+
+ function adicionaArcoPonderado(){
+
+     var vertice1 = document.getElementById('inputAddArestaPond1');
+     var vertice2 = document.getElementById('inputAddArestaPond2');
+     var peso = document.getElementById('inputAddPesoPond');
+
+     alert(vertice1.value);
+     alert(vertice2.value);
+     alert(peso.value);
+     if(vertice1.value != '' && vertice2.value != '' && peso.value != ''){
+         grafo.addArcoPonderado(vertice1.value, vertice2.value, peso.value);
+         vertice1.value = '';
+         vertice2.value = '';
+         peso.value = '';
+     }else{
+         $.notify("Valores não podem ser vazios!", {
+             globalPosition: "top right",
+             showDuration: 400,
+             className: "error",
+             gap: 2
+         });
+     }
+ }
 
     function removeVertice(){
         
@@ -797,6 +833,20 @@
             logger.innerHTML += '<br />'; 
         }  
     }
+
+ function imprimeLista() {
+     var logger = document.getElementById('log');
+     logger.innerHTML += '<br />';
+
+     console.log(grafo.ligacao);
+     for(var i=0;i<grafo.vertices.length;i++){
+         logger.innerHTML += grafo.vertices[i] + ' -> ';
+         for(var j=0; j<grafo.ligacao[grafo.vertices[i]].length; j++){
+             logger.innerHTML += ' | ' + grafo.ligacao[grafo.vertices[i]][j][0]
+         }
+         logger.innerHTML += '<br>';
+     }
+ }
 
     function limparConsole(){
         var logger = document.getElementById('log');  

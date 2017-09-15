@@ -32,6 +32,30 @@
         </div>
     </nav>
 
+    <div class="form-group col-md-3">
+        <button type="button" class="btn  btn-default " onclick="adicionaGrafo(1)">
+            <span class="glyphicon glyphicon-plus"></span>
+            Cria grafo Ponderado e Direcionado
+        </button>
+    </div>
+    <div class="form-group col-md-3">
+        <button type="button" class="btn  btn-default " onclick="adicionaGrafo(2)">
+            <span class="glyphicon glyphicon-plus"></span>
+            Cria grafo Não Ponderado e Direcionado
+        </button>
+    </div>
+    <div class="form-group col-md-3">
+        <button type="button" class="btn btn-default " onclick="adicionaGrafo(3)">
+            <span class="glyphicon glyphicon-plus"></span>
+            Cria grafo  Ponderado e Não Direcionado
+        </button>
+    </div>
+    <div class="form-group col-md-3">
+        <button type="button" class="btn   btn-default " onclick="adicionaGrafo(4)">
+            <span class="glyphicon glyphicon-plus"></span>
+            Cria grafo  Nao Ponderado e Não Direcionado
+        </button>
+    </div>
     <div class="container-fluid text-center">
         <div class="row">
             <!-- LISTA DE OPÇÕES DE COMPONENTES  -->
@@ -39,6 +63,7 @@
                 <div class="well-block">
                     <!-- CABEÇALHO DO PAINEL  -->
                     <legend>Componentes</legend>
+                    <!-- ADICIONA VÉRTICE -->
                     <form class="form-horizontal">
                         <!-- ADICIONA VÉRTICE -->
                         <div class="form-group">
@@ -68,7 +93,11 @@
                             <input class="form-control" id="inputAddPesoPond" placeholder="Peso">
                             <button type="button" class="btn botao-lindao btn-info pull-left" id="addArestaPond" onclick="adicionaArestaPonderada()">
                                  <span class="glyphicon glyphicon-plus"></span>
-                                 Adiciona Aresta Ponderada
+                                Aresta Ponderada
+                            </button>
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="addArestaPon" onclick="adicionaArcoPonderado()">
+                                <span class="glyphicon glyphicon-plus"></span>
+                              Arco Ponderado
                             </button>
                         </div>
                         <!-- REMOVE VÉRTICE -->
@@ -163,15 +192,21 @@
                                 Imprimir Vértices
                             </button>
                         </div>
-                        <!-- IMPRIMIR ARESTAS -->
+                        <!-- IMPRIMIR MATRIZ -->
                         <div class="form-group">
                             <button type="button" class="btn botao-lindao btn-info pull-left" id="imprirmirAresta" onclick="imprimeMatriz()">
                                 Imprimir Matriz
                             </button>
                         </div>
+                        <!-- IMPRIMIR LISTA -->
+                        <div class="form-group">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="imprirmirLista" onclick="imprimeLista()">
+                                Imprimir Lista
+                            </button>
+                        </div>
                         <!-- LIMPAR CONSOLE -->
                         <div class="form-group">
-                            <button type="button" class="btn  btn-danger pull-left" onclick="limparConsole()"> Limpar </button>
+                            <button type="button" class="btn  btn-danger pull-left" onclick="limparConsole()"> Limpar Console</button>
                         </div>
                     </form>
                 </div>
