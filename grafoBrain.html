@@ -254,25 +254,25 @@
         console.log("Vertice não encontrado");
     };
 
-    Grafo.prototype.dfs = function (origem){
+    Grafo.prototype.dfsSemDestino = function (origem){
         var visitados   = [];
         var pilha       = [];
 
         pilha.push(origem);
         //visita a partir da origem
-        this._dfs(origem, visitados, pilha);
+        this._dfsSemDestino(origem, visitados, pilha);
         for (var i = 0; i < Object.keys(this.ligacao).length; i++){
             var key = Object.keys(this.ligacao)[i];
             if (visitados.indexOf(key) == -1){
                 pilha.push(key);
-                this._dfs(key, visitados, pilha);
+                this._dfsSemDestino(key, visitados, pilha);
             }
         }
 
         console.log(visitados);
     };
 
-    Grafo.prototype._dfs = function(origem, visitados, pilha){
+    Grafo.prototype._dfsSemDestino = function(origem, visitados, pilha){
         while (pilha.length > 0){
             var nodo = pilha.pop();
             if (visitados.indexOf(nodo) == -1){
@@ -284,42 +284,30 @@
         }
     };
 
-    //ainda não funcionando
-    Grafo.prototype.dfsComDestino = function(origem){
-        var pilha = [];
-        var naoVisitado = [];
-        var visitado = [];
-        var percorreuTudo = false;
-
-        for(l=0;l<this.vertices.length;l++){
-            naoVisitado[this.vertices[l]] = true;
-        }
-        naoVisitado[origem] = false;
-
+    Grafo.prototype.dfsComDestino = function (origem,destino){
+        var visitados   = [];
+        var pilha       = [];
         pilha.push(origem);
-        do{
-            origem = pilha[pilha.length-1];
-            console.log(visitado);
-            naoVisitado[origem] = false;
-            visitado.push(origem);
-
-            var temLigacao = 0;
-            for(i=0; i<this.ligacao[origem].length;i++){
-                for(j =0; j<pilha.length; j++){
-                    if(this.ligacao[origem][i][0] !== pilha[j]){
-                        if(naoVisitado[this.ligacao[origem][i][0]]){
-                            pilha.push(this.ligacao[origem][i][0]);
-                            temLigacao++;
-                        }
+        //visita a partir da origem
+         while (pilha.length > 0){
+            var nodo = pilha.pop();
+            if (visitados.indexOf(nodo) == -1){
+                visitados.push(nodo);
+                for (var i = 0; i < this.ligacao[nodo].length; i++){
+                    pilha.push(this.ligacao[nodo][i][0]);
+                    if(this.ligacao[nodo][i][0] === destino){
+                         console.log('Caminho encontrado');
+                         visitados.push(this.ligacao[nodo][i][0]);
+                         console.log(visitados);
+                         return;
                     }
-                }if(temLigacao = 0){
-                    console.log('aqui');
-                    pilha.pop();
                 }
             }
-        } while(pilha.length > 0);
+        }
+        console.log('Caminho não encontrado');
     };
 
+ 
     var grafo = new Grafo(false,false);
         grafo.addVertice('q1');
         grafo.addVertice('q2');
@@ -332,12 +320,11 @@
 //        grafo.addVertice('q6');
 //        grafo.addVertice('q7');
 //        grafo.addVertice('q8');
-        grafo.addAresta('q1','q2');
         grafo.addAresta('q1','q3');
         grafo.addAresta('q2','q3');
         grafo.addAresta('q4','q3');
         grafo.addAresta('q5','q6');
-        grafo.dfs("q1");
+        grafo.dfsComDestino('q1','q4');
 //        grafo.addAresta('q5','q6');
 //        grafo.addAresta('q5','q8');
 //        grafo.addAresta('q8','q7');
