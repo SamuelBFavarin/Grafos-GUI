@@ -13,15 +13,15 @@
 </head>
 
 <body>
-
+    <!-- MENUSINHO -->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                 </button>
                 <a class="navbar-brand" href="#">Grafos</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
@@ -33,75 +33,151 @@
     </nav>
 
     <div class="container-fluid text-center">
-        <div class="row content">
-            <div class="col-sm-2 sidenav">
-                <div class="panel panel-default">
-
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-th"></span> Componentes
-                    </div>
-
-                    <div class="panel-body">
-                        <div class="list-group">
-
-                            <!--  -->
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" style="float: right">+</button>
-                                <div style="overflow: hidden; padding-right: .5em;">
-                                    <input type="text" class="form-control"  placeholder="Vértice" style="width: 100%;" />
-                                </div>
-                            </div>
-                            <!--  -->
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" style="float: right">+</button>
-                                <div style="overflow: hidden; padding-right: .5em;">
-                                    <input type="text" class="form-control"  placeholder="Aresta" style="width: 100%;" />
-                                </div>
-                            </div>
-                            <!--  -->
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" id="btnStatus">Remove Vértice</button>
-                            </div>
-                            <!--  -->
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" id="btnStatus">Remove Ligação</button>
-                            </div>
+        <div class="row">
+            <!-- LISTA DE OPÇÕES DE COMPONENTES  -->
+            <div class="col-md-4">
+                <div class="well-block">
+                    <!-- CABEÇALHO DO PAINEL  -->
+                    <legend>Componentes</legend>
+                    <form class="form-horizontal">
+                        <!-- ADICIONA VÉRTICE -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputAddVertice" placeholder="Vértice">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="addVertice" onclick="adicionaVertice()">
+                                 <span class="glyphicon glyphicon-plus"></span>
+                                    Adiciona Vértice
+                            </button>
                         </div>
-                    </div>
+                        <!-- ADICIONA ARESTA -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputAddAresta1" placeholder="Vértice 1">
+                            <input class="form-control" id="inputAddAresta2" placeholder="Vértice 2">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="addAresta" onclick="adicionaAresta()">
+                                 <span class="glyphicon glyphicon-plus"></span>
+                                  Adiciona Aresta
+                            </button>
+                        </div>
+                        <!-- ADICIONA ARESTA PONDERADA -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputAddArestaPond1" placeholder="Vértice 1">
+                            <input class="form-control" id="inputAddArestaPond2" placeholder="Vértice 2">
+                            <input class="form-control" id="inputAddPesoPond" placeholder="Peso">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="addArestaPond" onclick="adicionaArestaPonderada()">
+                                 <span class="glyphicon glyphicon-plus"></span>
+                                 Adiciona Aresta Ponderada
+                            </button>
+                        </div>
+                        <!-- REMOVE VÉRTICE -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputDelVertice" placeholder="Vértice">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="delVertice" onclick="removeVertice()">
+                                <span class="glyphicon glyphicon-remove"></span>
+                                Remove Vértice
+                            </button>
+                        </div>
+                        <!-- REMOVE LIGAÇÃO -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputDelLigacao1" placeholder="Origem">
+                            <input class="form-control" id="inputDelLigacao2" placeholder="Destino">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="delLigacao" onclick="removeLigacao()">
+                                <span class="glyphicon glyphicon-remove"></span>
+                                Remove Ligação
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="col-sm-8">
-            </div>
-            <div class="col-sm-2 sidenav">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-off"></span> Ações
-                    </div>
-                    <div class="panel-body">
-                        <div class="list-group">
-                            <!--  -->
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" id="btnStatus">Existe Ligação</button>
-                            </div>
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" id="btnStatus">DFS - Destino</button>
-                            </div>
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" id="btnStatus">DFS - S/Destino</button>
-                            </div>
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" id="btnStatus">BFS - Destino</button>
-                            </div>
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" id="btnStatus">BFS - S/Destino</button>
-                            </div>
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" id="btnStatus">Desenha Matriz</button>
-                            </div>
-                            <div class="list-group-item">
-                                <button type="button" class="btn btn-outline btn-info" id="btnStatus">Retorna Ligações</button>
-                            </div>
+            <!-- LISTA DE OPÇÕES DE BUSCAS  -->
+            <div class="col-md-4">
+                <div class="well-block">
+                    <legend>Buscas</legend>
+                    <form class="form-horizontal">
+                        <!-- DFS COM DESTINO -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputOrigemDfsOrigem" placeholder="Origem">
+                            <input class="form-control" id="inputDestinoDfsDestino" placeholder="Destino">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="dfsDestino" onclick="dfsComDestino()">
+                                <span class="glyphicon glyphicon-search"></span>
+                                DFS - Destino
+                            </button>
                         </div>
+                        <!-- BFS COM DESTINO  -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputOrigemBfsOrigem" placeholder="Origem">
+                            <input class="form-control" id="inputDestinoBfsDestino" placeholder="Destino">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="bfsDestino" onclick="bfsComDestino()">
+                                <span class="glyphicon glyphicon-search"></span>
+                                BFS - Destino
+                            </button>
+                        </div>
+                        <!-- DFS SEM DESTINO -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputOrigemDfs" placeholder="Origem">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="dfs" onclick="dfsSemDestino()">
+                                <span class="glyphicon glyphicon-search"></span>
+                                DFS - S\Destino
+                            </button>
+                        </div>
+                        <!-- BFS SEM DESTINO -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputOrigemBfs" placeholder="Origem">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="bfs" onclick="bfsSemDestino()">
+                                <span class="glyphicon glyphicon-search"></span>
+                                BFS - S\Destino
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- LISTA DE OPÇÕES DIVERSAS  -->
+            <div class="col-md-4">
+                <div class="well-block">
+                    <legend>Diversos</legend>
+                    <form class="form-horizontal">
+                        <!-- RETORNAR LIGAÇÕES -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputRetornarLigacoes" placeholder="Vértice">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="retornarLigacoes" onclick="retornaLigacoes()">
+                                Retornar Ligações</button>
+                        </div>
+                        <!-- EXISTE LIGAÇÕES -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputExisteLigacaoOrigem" placeholder="Origem">
+                            <input class="form-control" id="inputExisteLigacaoDestino" placeholder="Destino">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="existeLigacoes" onclick="existeLigacao()">
+                                Existe Ligação</button>
+                        </div>
+                        <!-- EXISTE VÉRTICE -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputExisteVertice" placeholder="Vértice">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="existeVertices" onclick="existeVertice()">
+                                Existe Vértice</button>
+                        </div>
+                        <!-- IMPRIMIR VERTICES -->
+                        <div class="form-group">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="imprirmirVertice" onclick="imprimeVertices()">
+                                Imprimir Vértices
+                            </button>
+                        </div>
+                        <!-- IMPRIMIR ARESTAS -->
+                        <div class="form-group">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="imprirmirAresta" onclick="imprimeArestas()">
+                                Imprimir Arestas
+                            </button>
+                        </div>
+                        <!-- LIMPAR CONSOLE -->
+                        <div class="form-group">
+                            <button type="button" class="btn  btn-danger pull-left" onclick="limparConsole()"> Limpar </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well-block">
+                    <legend>Console</legend>
+                    <div id="log">
                     </div>
                 </div>
             </div>
@@ -112,9 +188,8 @@
         <p>Desenvolvido por Samuel B, José H, e Vinícius M</p>
     </footer>
 
-    <script src="js/grafos.js">
-
-    </script>
+    <script src="js/grafos.js"></script>
+    <script src="js/notify.js"></script>
 </body>
 
 </html>
