@@ -1,4 +1,4 @@
-//GRAFO
+ //GRAFO
     // --GRAFO POSSUI UM CONJUNTO DE VÉRTICES E UM CONJUNTO DE LIGAÇÕES (ARESTAS OU ARCOS)
     // --GRAFO PODE SER PONDERADO E/OU DIRECIONADO
     function Grafo(_direcionado,_ponderado){
@@ -19,13 +19,35 @@
     //EXISTE VERTICE
     // --RECEBE O NOME DO VERTICE POR PARAMETRO, PROCURA NO OCNJUNTO DE VÉRTICES SE EXISTE
     Grafo.prototype.existeVertice = function (vertice) {
+        var logger = document.getElementById('log');
+
         for(i=0; i<this.vertices.length; i++){
             if(this.vertices[i] === vertice){
+                console.log(this.vertices[i]);
                 console.log('Existe vértice!!!');
+
+                $.notify("Existe Vértice! Verifique o console", {
+                    globalPosition: "top right",
+                    showDuration: 400,
+                    className: "success",
+                    gap: 2
+                })
+                
+                logger.innerHTML += this.vertices[i] + '<br />';  
+
                 return true;
             }
         }
         console.log('Vértice não encontrado');
+
+        $.notify("Vértice não encontrado!", {
+           globalPosition: "top right",
+           showDuration: 400,
+           className: "warn",
+           gap: 2
+        });
+
+        logger.innerHTML = '<br />';  
         return false;
     };
 
@@ -59,8 +81,23 @@
         if(!this.direcionado) {
             this.peso = 1;
             this.addArestaPonderada(vertice1, vertice2, this.peso);
+
+            $.notify("Aresta adicionado com sucesso!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "success",
+                gap: 2
+            });
+
         }else{
             console.log('Impossível adicionar Aresta em grafos direcionados');
+
+            $.notify("Impossível adicionar Aresta em grafos direcionados!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
         }
     };
 
@@ -72,8 +109,23 @@
         if (!this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
             this.ligacao[vertice2].push([vertice1, _peso]);
+
+             $.notify("Aresta Ponderada adicionado com sucesso!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "success",
+                gap: 2
+            });
+
         } else {
             console.log('Impossível adicionar Aresta em grafos direcionados');
+
+            $.notify("Impossível adicionar Aresta em grafos direcionados!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
         }
     };
 
@@ -86,10 +138,25 @@
             for(i =0; i<this.ligacao[origem].length; i++ ) {
                 if (this.ligacao[origem][i][0] === destino) {
                     console.log('Existe Arco!!!');
+                   
+                    $.notify("Existe Arco!", {
+                        globalPosition: "top right",
+                        showDuration: 400,
+                        className: "success",
+                        gap: 2
+                     });
+
                     return true;
                 }
             }
             console.log('Arco não encontrado!!!');
+
+            $.notify("Arco não encontrado!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "warn",
+                gap: 2
+            });
             return false;
         }else{
             for(i =0; i<this.ligacao[origem].length; i++ ) {
@@ -97,12 +164,27 @@
                     for(j =0; j<this.ligacao[destino].length; j++){
                         if(this.ligacao[destino][j][0] === origem){
                             console.log('Existe Aresta!!!');
+                            
+                            $.notify("Existe Aresta!", {
+                                globalPosition: "top right",
+                                showDuration: 400,
+                                className: "success",
+                                gap: 2
+                            });
+
                             return true;
                         }
                     }
                 }
             }
             console.log('Aresta não encontrada!!!');
+
+            $.notify("Aresta não encontrada!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "warn",
+                gap: 2
+            });
             return false;
         }
     };
@@ -111,29 +193,18 @@
     // --RETORNA A LISTA DE TODAS AS LIGAÇÕES DE UM VERTICE
     Grafo.prototype.retornarLigacoes = function (vertice) {
         console.log(this.ligacao[vertice]);
-    };
 
-    // DESENHA MATRIZ DE ADJACENCIA
-    // --CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
-    //   SE NÃO FOR ENCONTRADO É ATRIBUIDO 0 A POSIÇÃO SEM PESO
-    // -- PRINTA A MATRIZ DE ADJACENCIA E A LISTA DE ADJACENCIA
-    Grafo.prototype.desenharMatriz = function () {
-        this.matriz = new Array();
-        for(i=0;i < this.vertices.length; i++) {
-            this.matriz[i] = new Array();
-            for(j=0; j < this.vertices.length; j++){
-                this.matriz[i][j] = 0;
-                for(k=0; k< this.ligacao[this.vertices[i]].length; k++){
-                    if(this.ligacao[this.vertices[i]][k][0] === this.vertices[j]) {
-                        this.matriz[i][j] = this.ligacao[this.vertices[i]][k][1];
-                    }
-                }
-            }
+        $.notify("Ligações retornadas! Verifica o console", {
+            globalPosition: "top right",
+            showDuration: 400,
+            className: "success",
+            gap: 2
+         });
+
+        var logger = document.getElementById('log');  
+        for(i=0;i < this.ligacao[vertice].length; i++) {           
+            logger.innerHTML += ' [ ' + this.ligacao[vertice][i][0] + ' ] ';     
         }
-        console.log('Matriz de Adjacencia: ');
-        console.log(this.matriz);
-        console.log('Lista de Adjacencia: ');
-        console.log(this.ligacao);
     };
 
     // REMOVE ARESTA OU ARCO
@@ -169,6 +240,14 @@
         var index_vertice = this.vertices.indexOf(vertice);
         if (index_vertice == -1){
             console.log("Vértice não existe");
+
+            $.notify("Vértice não existe!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "warn",
+                gap: 2
+            });
+
             return null;
         }
 
@@ -177,6 +256,13 @@
             this.removerLigacao(this.vertices[pos], vertice);
         }
         delete this.ligacao[vertice];
+
+            $.notify("Vertice removido com sucesso!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "success",
+                gap: 2
+            });
     };
 
     Grafo.prototype.bfsSemDestino = function (origem){
@@ -218,6 +304,16 @@
             }
         }
 
+        $.notify("Vértice encontrado! Veja o Console", {
+            globalPosition: "top right",
+            showDuration: 400,
+            className: "success",
+            gap: 2
+        });
+
+        var logger = document.getElementById('log');
+        logger.innerHTML += visitado + '<br />';  
+
         console.log(visitado);
     };
 
@@ -225,6 +321,7 @@
         var fila = [];
         fila.push(origem);
         var visitado = [];
+        var temp = origem;
         visitado[origem] = true;
 
         while(fila.length) {
@@ -232,14 +329,39 @@
             for(var i = 0; i < this.ligacao[origem].length; i++) {
                 if(!visitado[this.ligacao[origem][i][0]]) {
                     visitado[this.ligacao[origem][i][0]] = true;
+                    visitado.push(this.ligacao[origem][i][0]);
                     fila.push(this.ligacao[origem][i][0]);
                 }
                 if (this.ligacao[origem][i][0] === destino){
-                    return visitado;
+                    
+                    console.log('Vertice encontrado');
+                    console.log(visitado);
+
+                    $.notify("Vértice encontrado! Veja o Console", {
+                        globalPosition: "top right",
+                        showDuration: 400,
+                        className: "success",
+                        gap: 2
+                    });
+
+                    var logger = document.getElementById('log');
+                    logger.innerHTML += temp + '<br />';  
+
+                    for(var i = 0; i < visitado.length; i++) {
+                        logger.innerHTML += visitado[i] + '<br />';  
+                    }
+                    return;
                 }
             }
         }
         console.log("Vertice não encontrado");
+
+            $.notify("Vértice não encontrado!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "warn",
+                gap: 2
+            });
     };
 
     Grafo.prototype.dfsSemDestino = function (origem){
@@ -258,6 +380,16 @@
         }
 
         console.log(visitados);
+        
+        $.notify("Caminho encontrado! Veja o console", {
+            globalPosition: "top right",
+            showDuration: 400,
+            className: "success",
+            gap: 2
+        });
+
+        var logger = document.getElementById('log');  
+        logger.innerHTML += visitados + '<br />';    
     };
 
     Grafo.prototype._dfsSemDestino = function(origem, visitados, pilha){
@@ -277,46 +409,353 @@
         var pilha       = [];
         pilha.push(origem);
         //visita a partir da origem
-         while (pilha.length > 0){
+        while (pilha.length > 0){
             var nodo = pilha.pop();
             if (visitados.indexOf(nodo) == -1){
                 visitados.push(nodo);
                 for (var i = 0; i < this.ligacao[nodo].length; i++){
                     pilha.push(this.ligacao[nodo][i][0]);
                     if(this.ligacao[nodo][i][0] === destino){
-                         console.log('Caminho encontrado');
-                         visitados.push(this.ligacao[nodo][i][0]);
-                         console.log(visitados);
-                         return;
+                        console.log('Caminho encontrado');
+                        visitados.push(this.ligacao[nodo][i][0]);
+                        console.log(visitados);
+
+                        $.notify("Caminho encontrado! Veja o Console", {
+                            globalPosition: "top right",
+                            showDuration: 400,
+                            className: "success",
+                            gap: 2
+                        });
+
+                        var logger = document.getElementById('log');  
+                        logger.innerHTML += visitados + '<br />';
+
+                        return;
                     }
                 }
             }
         }
         console.log('Caminho não encontrado');
+
+        $.notify("Caminho não encontrado!", {
+            globalPosition: "top right",
+            showDuration: 400,
+            className: "warn",
+            gap: 2
+        });
+
     };
 
- 
+    // DESENHA MATRIZ DE ADJACENCIA
+    // --CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
+    //   SE NÃO FOR ENCONTRADO É ATRIBUIDO 0 A POSIÇÃO SEM PESO
+    // -- PRINTA A MATRIZ DE ADJACENCIA E A LISTA DE ADJACENCIA
+    Grafo.prototype.imprimirGrafo = function () {
+        this.matriz = new Array();
+        for(i=0;i < this.vertices.length; i++) {
+            this.matriz[i] = new Array();
+            for(j=0; j < this.vertices.length; j++){
+                this.matriz[i][j] = 0;
+                for(k=0; k< this.ligacao[this.vertices[i]].length; k++){
+                    if(this.ligacao[this.vertices[i]][k][0] === this.vertices[j]) {
+                        this.matriz[i][j] = this.ligacao[this.vertices[i]][k][1];
+                    }
+                }
+            }
+        }
+        console.log('Matriz de Adjacencia: ');
+        console.log(this.matriz);
+        console.log('Lista de Adjacencia: ');
+        console.log(this.ligacao);
+    };
+
+
     var grafo = new Grafo(false,false);
-        grafo.addVertice('q1');
-        grafo.addVertice('q2');
-        grafo.addVertice('q3');
-        grafo.addVertice('q4');
-        grafo.addVertice('q5');
-        grafo.addVertice('q6');
-        grafo.addVertice('q7');
-//        grafo.addVertice('q5');
-//        grafo.addVertice('q6');
-//        grafo.addVertice('q7');
-//        grafo.addVertice('q8');
-        grafo.addAresta('q1','q3');
-        grafo.addAresta('q2','q3');
-        grafo.addAresta('q4','q3');
-        grafo.addAresta('q5','q6');
-        grafo.dfsComDestino('q1','q4');
-//        grafo.addAresta('q5','q6');
-//        grafo.addAresta('q5','q8');
-//        grafo.addAresta('q8','q7');
-//    grafo.dfsComDestino('q1','q4');
-    //console.log(grafo.bfsComDestino('q1','q5'));
-    //console.log(this.ligacao);
-//    grafo.desenharMatriz();
+
+/***************************************************************************************************************************
+ Vinícius Machado 15/09/17
+ As funções a seguir são usadas para a interface WEB (Botões, inputs, console), chamando as funções da classe grafo acima.
+ Evitem mexer pelos controles dos buttons etc
+****************************************************************************************************************************/
+    function adicionaVertice(){
+        
+        var vertice = document.getElementById('inputAddVertice');
+      
+        if(vertice.value != ''){
+            grafo.addVertice(vertice.value);
+
+            $.notify("Vertice adicionado com sucesso!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "success",
+                gap: 2
+            });
+      
+        vertice.value = '';
+      
+      }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+      }
+    }
+
+    function adicionaAresta(){
+
+        var vertice1 = document.getElementById('inputAddAresta1');
+        var vertice2 = document.getElementById('inputAddAresta2');
+
+        if(vertice1.value != '' && vertice2.value != ''){
+          
+          grafo.addAresta(vertice1.value, vertice2.value);  
+          vertice1.value = '';
+          vertice2.value = '';
+
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        }
+    }
+
+    function adicionaArestaPonderada(){
+        
+        var vertice1 = document.getElementById('inputAddArestaPond1');
+        var vertice2 = document.getElementById('inputAddArestaPond2');
+        var peso = document.getElementById('inputAddPesoPond');
+
+        if(vertice1.value != '' && vertice2.value != '' && peso.value != ''){
+            grafo.addArestaPonderada(vertice1.value, vertice2.value, peso.value);  
+            vertice1.value = '';
+            vertice2.value = '';
+            peso.value = '';
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        }
+    }
+
+    function removeVertice(){
+        
+        var vertice = document.getElementById('inputDelVertice');
+
+        if(vertice.value != ''){ 
+            grafo.removerVertice(vertice.value);
+            vertice.value = '';
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        }
+    }
+
+    function removeLigacao(){
+        
+        var origem = document.getElementById('inputDelLigacao1');
+        var destino = document.getElementById('inputDelLigacao2');
+
+        if(origem.value != '' && destino.value != ''){  
+            grafo.removerLigacao(origem.value, destino.value);  
+            origem.value = '';
+            destino.value = '';
+
+            $.notify("Ligação removida com sucesso!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "success",
+                gap: 2
+            });
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        } 
+    }
+
+    function dfsComDestino(){
+        
+        var origem = document.getElementById('inputOrigemDfsOrigem');
+        var destino = document.getElementById('inputDestinoDfsDestino');
+
+        if(origem.value != '' && destino.value != ''){ 
+            grafo.dfsComDestino(origem.value, destino.value);  
+            origem.value = '';
+            destino.value = '';
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        } 
+    }
+
+    function bfsComDestino(){
+        
+        var origem = document.getElementById('inputOrigemBfsOrigem');
+        var destino = document.getElementById('inputDestinoBfsDestino');
+
+        if(origem.value != '' && destino.value != ''){    
+            grafo.bfsComDestino(origem.value, destino.value);  
+            origem.value = '';
+            destino.value = '';
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        } 
+    }
+
+    function dfsSemDestino(){
+
+        var origem = document.getElementById('inputOrigemDfs');
+
+        if(origem.value != ''){
+            grafo.dfsSemDestino(origem.value);
+            origem.value = '';
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        }
+    }
+
+    function bfsSemDestino(){
+
+        var origem = document.getElementById('inputOrigemBfs');
+
+        if(origem.value != ''){
+            grafo.bfsSemDestino(origem.value);
+            origem.value = '';
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        }
+    }
+
+    function retornaLigacoes(){
+
+        var vertice = document.getElementById('inputRetornarLigacoes');
+
+        if(vertice.value != ''){
+            grafo.retornarLigacoes(vertice.value);
+            vertice.value = '';
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        }
+    }
+
+    function existeLigacao(){
+
+        var origem = document.getElementById('inputExisteLigacaoOrigem');
+        var destino = document.getElementById('inputExisteLigacaoDestino');
+
+        if(origem.value != '' && destino.value != ''){  
+            grafo.existeLigacao(origem.value, destino.value);  
+            origem.value = '';
+            destino.value = '';
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                className: "error",
+                gap: 2
+            });
+        } 
+    }
+
+    function existeVertice(){
+        
+        var vertice = document.getElementById('inputExisteVertice');
+
+        if(vertice.value != ''){
+            grafo.existeVertice(vertice.value);
+            vertice.value = '';
+        }else{
+            $.notify("Valores não podem ser vazios!", {
+                globalPosition: "top right",
+                showDuration: 400,
+                lassName: "error",
+                gap: 2
+            });
+        }
+    }
+
+    function imprimeVertices() {
+        var logger = document.getElementById('log'); 
+        logger.innerHTML += '<br />'; 
+        logger.innerHTML += grafo.vertices + '<br />'; 
+    }
+
+    function imprimeArestas() {
+        var logger = document.getElementById('log');  
+        logger.innerHTML += '<br />';
+
+        this.matriz = new Array();
+        for(i=0;i < grafo.vertices.length; i++) {
+            this.matriz[i] = new Array();
+            for(j=0; j < grafo.vertices.length; j++){
+                this.matriz[i][j] = 0;
+                for(k=0; k< grafo.ligacao[grafo.vertices[i]].length; k++){
+                    if(grafo.ligacao[grafo.vertices[i]][k][0] === grafo.vertices[j]) {
+                        this.matriz[i][j] = grafo.ligacao[grafo.vertices[i]][k][1];   
+                    }   
+                }
+            }
+        }
+
+        logger.innerHTML += '  [ ## ]  ';
+
+        for(i=0;i < grafo.vertices.length; i++) {
+            logger.innerHTML += '  [' + grafo.vertices[i] + ']  '; 
+        }
+        
+        logger.innerHTML += '<br />'; 
+
+        for(i=0;i < this.matriz.length; i++) {
+          
+            logger.innerHTML += '  [ ' + grafo.vertices[i] + ' ]  ';   
+           
+            for(j=0; j < this.matriz.length; j++){
+               logger.innerHTML += '  [  ' + this.matriz[i][j] + ' ]  '; 
+            }
+            logger.innerHTML += '<br />'; 
+        }  
+    }
+
+    function limparConsole(){
+        var logger = document.getElementById('log');  
+        logger.innerHTML = '<br />';
+    }
