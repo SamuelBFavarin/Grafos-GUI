@@ -3,9 +3,9 @@
     <meta charset="utf-8">
 </head>
 <body>
-    <h1>Grafos.js</h1>
-    <p>Abra o console administrador para receber os resultados (F12)</p>
-    <p>Em breve uma interface gráfica aqui</p>
+<h1>Grafos.js</h1>
+<p>Abra o console administrador para receber os resultados (F12)</p>
+<p>Em breve uma interface gráfica aqui</p>
 </body>
 </html>
 <script type="text/javascript">
@@ -94,29 +94,29 @@
     //-- SE NÃO FOR DIRECIONADO - PROCURA SE EXISTE O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES DO VERTICE ORIGEM E
     //                            E SE  EXISTE O VERTICE ORIGEM NO CONJUNTO DE LIGAÇÕES DO VERTICE DESTINO
     Grafo.prototype.existeLigacao = function (origem,destino) {
-      if(this.direcionado){
-          for(i =0; i<this.ligacao[origem].length; i++ ) {
-              if (this.ligacao[origem][i][0] === destino) {
-                  console.log('Existe Arco!!!');
-                  return true;
-              }
-          }
-          console.log('Arco não encontrado!!!');
-          return false;
-      }else{
-          for(i =0; i<this.ligacao[origem].length; i++ ) {
-              if (this.ligacao[origem][i][0] === destino) {
-                  for(j =0; j<this.ligacao[destino].length; j++){
-                      if(this.ligacao[destino][j][0] === origem){
-                          console.log('Existe Aresta!!!');
-                          return true;
-                      }
-                  }
-              }
-          }
-          console.log('Aresta não encontrada!!!');
-          return false;
-      }
+        if(this.direcionado){
+            for(i =0; i<this.ligacao[origem].length; i++ ) {
+                if (this.ligacao[origem][i][0] === destino) {
+                    console.log('Existe Arco!!!');
+                    return true;
+                }
+            }
+            console.log('Arco não encontrado!!!');
+            return false;
+        }else{
+            for(i =0; i<this.ligacao[origem].length; i++ ) {
+                if (this.ligacao[origem][i][0] === destino) {
+                    for(j =0; j<this.ligacao[destino].length; j++){
+                        if(this.ligacao[destino][j][0] === origem){
+                            console.log('Existe Aresta!!!');
+                            return true;
+                        }
+                    }
+                }
+            }
+            console.log('Aresta não encontrada!!!');
+            return false;
+        }
     };
 
     // RETORNAR LIGAÇÕES
@@ -165,10 +165,10 @@
                 if (this.ligacao[origem][i][0] === destino) {
                     for(j =0; j<this.ligacao[destino].length; j++){
                         if(this.ligacao[destino][j][0] === origem){
-                                this.ligacao[origem][i].pop();
-                                this.ligacao[origem][i].pop();
-                                this.ligacao[destino][j].pop();
-                                this.ligacao[destino][j].pop();
+                            this.ligacao[origem][i].pop();
+                            this.ligacao[origem][i].pop();
+                            this.ligacao[destino][j].pop();
+                            this.ligacao[destino][j].pop();
                         }
                     }
                 }
@@ -192,7 +192,7 @@
     };
 
     Grafo.prototype.bfsSemDestino = function (origem){
-    	var fila = [];
+        var fila = [];
         fila.push(origem);
         var visitado = [];
         var naoVisitado = [];
@@ -214,7 +214,7 @@
                         fila.push(this.ligacao[origem][i][0]);
                     }
                 }
-               
+
             }
             percorreuTudo = true;
             var primeiroEncontrado = 0;
@@ -228,30 +228,60 @@
                     primeiroEncontrado++;
                 }
             }
-        }   
+        }
 
         console.log(visitado);
     };
 
     Grafo.prototype.bfsComDestino = function(origem,destino){
-         var fila = [];
-         fila.push(origem);
-         var visitado = [];
-         visitado[origem] = true;
- 
-         while(fila.length) {
-             origem = fila.shift();
-             for(var i = 0; i < this.ligacao[origem].length; i++) {
-                 if(!visitado[this.ligacao[origem][i][0]]) {
-                     visitado[this.ligacao[origem][i][0]] = true;
-                     fila.push(this.ligacao[origem][i][0]);
-                 }
-                 if (this.ligacao[origem][i][0] === destino){
-                     return visitado;
-                 }
-             }
-         }
-         console.log("Vertice não encontrado");
+        var fila = [];
+        fila.push(origem);
+        var visitado = [];
+        visitado[origem] = true;
+
+        while(fila.length) {
+            origem = fila.shift();
+            for(var i = 0; i < this.ligacao[origem].length; i++) {
+                if(!visitado[this.ligacao[origem][i][0]]) {
+                    visitado[this.ligacao[origem][i][0]] = true;
+                    fila.push(this.ligacao[origem][i][0]);
+                }
+                if (this.ligacao[origem][i][0] === destino){
+                    return visitado;
+                }
+            }
+        }
+        console.log("Vertice não encontrado");
+    };
+
+    Grafo.prototype.dfs = function (origem){
+        var visitados   = [];
+        var pilha       = [];
+
+        pilha.push(origem);
+        //visita a partir da origem
+        this._dfs(origem, visitados, pilha);
+        for (var i = 0; i < Object.keys(this.ligacao).length; i++){
+            var key = Object.keys(this.ligacao)[i];
+            if (visitados.indexOf(key) == -1){
+                pilha.push(key);
+                this._dfs(key, visitados, pilha);
+            }
+        }
+
+        console.log(visitados);
+    };
+
+    Grafo.prototype._dfs = function(origem, visitados, pilha){
+        while (pilha.length > 0){
+            var nodo = pilha.pop();
+            if (visitados.indexOf(nodo) == -1){
+                visitados.push(nodo);
+                for (var i = 0; i < this.ligacao[nodo].length; i++){
+                    pilha.push(this.ligacao[nodo][i][0]);
+                }
+            }
+        }
     };
 
     //ainda não funcionando
@@ -260,7 +290,7 @@
         var naoVisitado = [];
         var visitado = [];
         var percorreuTudo = false;
-        
+
         for(l=0;l<this.vertices.length;l++){
             naoVisitado[this.vertices[l]] = true;
         }
@@ -286,14 +316,11 @@
                     console.log('aqui');
                     pilha.pop();
                 }
-            } 
-        }while(pilha.length === 4);
-
-
-    
+            }
+        } while(pilha.length > 0);
     };
 
-   var grafo = new Grafo(false,false);
+    var grafo = new Grafo(false,false);
         grafo.addVertice('q1');
         grafo.addVertice('q2');
         grafo.addVertice('q3');
@@ -301,18 +328,23 @@
         grafo.addVertice('q5');
         grafo.addVertice('q6');
         grafo.addVertice('q7');
-        grafo.addVertice('q8');
+//        grafo.addVertice('q5');
+//        grafo.addVertice('q6');
+//        grafo.addVertice('q7');
+//        grafo.addVertice('q8');
         grafo.addAresta('q1','q2');
         grafo.addAresta('q1','q3');
         grafo.addAresta('q2','q3');
         grafo.addAresta('q4','q3');
         grafo.addAresta('q5','q6');
-        grafo.addAresta('q5','q8');
-        grafo.addAresta('q8','q7');
-        grafo.dfsComDestino('q1','q4');
-        //console.log(grafo.bfsComDestino('q1','q5'));
-        //console.log(this.ligacao);
-        grafo.desenharMatriz();
-      
+        grafo.dfs("q1");
+//        grafo.addAresta('q5','q6');
+//        grafo.addAresta('q5','q8');
+//        grafo.addAresta('q8','q7');
+//    grafo.dfsComDestino('q1','q4');
+    //console.log(grafo.bfsComDestino('q1','q5'));
+    //console.log(this.ligacao);
+//    grafo.desenharMatriz();
+
 
 </script>
