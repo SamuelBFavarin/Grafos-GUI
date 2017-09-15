@@ -234,6 +234,7 @@
     };
 
     Grafo.prototype.bfsComDestino = function(origem,destino){
+<<<<<<< Updated upstream
         var fila = [];
         fila.push(origem);
         var visitado = [];
@@ -305,6 +306,52 @@
             }
         }
         console.log('Caminho não encontrado');
+=======
+         var fila = [];
+         fila.push(origem);
+         var visitado = [];
+         visitado[origem] = true;
+ 
+         while(fila.length) {
+             origem = fila.shift();
+             for(var i = 0; i < this.ligacao[origem].length; i++) {
+                 if(!visitado[this.ligacao[origem][i][0]]) {
+                     visitado[this.ligacao[origem][i][0]] = true;
+                     fila.push(this.ligacao[origem][i][0]);
+                 }
+                 if (this.ligacao[origem][i][0] === destino){
+                     return visitado;
+                 }
+             }
+         }
+         console.log("Vertice não encontrado");
+    };
+
+    //ainda não funcionando
+    Grafo.prototype.dfsComDestino = function(origem,destino){
+        var pilha = [];
+        var visitado = [];
+        var nodo;
+        pilha.push(origem);
+        visitado[origem] = true;
+        while(pilha.length){
+            nodo = pilha.pop();
+            if (nodo === destino){
+                console.log(visitado);
+                return true;
+            }
+            for(var i=0; i< this.ligacao[nodo].length; i+=1){
+                console.log('aqui');
+                if(this.ligacao[nodo][i][0] && !visitado[this.vertices[i]]){
+                    pilha.push(nodo);
+                    visitado[this.vertices[i]] = true;
+                }
+            }
+        }
+        console.log('Não achou');
+        return false;
+
+>>>>>>> Stashed changes
     };
 
  
@@ -325,6 +372,7 @@
         grafo.addAresta('q4','q3');
         grafo.addAresta('q5','q6');
         grafo.dfsComDestino('q1','q4');
+<<<<<<< Updated upstream
 //        grafo.addAresta('q5','q6');
 //        grafo.addAresta('q5','q8');
 //        grafo.addAresta('q8','q7');
@@ -333,5 +381,11 @@
     //console.log(this.ligacao);
 //    grafo.desenharMatriz();
 
+=======
+        //console.log(grafo.bfsComDestino('q1','q5'));
+       // console.log(grafo.ligacao);
+        grafo.desenharMatriz();
+      
+>>>>>>> Stashed changes
 
 </script>
