@@ -241,6 +241,8 @@
 					this.ligacao[origem][i].pop();
 					//DELETA VERTICE
                     this.ligacao[origem][i].pop();
+					this.ligacao[origem].splice(i, 1);
+					break;
                 }
             }
         }else{
@@ -256,6 +258,9 @@
                             this.ligacao[destino][j].pop();
 							//DELETA VERTICE
                             this.ligacao[destino][j].pop();
+							this.ligacao[origem].splice(i, 1);
+							this.ligacao[destino].splice(j, 1);
+							break;
                         }
                     }
                 }
@@ -435,7 +440,7 @@
                 for (var i = 0; i < this.ligacao[nodo].length; i++){
                     pilha.push(this.ligacao[nodo][i][0]);
                 }
-            }
+            }	
         }
     };
 
@@ -446,7 +451,7 @@
         //visita a partir da origem
         while (pilha.length > 0){
             var nodo = pilha.pop();
-			//SE NÃO TIVER A POSIÇÃO
+			//SE O VERTICE NÃO FOI VISITADO
             if (visitados.indexOf(nodo) == -1){
                 visitados.push(nodo);
                 for (var i = 0; i < this.ligacao[nodo].length; i++){
