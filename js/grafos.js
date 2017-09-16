@@ -237,7 +237,9 @@
         if(this.direcionado){
             for(i =0; i<this.ligacao[origem].length; i++ ) {
                 if (this.ligacao[origem][i][0] === destino) {
-                    this.ligacao[origem][i].pop();
+                    //DELETA PESO
+					this.ligacao[origem][i].pop();
+					//DELETA VERTICE
                     this.ligacao[origem][i].pop();
                 }
             }
@@ -246,9 +248,13 @@
                 if (this.ligacao[origem][i][0] === destino) {
                     for(j =0; j<this.ligacao[destino].length; j++){
                         if(this.ligacao[destino][j][0] === origem){
+							// DELETA PESO
                             this.ligacao[origem][i].pop();
+							//DELETA VERTICE
                             this.ligacao[origem][i].pop();
+							//DELETA PESO
                             this.ligacao[destino][j].pop();
+							//DELETA VERTICE
                             this.ligacao[destino][j].pop();
                         }
                     }
@@ -257,7 +263,9 @@
         }
     };
 
-    //REMOVE VERTICE PELO NOME
+    //REMOVE VERTICE PELO NOME, VERIFICANDO SE EXISTE O VERTICE NA POSIÇÃO PASSADA POR PARAMETRO.
+	//CASO NÃO EXISTA RETORNA -1;
+	//BUSCA EM TODOS OS VERTICES E EXCLUÍ A LIGAÇÃO
     Grafo.prototype.removerVertice = function (vertice) {
         var index_vertice = this.vertices.indexOf(vertice);
         if (index_vertice == -1){
@@ -287,6 +295,10 @@
             });
     };
 
+	//BFS SEM DESTINO
+	//PROCURA AS LIGAÇÕES DA PRIMEIRA POSIÇÃO DA FILA E TESTA SE JA FORAM VISITADAS
+	//COLOCA OS VERTICES ENCONTRADOS NA FILA
+	//DELETA O PRIMEIRO DA FILA
     Grafo.prototype.bfsSemDestino = function (origem){
         var fila = [];
         fila.push(origem);
@@ -314,6 +326,7 @@
             }
             percorreuTudo = true;
             var primeiroEncontrado = 0;
+			//TESTA SE EXISTE MAIS VÉRTICES A PERCORRER
             for(var k =0; k < this.vertices.length; k++){
                 if(naoVisitado[this.vertices[k]]){
                     if(primeiroEncontrado<=0){
@@ -433,6 +446,7 @@
         //visita a partir da origem
         while (pilha.length > 0){
             var nodo = pilha.pop();
+			//SE NÃO TIVER A POSIÇÃO
             if (visitados.indexOf(nodo) == -1){
                 visitados.push(nodo);
                 for (var i = 0; i < this.ligacao[nodo].length; i++){
@@ -509,6 +523,12 @@
         }else if(opcao === 4){
             grafo =  new Grafo(false,false);
         }
+		$.notify("Grafo criado com sucesso!", {
+            globalPosition: "top right",
+            showDuration: 400,
+            className: "success",
+            gap: 2
+        });
     }
 
     function adicionaVertice(){
