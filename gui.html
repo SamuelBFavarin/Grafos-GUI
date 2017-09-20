@@ -1,64 +1,66 @@
 <html>
-	<canvas id="myCanvas" width="600" height="600" style="border:1px solid #000000;"></canvas>
+	<canvas id="myCanvas" width="1330" height="650" style="border:1px solid #000000;"></canvas>
 </html>
 
 <script type="text/javascript">
 
-	var c = document.getElementById("myCanvas");
-
-	function update(){
-		//ctx.clearRect(0, 0, 500, 500);
-	}
 
 	//DESENHA LINHA
-	function drawLine(Ix,Iy,Ex,Ey){
-			ctx.moveTo(Ix,Iy);
-			ctx.lineTo(Ex,Ey);
+	function drawLine(Inx,Iny,Outx,Outy){
+			ctx.moveTo(Inx,Iny);
+			ctx.lineTo(Outx,Outy);
 			ctx.fillStyle="red";
 			ctx.stroke();
 	}
 
-	function drawCircle(x,y){
+	function drawCircle(name,x,y){
 		ctx.beginPath();
-		ctx.arc(x,y,40,0,2*Math.PI);
+		ctx.arc(x,y,30,0,2*Math.PI);
 		ctx.lineWidth = 5;
         ctx.strokeStyle = '#003300';
         ctx.stroke();
 		ctx.fillStyle = 'green';
 		ctx.fill();
-	}
-
+        ctx.font = "16px Comic Sans MS";
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        ctx.fillText(name, x, y);
+    }
 	//INICIA 
-	function start(){
-		var cont = 0;
+	function start(vertices,ligacoes){
+	    circles = [];
+	    // cria vetor de circulos com a posição e o nome do vertice
+	    for(var i=0; i<vertices.length;i++){
+	        posX = Math.floor((Math.random() * 1330) + 1);
+	        posY = Math.floor((Math.random() * 650) + 1);
+            circle = [vertices[i],posX,posY];
+            circles.push(circle);
+		}
 
-		var circles =[];
-
-		document.querySelector('body').addEventListener('click', function(event) {
-			if(cont === 0){
-				
-				  var posX = event.clientX, posY = event.clientY;		
-				  update();
-				  drawCircle(posX, posY); 
-				  var circle = [posX,posY];
-				  circles.push(circle);
-				  cont++;
-			}else{				
-				  var posX = event.clientX, posY = event.clientY;		
-				  update();
-				  drawCircle(posX, posY); 
-				  var ant = circles[circles.length-1];
-				  //console.log(ant);
-				  posXant = ant[0];
-				  posYant = ant[1];
-				  drawLine(posXant,posYant,posX,posY);
-				  var circle = [posX,posY];
-				  circles.push(circle);
-				  cont++;			
+		//desenha as ligações entre os circulos
+		for(var j=0; j<ligacoes.length;j++){
+            var origem;
+            var destino;
+	        for(var k=0; k<circles.length; k++){
+	            if(circles[k][0] === ligacoes[j][0]){
+	                origem = circles[k];
+				}
+                if(circles[k][0] === ligacoes[j][1]){
+                    destino = circles[k];
+                }
 			}
-		});
-		  
-	} 	
+
+			console.log(origem);
+			console.log(destino);
+	        drawLine(origem[1],origem[2],destino[1],destino[2]);
+		}
+
+		//desenha os circulos
+		for(var l=0; l<circles.length;l++){
+		    drawCircle(circles[l][0],circles[l][1],circles[l][2]);
+		}
+
+	};
 
 	//ACONTECE QUANDO CARREGA
 	window.onload = function () {
@@ -66,10 +68,18 @@
 	    canvas  = document.getElementById('myCanvas');
 	    ctx     = canvas.getContext('2d');
 
-	    canvas.width  = 500;
-	    canvas.height = 500;
+	    canvas.width  = 1330;
+	    canvas.height = 650;
 
-	    start();
+	    var vertices = [];
+	    var ligacoes = [];
+	    for(i = 0; i< 3; i++){
+            vertices.push('q'+i);
+		}
+		ligacoes.push(['q0','q1']);
+        ligacoes.push(['q2','q1']);
+		ligacoes.push(['q0','q2']);
+        start(vertices,ligacoes);
 	};
 
 
