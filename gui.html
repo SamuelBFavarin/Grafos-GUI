@@ -9,13 +9,14 @@
 	function drawLine(Inx,Iny,Outx,Outy){
 			ctx.moveTo(Inx,Iny);
 			ctx.lineTo(Outx,Outy);
-			ctx.fillStyle="red";
+			ctx.fillStyle="black";
 			ctx.stroke();
+
 	}
 
 	function drawCircle(name,x,y){
 		ctx.beginPath();
-		ctx.arc(x,y,30,0,2*Math.PI);
+		ctx.arc(x,y,20,0,2*Math.PI);
 		ctx.lineWidth = 5;
         ctx.strokeStyle = '#003300';
         ctx.stroke();
@@ -59,7 +60,6 @@
 		for(var l=0; l<circles.length;l++){
 		    drawCircle(circles[l][0],circles[l][1],circles[l][2]);
 		}
-
 	};
 
 	//ACONTECE QUANDO CARREGA
@@ -73,12 +73,12 @@
 
 	    var vertices = [];
 	    var ligacoes = [];
-	    for(i = 0; i< 3; i++){
+	    for(i = 0; i< 4; i++){
             vertices.push('q'+i);
 		}
 		ligacoes.push(['q0','q1']);
-        ligacoes.push(['q2','q1']);
-		ligacoes.push(['q0','q2']);
+        ligacoes.push(['q0','q2']);
+        ligacoes.push(['q0','q3']);
         start(vertices,ligacoes);
 	};
 
