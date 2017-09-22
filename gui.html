@@ -11,7 +11,6 @@
 			ctx.lineTo(Outx,Outy);
 			ctx.fillStyle="black";
 			ctx.stroke();
-
 	}
 
 	function drawCircle(name,x,y){
@@ -22,13 +21,13 @@
         ctx.stroke();
 		ctx.fillStyle = 'green';
 		ctx.fill();
-        ctx.font = "16px Comic Sans MS";
+        ctx.font = "16px Arial";
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText(name, x, y);
+        ctx.fillText(name, x, y+5);
     }
 	//INICIA 
-	function start(vertices,ligacoes){
+	function start(canvas,vertices,ligacoes){
 	    circles = [];
 	    // cria vetor de circulos com a posição e o nome do vertice
 	    for(var i=0; i<vertices.length;i++){
@@ -60,6 +59,28 @@
 		for(var l=0; l<circles.length;l++){
 		    drawCircle(circles[l][0],circles[l][1],circles[l][2]);
 		}
+		
+		canvas.onmousedown = function(e){
+			var rect = canvas.getBoundingClientRect();
+			posX = e.clientX - rect.left;
+			posY = e.clientY - rect.top;
+			console.log('down ',posX,posY);
+		};
+		
+		canvas.onmouseup = function(e){
+			var rect = canvas.getBoundingClientRect();
+			posX = e.clientX - rect.left;
+			posY = e.clientY - rect.top;
+			console.log('up ',posX,posY);
+		}
+		
+		canvas.onmousemove = function(e){
+			var rect = canvas.getBoundingClientRect();
+			posX = e.clientX - rect.left;
+			posY = e.clientY - rect.top;
+			console.log('move ',posX,posY);
+		}
+		
 	};
 
 	//ACONTECE QUANDO CARREGA
@@ -76,11 +97,14 @@
 	    for(i = 0; i< 4; i++){
             vertices.push('q'+i);
 		}
+		
 		ligacoes.push(['q0','q1']);
         ligacoes.push(['q0','q2']);
         ligacoes.push(['q0','q3']);
-        start(vertices,ligacoes);
+        start(canvas,vertices,ligacoes);
 	};
+	
+	
 
 
 </script>
