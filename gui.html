@@ -26,6 +26,32 @@
         ctx.textAlign = "center";
         ctx.fillText(name, x, y+5);
     }
+
+    function update(circles,ligacoes){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.beginPath();
+
+        //desenha as ligações entre os circulos
+        for(var j=0; j<ligacoes.length;j++){
+            var origem;
+            var destino;
+            for(var k=0; k<circles.length; k++){
+                if(circles[k][0] === ligacoes[j][0]){
+                    origem = circles[k];
+                }
+                if(circles[k][0] === ligacoes[j][1]){
+                    destino = circles[k];
+                }
+            }
+            drawLine(origem[1],origem[2],destino[1],destino[2]);
+        }
+
+        //desenha os circulos
+        for(var l=0; l<circles.length;l++){
+            drawCircle(circles[l][0],circles[l][1],circles[l][2]);
+        }
+	}
+
 	//INICIA 
 	function start(canvas,vertices,ligacoes){
 	    circles = [];
@@ -37,49 +63,46 @@
             circles.push(circle);
 		}
 
-		//desenha as ligações entre os circulos
-		for(var j=0; j<ligacoes.length;j++){
-            var origem;
-            var destino;
-	        for(var k=0; k<circles.length; k++){
-	            if(circles[k][0] === ligacoes[j][0]){
-	                origem = circles[k];
-				}
-                if(circles[k][0] === ligacoes[j][1]){
-                    destino = circles[k];
-                }
-			}
+		update(circles,ligacoes);
 
-			console.log(origem);
-			console.log(destino);
-	        drawLine(origem[1],origem[2],destino[1],destino[2]);
-		}
-
-		//desenha os circulos
-		for(var l=0; l<circles.length;l++){
-		    drawCircle(circles[l][0],circles[l][1],circles[l][2]);
-		}
-		
+		var circuloClicado = 'vazio';
 		canvas.onmousedown = function(e){
 			var rect = canvas.getBoundingClientRect();
 			posX = e.clientX - rect.left;
 			posY = e.clientY - rect.top;
-			console.log('down ',posX,posY);
+            for(var h=0; h<circles.length; h++){
+                if(posX < circles[h][1]+20 && posX > circles[h][1]-20){
+                    if(posY < circles[h][2]+20 && posY > circles[h][2]-20){
+                        console.log('clicou: '+circles[h][0]);
+                        circuloClicado = h;
+					}
+                }
+            }
 		};
 		
 		canvas.onmouseup = function(e){
 			var rect = canvas.getBoundingClientRect();
 			posX = e.clientX - rect.left;
 			posY = e.clientY - rect.top;
-			console.log('up ',posX,posY);
-		}
+            if(circuloClicado !== 'vazio'){
+                circles[circuloClicado][1] = posX;
+                circles[circuloClicado][2] = posY;
+                circuloClicado = 'vazio';
+                update(circles,ligacoes);
+            }
+		};
 		
 		canvas.onmousemove = function(e){
 			var rect = canvas.getBoundingClientRect();
 			posX = e.clientX - rect.left;
 			posY = e.clientY - rect.top;
-			console.log('move ',posX,posY);
-		}
+			if(circuloClicado !== 'vazio'){
+                console.log('x: ',posX,' y: ',posY);
+                circles[circuloClicado][1] = posX;
+                circles[circuloClicado][2] = posY;
+                update(circles,ligacoes);
+			}
+		};
 		
 	};
 
@@ -94,17 +117,18 @@
 
 	    var vertices = [];
 	    var ligacoes = [];
-	    for(i = 0; i< 4; i++){
+	    for(i = 0; i< 6; i++){
             vertices.push('q'+i);
 		}
 		
 		ligacoes.push(['q0','q1']);
         ligacoes.push(['q0','q2']);
         ligacoes.push(['q0','q3']);
+        ligacoes.push(['q1','q3']);
+        ligacoes.push(['q0','q4']);
+        ligacoes.push(['q2','q5']);
+        ligacoes.push(['q2','q1']);
         start(canvas,vertices,ligacoes);
 	};
-	
-	
-
 
 </script>
