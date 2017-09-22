@@ -11,6 +11,9 @@
 			ctx.lineTo(Outx,Outy);
 			ctx.fillStyle="black";
 			ctx.stroke();
+			/*ctx.moveTo(Inx,Iny);
+			ctx.bezierCurveTo(Inx,Iny+50,Outx,Outy+50, Outx, Outy);
+        	ctx.stroke();*/
 	}
 
 	function drawCircle(name,x,y){
@@ -64,6 +67,7 @@
 		}
 
 		update(circles,ligacoes);
+        update(circles,ligacoes);
 
 		var circuloClicado = 'vazio';
 		canvas.onmousedown = function(e){
@@ -102,6 +106,16 @@
                 circles[circuloClicado][2] = posY;
                 update(circles,ligacoes);
 			}
+			onCircle = 0;
+            for(var h=0; h<circles.length; h++){
+                if(posX < circles[h][1]+20 && posX > circles[h][1]-20){
+                    if(posY < circles[h][2]+20 && posY > circles[h][2]-20){
+                        onCircle++;
+                    }
+                }
+            }
+            if(onCircle>0) canvas.style.cursor = "pointer";
+			else canvas.style.cursor = "auto";
 		};
 		
 	};
