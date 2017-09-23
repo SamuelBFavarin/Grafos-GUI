@@ -16,13 +16,13 @@
         	ctx.stroke();*/
 	}
 
-	function drawCircle(name,x,y){
+	function drawCircle(name,x,y,color){
 		ctx.beginPath();
 		ctx.arc(x,y,20,0,2*Math.PI);
 		ctx.lineWidth = 5;
-        ctx.strokeStyle = '#003300';
+        ctx.strokeStyle = 'black';
         ctx.stroke();
-		ctx.fillStyle = 'green';
+		ctx.fillStyle = color;
 		ctx.fill();
         ctx.font = "16px Arial";
         ctx.fillStyle = "white";
@@ -51,7 +51,7 @@
 
         //desenha os circulos
         for(var l=0; l<circles.length;l++){
-            drawCircle(circles[l][0],circles[l][1],circles[l][2]);
+            drawCircle(circles[l][0],circles[l][1],circles[l][2],circles[l][3]);
         }
 	}
 
@@ -62,7 +62,7 @@
 	    for(var i=0; i<vertices.length;i++){
 	        posX = Math.floor((Math.random() * 1330) + 1);
 	        posY = Math.floor((Math.random() * 650) + 1);
-            circle = [vertices[i],posX,posY];
+            circle = [vertices[i][0],posX,posY,vertices[i][1]];
             circles.push(circle);
 		}
 
@@ -131,9 +131,13 @@
 
 	    var vertices = [];
 	    var ligacoes = [];
-	    for(i = 0; i< 6; i++){
-            vertices.push('q'+i);
-		}
+	   
+        vertices.push(['q0','red']);
+        vertices.push(['q1','blue']);
+        vertices.push(['q2','green']);
+        vertices.push(['q3','purple']);
+        vertices.push(['q4','grey']);
+        vertices.push(['q5','pink']);
 		
 		ligacoes.push(['q0','q1']);
         ligacoes.push(['q0','q2']);
@@ -144,6 +148,7 @@
         ligacoes.push(['q2','q1']);
         ligacoes.push(['q5','q4']);
         ligacoes.push(['q5','q0']);
+        ligacoes.push(['q3','q4']);
         start(canvas,vertices,ligacoes);
 	};
 
