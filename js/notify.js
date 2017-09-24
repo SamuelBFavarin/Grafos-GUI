@@ -1,4 +1,19 @@
-/* Notify.js - http://notifyjs.com/ Copyright (c) 2015 MIT */
+//Função usada para notificações!!!
+function imprimeNotificacao(mensagem, tipo){
+
+	$.notify(mensagem, {
+        globalPosition: "top right",
+        showDuration: 400,
+        className: tipo,
+        gap: 2
+    });
+}
+
+/***************************************************************************************************************************
+ Vinícius Machado 24/09/17
+NÃO MEXER !!! CLASSE PRONTA PARA USO!!!
+****************************************************************************************************************************/
+
 (function (factory) {
 	// UMD start
 	// https://github.com/umdjs/umd/blob/master/jqueryPluginCommonjs.js
