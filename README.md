@@ -28,3 +28,4 @@
 - [ ] Implementar interface de desenho de grafos
 - [ ] Coloração por Welsh e Powell
 - [ ] Coloração por DSATUR
+- [x] Divisão de arquivo (Classe e funções)
