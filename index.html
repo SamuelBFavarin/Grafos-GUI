@@ -24,9 +24,13 @@
                  </button>
                 <a class="navbar-brand" href="#">Grafos</a>
             </div>
+            <!--OPÇÕES COM STYLE LOUCO DE JS -->
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a target="_blank" href="https://github.com/SamuelBFavarin/grafos.js">GitHub</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#myCanvas">Canvas</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#console">Console</a></li>
@@ -69,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" id="acoes">
+        <div class="row slideanim" id="acoes">
             <!-- LISTA DE OPÇÕES DE COMPONENTES  -->
             <div class="col-md-4">
                 <div class="well-block-acoes">
@@ -238,7 +242,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" id="console">
+        <div class="row slideanim" id="console">
             <div class="col-md-12">
                 <div class="well-block-log">
                     <legend>Console</legend>
@@ -246,6 +250,19 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row slideanim" id="interface">
+           <div class="col-md-12">
+            <div class="well-block-canvas">   
+                <legend>Canvas</legend>
+                <p> Obs: Apenas para testes. Se usar o console com start(canvas, grafo.vertices, grafo.ligacao)
+                    não irá fucionar pois o vetor ligacao sempre tem lenght igual a ZERO!!
+                <canvas id="myCanvas" >
+                    
+
+                </canvas>
+            </div>
+           </div>
         </div>
     </div>
 
@@ -255,6 +272,7 @@
 
     <script src="js/grafosLib.js"></script>
     <script src="js/grafosButton.js"></script>
+    <script src="js/canvas.js"></script>
     <script src="js/notify.js"></script>
     <script>
         $(document).ready(function () {
@@ -282,6 +300,17 @@
                 } // End if
             });
         })
+
+        $(window).scroll(function() {
+            $(".slideanim").each(function(){
+                var pos = $(this).offset().top;
+
+                var winTop = $(window).scrollTop();
+                if (pos < winTop + 600) {
+                $(this).addClass("slide");
+                }
+            });
+        });
     </script>
 </body>
 
