@@ -18,7 +18,7 @@
 
     .navbar-nav li.active a {
       color: #fff !important;
-      background-color: #29292c !important;
+      background-color: #700A47 !important;
     }
 
     .navbar-default .navbar-toggle {
@@ -45,80 +45,115 @@
     }
     
   .well-block-acoes {
-    background-color: #fff;
-    border: 2px solid #160A47;
-    padding: 40px;
-    height: 650px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    margin-top: 10px;
+      background-color: #fff;
+      border: 2px solid #160A47;
+      padding: 40px;
+      height: 650px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
   }
 
   .well-block-criacao {
-    background-color: #fff;
-    border: 2px solid #160A47;
-    padding: 40px;
-    height: 100%;
-    margin-bottom: 2%;
-    border-radius: 10px;
-    margin-top: 6%;
+      background-color: #fff;
+      border: 2px solid #160A47;
+      padding: 40px;
+      height: 100%;
+      margin-bottom: 2%;
+      border-radius: 10px;
+      margin-top: 6%;
   }
 
     .well-block-log {
-    background-color: #fff;
-    border: 2px solid #160A47;
-    padding: 40px;
-    height: 100%;
-    margin-bottom: 8%;
-    border-radius: 10px;
-    margin-top: 2%;
+      background-color: #fff;
+      border: 2px solid #160A47;
+      padding: 40px;
+      height: 100%;
+      margin-bottom: 2%;
+      border-radius: 10px;
+      margin-top: 2%;
+  }
+
+    .well-block-canvas {
+      background-color: #fff;
+      border: 2px solid #160A47;
+      padding: 40px;
+      height: 100%;
+      width: 100%;
+      margin-bottom: 8%;
+      border-radius: 10px;
+      margin-top: 2%;
   }
   
-
   .botao-lindao{
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    color: #fff;
-    border-color: #29292c;
-    background-color: #160A47;
-    transition: all .5s;
-
+      display: inline-block;
+      padding: 6px 12px;
+      margin-bottom: 0;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.42857143;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      color: #fff;
+      border-color: #29292c;
+      background-color: #160A47;
+      transition: all .5s;
   }
 
   .mesma-linha{
-    width:100%;
-    text-align: center;
+      width:100%;
+      text-align: center;
   }
 
   .btn-xlarge{
-    display: inline-block;
-    margin: 10px;
-    height: 20x;
-    padding: 18px 18px;
-    font-size: 12px;
-    color: white;
-    text-align: center;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-    background: #160A47;
-    border: 0;
-    cursor: pointer;
+      display: inline-block;
+      margin: 10px;
+      height: 20x;
+      padding: 18px 18px;
+      font-size: 12px;
+      color: white;
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+      background: #160A47;
+      border: 0;
+      cursor: pointer;
 }
 
 .input{
-  display: inline-block;
+    display: inline-block;
+}
+    
+.slideanim {visibility:hidden;}
+.slide {
+    /* The name of the animation */
+    animation-name: slide;
+    -webkit-animation-name: slide; 
+    /* The duration of the animation */
+    animation-duration: 0.8s; 
+    -webkit-animation-duration: 1s;
+    /* Make the element visible */
+    visibility: visible; 
 }
 
-.well-modall {
-  background-color: #fff;
-  border: 2px solid #e9e6e8;
-  padding: 20px;
-  height: 270px;
- }
-    
+/* Go from 0% to 100% opacity (see-through) and specify the percentage from when to slide in the element along the Y-axis */
+@keyframes slide {
+    0% {
+        opacity: 0;
+        transform: translateY(70%);
+    } 
+    100% {
+        opacity: 1;
+        transform: translateY(0%);
+    } 
+}
+@-webkit-keyframes slide {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(70%);
+    } 
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0%);
+    }
+}
