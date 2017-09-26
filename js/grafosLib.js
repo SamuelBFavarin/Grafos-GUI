@@ -139,12 +139,14 @@
     // RETORNAR LIGAÇÕES
     // --RETORNA A LISTA DE TODAS AS LIGAÇÕES DE UM VERTICE
     Grafo.prototype.retornarLigacoes = function (vertice) {
-        console.log(this.ligacao[vertice]);
+
         imprimeNotificacao("Ligações retornadas! Verifica o console", "success");
         var logger = document.getElementById('log');  
         for(i=0;i < this.ligacao[vertice].length; i++) {           
             logger.innerHTML += ' [ ' + this.ligacao[vertice][i][0] + ' ] ';     
         }
+
+        return this.ligacao[vertice];
     };
 
     // REMOVE ARESTA OU ARCO
@@ -353,6 +355,38 @@
         console.log('Caminho não encontrado');
         imprimeNotificacao("Caminho não encontrado!", "warn");
 
+    };
+
+    //Vinícius Machado 26/09
+    Grafo.prototype.welshAndPowell = function (){
+
+        var grauEmOrdem = [];
+        var verticePeso;
+        var maior;
+        var temp;
+
+        for(var i=0;i < this.vertices.length; i++) {
+            verticePeso = new Array();
+            verticePeso[0] = this.vertices[i]; //Vértice
+            verticePeso[1] = this.retornarLigacoes(this.vertices[i]).length; //Grau
+
+            grauEmOrdem.push(verticePeso); //Inserindo para poder ver vertice e seus graus!
+        } 
+
+        //Ordenando o grauEmOrdem pelos graus de seus vértices, para facilitar o algoritimo
+        maior = grauEmOrdem[0];
+
+        for(var j=0; j < grauEmOrdem.length; j++){
+            if(grauEmOrdem[j][1] > maior[0][1]){
+                temp = maior;
+                maior = grauEmOrdem[j];
+                grauEmOrdem[j] = temp;
+            }
+
+        }
+
+
+        return grauEmOrdem;
     };
 
     // DESENHA MATRIZ DE ADJACENCIA
