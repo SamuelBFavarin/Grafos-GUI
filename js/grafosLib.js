@@ -31,13 +31,8 @@
             if(this.vertices[i] === vertice){
                 console.log(this.vertices[i]);
                 console.log('Existe vértice!!!');
-
-                $.notify("Existe Vértice! Verifique o console", {
-                    globalPosition: "top right",
-                    showDuration: 400,
-                    className: "success",
-                    gap: 2
-                })
+                
+                imprimeNotificacao("Existe Vértice! Verifique o console", "success");
                 
                 logger.innerHTML += this.vertices[i] + '<br />';  
 
@@ -45,13 +40,8 @@
             }
         }
         console.log('Vértice não encontrado');
-
-        $.notify("Vértice não encontrado!", {
-           globalPosition: "top right",
-           showDuration: 400,
-           className: "warn",
-           gap: 2
-        });
+        
+        imprimeNotificacao("Vértice não encontrado!", "warn");
 
         logger.innerHTML = '<br />';  
         return false;
@@ -65,14 +55,8 @@
             this.peso = 1;
             this.addArcoPonderado(vertice1, vertice2, this.peso);
         }else{
-            console.log('Impossível adicionar Arco em grafos não direcionados');
-
-            $.notify("Impossível adicionar Arco em grafos não direcionados!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "error",
-                gap: 2
-            });
+            console.log('Impossível adicionar Arco em grafos não direcionados');      
+            imprimeNotificacao("Impossível adicionar Arco em grafos não direcionados!", "error");
         }
     };
 
@@ -81,24 +65,11 @@
     //--INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE UM ARRAY COM O DESTINO E O PESO
     Grafo.prototype.addArcoPonderado = function (vertice1,vertice2,_peso){
         if (this.direcionado) {
-            this.ligacao[vertice1].push([vertice2, _peso]);
-            
-            $.notify("Arco adicionado com sucesso!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "success",
-                gap: 2
-            });
-
+            this.ligacao[vertice1].push([vertice2, _peso]);  
+            imprimeNotificacao("Arco adicionado com sucesso!", "success");
         } else {
             console.log('Impossível adicionar Arco em grafos não direcionados');
-
-            $.notify("Impossível adicionar Arco em grafos não direcionados!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "error",
-                gap: 2
-            });
+            imprimeNotificacao("Impossível adicionar Arco em grafos não direcionados!", "error");
         }
     };
 
@@ -109,23 +80,10 @@
         if(!this.direcionado) {
             this.peso = 1;
             this.addArestaPonderada(vertice1, vertice2, this.peso);
-
-            $.notify("Aresta adicionado com sucesso!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "success",
-                gap: 2
-            });
-
+            imprimeNotificacao("Aresta adicionado com sucesso!", "success");
         }else{
             console.log('Impossível adicionar Aresta em grafos direcionados');
-
-            $.notify("Impossível adicionar Aresta em grafos direcionados!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "error",
-                gap: 2
-            });
+            imprimeNotificacao("Impossível adicionar Aresta em grafos direcionados!", "error");
         }
     };
 
@@ -137,23 +95,10 @@
         if (!this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
             this.ligacao[vertice2].push([vertice1, _peso]);
-
-             $.notify("Aresta Ponderada adicionado com sucesso!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "success",
-                gap: 2
-            });
-
+            imprimeNotificacao("Aresta Ponderada adicionado com sucesso!", "success");
         } else {
             console.log('Impossível adicionar Aresta em grafos direcionados');
-
-            $.notify("Impossível adicionar Aresta em grafos direcionados!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "error",
-                gap: 2
-            });
+            imprimeNotificacao("Impossível adicionar Aresta em grafos direcionados!", "error");
         }
     };
 
@@ -166,25 +111,12 @@
             for(i =0; i<this.ligacao[origem].length; i++ ) {
                 if (this.ligacao[origem][i][0] === destino) {
                     console.log('Existe Arco!!!');
-                   
-                    $.notify("Existe Arco!", {
-                        globalPosition: "top right",
-                        showDuration: 400,
-                        className: "success",
-                        gap: 2
-                     });
-
+                    imprimeNotificacao("Existe Arco!", "success");
                     return true;
                 }
             }
             console.log('Arco não encontrado!!!');
-
-            $.notify("Arco não encontrado!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "warn",
-                gap: 2
-            });
+            imprimeNotificacao("Arco não encontrado!", "error");
             return false;
         }else{
             for(i =0; i<this.ligacao[origem].length; i++ ) {
@@ -192,27 +124,14 @@
                     for(j =0; j<this.ligacao[destino].length; j++){
                         if(this.ligacao[destino][j][0] === origem){
                             console.log('Existe Aresta!!!');
-                            
-                            $.notify("Existe Aresta!", {
-                                globalPosition: "top right",
-                                showDuration: 400,
-                                className: "success",
-                                gap: 2
-                            });
-
+                            imprimeNotificacao("Existe Aresta!", "success");
                             return true;
                         }
                     }
                 }
             }
             console.log('Aresta não encontrada!!!');
-
-            $.notify("Aresta não encontrada!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "warn",
-                gap: 2
-            });
+            imprimeNotificacao("Aresta não encontrada!", "warn");
             return false;
         }
     };
@@ -221,14 +140,7 @@
     // --RETORNA A LISTA DE TODAS AS LIGAÇÕES DE UM VERTICE
     Grafo.prototype.retornarLigacoes = function (vertice) {
         console.log(this.ligacao[vertice]);
-
-        $.notify("Ligações retornadas! Verifica o console", {
-            globalPosition: "top right",
-            showDuration: 400,
-            className: "success",
-            gap: 2
-         });
-
+        imprimeNotificacao("Ligações retornadas! Verifica o console", "success");
         var logger = document.getElementById('log');  
         for(i=0;i < this.ligacao[vertice].length; i++) {           
             logger.innerHTML += ' [ ' + this.ligacao[vertice][i][0] + ' ] ';     
@@ -281,14 +193,7 @@
         var index_vertice = this.vertices.indexOf(vertice);
         if (index_vertice == -1){
             console.log("Vértice não existe");
-
-            $.notify("Vértice não existe!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "warn",
-                gap: 2
-            });
-
+            imprimeNotificacao("Vértice não existe!", "warn");
             return null;
         }
 
@@ -297,13 +202,7 @@
             this.removerLigacao(this.vertices[pos], vertice);
         }
         delete this.ligacao[vertice];
-
-            $.notify("Vertice removido com sucesso!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "success",
-                gap: 2
-            });
+        imprimeNotificacao("Vértice removido com sucesso!", "success");
     };
 
 	//BFS SEM DESTINO
@@ -349,14 +248,7 @@
                 }
             }
         }
-
-        $.notify("Vértice encontrado! Veja o Console", {
-            globalPosition: "top right",
-            showDuration: 400,
-            className: "success",
-            gap: 2
-        });
-
+        imprimeNotificacao("Vértice encontrado! Veja o Console", "success");
         var logger = document.getElementById('log');
         logger.innerHTML += visitado + '<br />';  
 
@@ -382,13 +274,7 @@
                     
                     console.log('Vertice encontrado');
                     console.log(visitado);
-
-                    $.notify("Vértice encontrado! Veja o Console", {
-                        globalPosition: "top right",
-                        showDuration: 400,
-                        className: "success",
-                        gap: 2
-                    });
+                    imprimeNotificacao("Vértice encontrado! Veja o Console", "success");
 
                     var logger = document.getElementById('log');
                     logger.innerHTML += temp + '<br />';  
@@ -401,13 +287,7 @@
             }
         }
         console.log("Vertice não encontrado");
-
-            $.notify("Vértice não encontrado!", {
-                globalPosition: "top right",
-                showDuration: 400,
-                className: "warn",
-                gap: 2
-            });
+        imprimeNotificacao("Vértice não encontrado!", "warn");
     };
 
     Grafo.prototype.dfsSemDestino = function (origem){
@@ -426,14 +306,7 @@
         }
 
         console.log(visitados);
-        
-        $.notify("Caminho encontrado! Veja o console", {
-            globalPosition: "top right",
-            showDuration: 400,
-            className: "success",
-            gap: 2
-        });
-
+        imprimeNotificacao("Caminho encontraado! Veja o console", "success");
         var logger = document.getElementById('log');  
         logger.innerHTML += visitados + '<br />';    
     };
@@ -467,12 +340,7 @@
                         visitados.push(this.ligacao[nodo][i][0]);
                         console.log(visitados);
 
-                        $.notify("Caminho encontrado! Veja o Console", {
-                            globalPosition: "top right",
-                            showDuration: 400,
-                            className: "success",
-                            gap: 2
-                        });
+                        imprimeNotificacao("Caminho encontrado! Veja o Console", "success");
 
                         var logger = document.getElementById('log');  
                         logger.innerHTML += visitados + '<br />';
@@ -483,13 +351,7 @@
             }
         }
         console.log('Caminho não encontrado');
-
-        $.notify("Caminho não encontrado!", {
-            globalPosition: "top right",
-            showDuration: 400,
-            className: "warn",
-            gap: 2
-        });
+        imprimeNotificacao("Caminho não encontrado!", "warn");
 
     };
 
