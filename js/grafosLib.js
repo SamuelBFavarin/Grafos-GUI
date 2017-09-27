@@ -362,7 +362,7 @@
 
         var grauEmOrdem = [];
         var verticePeso;
-        var maior;
+        var troca;
         var temp;
 
         for(var i=0;i < this.vertices.length; i++) {
@@ -373,19 +373,20 @@
             grauEmOrdem.push(verticePeso); //Inserindo para poder ver vertice e seus graus!
         } 
 
-        //Ordenando o grauEmOrdem pelos graus de seus vértices, para facilitar o algoritimo
-        maior = grauEmOrdem[0];
-
-        for(var j=0; j < grauEmOrdem.length; j++){
-            if(grauEmOrdem[j][1] > maior[0][1]){
-                temp = maior;
-                maior = grauEmOrdem[j];
-                grauEmOrdem[j] = temp;
+        troca = 1;
+        
+        while (troca == 1){
+            troca = 0;        
+            for (i = 0; i <= grauEmOrdem.length; i++){ 
+                if (grauEmOrdem[i][1] < grauEmOrdem[i + 1][1]){
+                    troca = 1;
+                    aux = grauEmOrdem[i];
+                    grauEmOrdem[i] = grauEmOrdem[i + 1];
+                    grauEmOrdem[i + 1] = aux;
+                }
             }
-
         }
-
-
+            
         return grauEmOrdem;
     };
 
