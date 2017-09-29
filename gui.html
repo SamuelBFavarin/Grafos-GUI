@@ -6,18 +6,20 @@
 
 
 	//DESENHA LINHA
-	function drawLine(Inx,Iny,Outx,Outy){
+	function drawLine(Inx,Iny,Outx,Outy, grafo){
 
-		if(Inx === Outx && Iny === Outy){
+		if(grafo['isDirecionado'] === true && Inx === Outx && Iny === Outy){
             ctx.arc(Inx,Iny-25,20,0,2*Math.PI);
             ctx.lineWidth = 5;
             ctx.strokeStyle = 'black';
             ctx.stroke();
             ctx.beginPath();
-            ctx.font="18px Arial";
-            ctx.fillStyle = 'red';
-            ctx.fillText('peso', Inx, Iny-35);
-            ctx.closePath();
+            if(grafo['isPonderado'] === true) {
+                ctx.font="18px Arial";
+                ctx.fillStyle = 'red';
+                ctx.fillText('peso', Inx, Iny-45);
+                ctx.closePath();
+            }
 		}else{
             ctx.beginPath();
             ctx.moveTo(Inx,Iny);
@@ -45,11 +47,13 @@
 				posYPeso = (Iny + Outy)/2;
 			}
 		}
-		ctx.beginPath();
-		ctx.font="18px Arial";
-		ctx.fillStyle = 'red';
-		ctx.fillText('peso', posXPeso, posYPeso);
-		ctx.closePath();
+		if(grafo['isPonderado'] === true){
+            ctx.beginPath();
+            ctx.font="18px Arial";
+            ctx.fillStyle = 'red';
+            ctx.fillText('peso', posXPeso, posYPeso);
+            ctx.closePath();
+		}
 	}
 
 	function drawCircle(name,x,y,color){
@@ -66,7 +70,7 @@
         ctx.fillText(name, x, y+5);
     }
 
-    function update(circles,ligacoes){
+    function update(circles,ligacoes,grafo){
         ctx.clearRect(0,0,canvas.width,canvas.height);
         ctx.beginPath();
 
@@ -82,7 +86,7 @@
                     destino = circles[k];
                 }
             }
-            drawLine(origem[1],origem[2],destino[1],destino[2]);
+            drawLine(origem[1],origem[2],destino[1],destino[2],grafo);
         }
 
         //desenha os circulos
@@ -92,7 +96,7 @@
 	}
 
 	//INICIA 
-	function start(canvas,vertices,ligacoes){
+	function start(canvas,vertices,ligacoes,grafo){
 	    circles = [];
 	    // cria vetor de circulos com a posição e o nome do vertice
 	    for(var i=0; i<vertices.length;i++){
@@ -102,8 +106,8 @@
             circles.push(circle);
 		}
 
-		update(circles,ligacoes);
-        update(circles,ligacoes);
+		update(circles,ligacoes,grafo);
+        update(circles,ligacoes,grafo);
 
 		var circuloClicado = 'vazio';
 		canvas.onmousedown = function(e){
@@ -128,7 +132,7 @@
                 circles[circuloClicado][1] = posX;
                 circles[circuloClicado][2] = posY;
                 circuloClicado = 'vazio';
-                update(circles,ligacoes);
+                update(circles,ligacoes,grafo);
             }
 		};
 		
@@ -140,7 +144,7 @@
                 console.log('x: ',posX,' y: ',posY);
                 circles[circuloClicado][1] = posX;
                 circles[circuloClicado][2] = posY;
-                update(circles,ligacoes);
+                update(circles,ligacoes,grafo);
 			}
 			onCircle = 0;
             for(var h=0; h<circles.length; h++){
@@ -167,7 +171,11 @@
 
 	    var vertices = [];
 	    var ligacoes = [];
-	   
+
+	    var grafo = [];
+        grafo['isPonderado'] = true;
+        grafo['isDirecionado'] = true;
+
         vertices.push(['q0','red']);
         vertices.push(['q1','blue']);
         vertices.push(['q2','green']);
@@ -186,7 +194,7 @@
         ligacoes.push(['q5','q4']);
         ligacoes.push(['q5','q0']);
         ligacoes.push(['q3','q4']);
-        start(canvas,vertices,ligacoes);
+        start(canvas,vertices,ligacoes,grafo);
 	};
 
 </script>
