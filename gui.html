@@ -7,13 +7,35 @@
 
 	//DESENHA LINHA
 	function drawLine(Inx,Iny,Outx,Outy){
+	    	ctx.beginPath();
 			ctx.moveTo(Inx,Iny);
 			ctx.lineTo(Outx,Outy);
 			ctx.fillStyle="black";
 			ctx.stroke();
-			/*ctx.moveTo(Inx,Iny);
-			ctx.bezierCurveTo(Inx,Iny+50,Outx,Outy+50, Outx, Outy);
-        	ctx.stroke();*/
+
+			var posXPeso = 0, posYPeso = 0;
+
+			if(Inx < Outx){
+			    if(Iny < Outy){
+                    posXPeso = (Outx+Inx)/2;
+                    posYPeso = (Outy + Iny)/2;
+				}else{
+                    posXPeso = (Outx+Inx)/2;
+                    posYPeso = (Iny + Outy)/2
+				}
+			}else{
+                if(Iny < Outy){
+                    posXPeso = (Inx + Outx)/2 ;
+                    posYPeso = (Outy + Iny)/2;
+                }else{
+                    posXPeso = (Inx + Outx)/2 ;
+                    posYPeso = (Iny + Outy)/2;
+                }
+			}
+			console.log(posXPeso,posYPeso);
+        	ctx.fillText('peso', posXPeso, posYPeso);
+			ctx.stroke();
+			ctx.closePath();
 	}
 
 	function drawCircle(name,x,y,color){
