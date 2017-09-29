@@ -12,6 +12,7 @@
 			ctx.lineTo(Outx,Outy);
 			ctx.fillStyle="black";
 			ctx.stroke();
+			ctx.closePath();
 
 			var posXPeso = 0, posYPeso = 0;
 
@@ -32,7 +33,9 @@
                     posYPeso = (Iny + Outy)/2;
                 }
 			}
-			console.log(posXPeso,posYPeso);
+			ctx.beginPath();
+        	ctx.font="18px Arial";
+        	ctx.fillStyle = 'red';
         	ctx.fillText('peso', posXPeso, posYPeso);
 			ctx.stroke();
 			ctx.closePath();
