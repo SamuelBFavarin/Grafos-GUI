@@ -7,38 +7,49 @@
 
 	//DESENHA LINHA
 	function drawLine(Inx,Iny,Outx,Outy){
-	    	ctx.beginPath();
-			ctx.moveTo(Inx,Iny);
-			ctx.lineTo(Outx,Outy);
-			ctx.fillStyle="black";
-			ctx.stroke();
-			ctx.closePath();
 
-			var posXPeso = 0, posYPeso = 0;
+		if(Inx === Outx && Iny === Outy){
+            ctx.arc(Inx,Iny-25,20,0,2*Math.PI);
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.font="18px Arial";
+            ctx.fillStyle = 'red';
+            ctx.fillText('peso', Inx, Iny-35);
+            ctx.closePath();
+		}else{
+            ctx.beginPath();
+            ctx.moveTo(Inx,Iny);
+            ctx.lineTo(Outx,Outy);
+            ctx.fillStyle="black";
+            ctx.stroke();
+            ctx.closePath();
+		}
+		var posXPeso = 0, posYPeso = 0;
 
-			if(Inx < Outx){
-			    if(Iny < Outy){
-                    posXPeso = (Outx+Inx)/2;
-                    posYPeso = (Outy + Iny)/2;
-				}else{
-                    posXPeso = (Outx+Inx)/2;
-                    posYPeso = (Iny + Outy)/2
-				}
+		if(Inx < Outx){
+			if(Iny < Outy){
+				posXPeso = (Outx+Inx)/2;
+				posYPeso = (Outy + Iny)/2;
 			}else{
-                if(Iny < Outy){
-                    posXPeso = (Inx + Outx)/2 ;
-                    posYPeso = (Outy + Iny)/2;
-                }else{
-                    posXPeso = (Inx + Outx)/2 ;
-                    posYPeso = (Iny + Outy)/2;
-                }
+				posXPeso = (Outx+Inx)/2;
+				posYPeso = (Iny + Outy)/2
 			}
-			ctx.beginPath();
-        	ctx.font="18px Arial";
-        	ctx.fillStyle = 'red';
-        	ctx.fillText('peso', posXPeso, posYPeso);
-			ctx.stroke();
-			ctx.closePath();
+		}else{
+			if(Iny < Outy){
+				posXPeso = (Inx + Outx)/2 ;
+				posYPeso = (Outy + Iny)/2;
+			}else{
+				posXPeso = (Inx + Outx)/2 ;
+				posYPeso = (Iny + Outy)/2;
+			}
+		}
+		ctx.beginPath();
+		ctx.font="18px Arial";
+		ctx.fillStyle = 'red';
+		ctx.fillText('peso', posXPeso, posYPeso);
+		ctx.closePath();
 	}
 
 	function drawCircle(name,x,y,color){
@@ -163,7 +174,8 @@
         vertices.push(['q3','purple']);
         vertices.push(['q4','grey']);
         vertices.push(['q5','pink']);
-		
+
+        ligacoes.push(['q0','q0']);
 		ligacoes.push(['q0','q1']);
         ligacoes.push(['q0','q2']);
         ligacoes.push(['q0','q3']);
