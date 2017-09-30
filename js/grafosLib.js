@@ -377,8 +377,8 @@
         
         while (troca == 1){
             troca = 0;        
-            for (i = 0; i <= grauEmOrdem.length; i++){ 
-                if (grauEmOrdem[i][1] < grauEmOrdem[i + 1][1]){
+            for (i = 0; i <= grauEmOrdem.length-2; i++){ 
+                if (grauEmOrdem[i][1] < grauEmOrdem[i+1][1]){
                     troca = 1;
                     aux = grauEmOrdem[i];
                     grauEmOrdem[i] = grauEmOrdem[i + 1];
