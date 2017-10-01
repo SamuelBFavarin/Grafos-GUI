@@ -76,7 +76,7 @@
         </div>
         <div class="row slideanim" id="acoes">
             <!-- LISTA DE OPÇÕES DE COMPONENTES  -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="well-block-acoes">
                     <!-- CABEÇALHO DO PAINEL  -->
                     <legend>Componentes</legend>
@@ -137,22 +137,18 @@
                         </div>
                         <!-- REMOVE LIGAÇÃO -->
                         <div class="form-group">
-                            <div class="form-group col-md-6 pull-left">
-                                <input class="form-control" id="inputDelLigacao1" placeholder="Origem">
-                            </div>
-                            <div class="form-group col-md-6 pull-right">
-                                <input class="form-control" id="inputDelLigacao2" placeholder="Destino">
-                                <button type="button" class="btn botao-lindao btn-info pull-left" id="delLigacao" onclick="removeLigacao()">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                    Remove Ligação
-                                </button>
-                            </div>
+                            <input class="form-control" id="inputDelLigacao1" placeholder="Origem">
+                            <input class="form-control" id="inputDelLigacao2" placeholder="Destino">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="delLigacao" onclick="removeLigacao()">
+                                 <span class="glyphicon glyphicon-remove"></span>
+                                 Remove Ligação
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
             <!-- LISTA DE OPÇÕES DE BUSCAS  -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="well-block-acoes">
                     <legend>Buscas</legend>
                     <form class="form-horizontal">
@@ -190,11 +186,28 @@
                                 BFS - S\Destino
                             </button>
                         </div>
+                        <!-- DIJKSTRA SEM DESTINO -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputOrigemDijkstra" placeholder="Origem">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="dijkstra" onclick="">
+                                <span class="glyphicon glyphicon-search"></span>
+                                DIJKSTRA - S\Destino
+                            </button>
+                        </div>
+                        <!-- DIJKSTRA COM DESTINO -->
+                        <div class="form-group">
+                            <input class="form-control" id="inputOrigemDijkstraOrigem" placeholder="Origem">
+                            <input class="form-control" id="inputOrigemDijkstraDestino" placeholder="Destino">
+                            <button type="button" class="btn botao-lindao btn-info pull-left" id="dijkstraDestino" onclick="">
+                                <span class="glyphicon glyphicon-search"></span>
+                                DIJKSTRA - Destino
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
             <!-- LISTA DE OPÇÕES DIVERSAS  -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="well-block-acoes">
                     <legend>Diversos</legend>
                     <form class="form-horizontal">
@@ -222,10 +235,8 @@
                             <button type="button" class="btn botao-lindao btn-info pull-left" id="imprirmirVertice" onclick="imprimeVertices()">
                                 Imprimir Vértices
                             </button>
-                        </div>
-                        <!-- IMPRIMIR MATRIZ -->
-                        <div class="form-group">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="imprirmirAresta" onclick="imprimeMatriz()">
+                            <!-- IMPRIMIR MATRIZ -->
+                            <button type="button" class="btn botao-lindao btn-info pull-right" id="imprirmirAresta" onclick="imprimeMatriz()">
                                 Imprimir Matriz
                             </button>
                         </div>
@@ -233,6 +244,10 @@
                         <div class="form-group">
                             <button type="button" class="btn botao-lindao btn-info pull-left" id="imprirmirLista" onclick="imprimeLista()">
                                 Imprimir Lista
+                            </button>
+                            <!-- IMPRIMIR CANVAS -->
+                            <button type="button" class="btn botao-lindao btn-info pull-right" id="imprimirCanvas" onclick="imprimeCanvas()">
+                                Imprimir Canvas
                             </button>
                         </div>
                         <!-- LIMPAR CONSOLE -->
@@ -242,7 +257,24 @@
                     </form>
                 </div>
             </div>
+            <!-- LISTA DE OPÇÕES DE COLORAÇÃO -->
+            <div class="col-md-3">
+                <div class="well-block-acoes">
+                    <legend>Coloração</legend>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <button type="button" class="btn botao-lindao btn-info" id="welshAndPowell" onclick="coloreWelshAndPowell()">
+                                 Welsh e Powell</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn botao-lindao btn-info" id="dsatur" onclick="coloreDsatur()">
+                                 DSATUR</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+        <!-- LOG -->
         <div class="row slideanim" id="console">
             <div class="col-md-12">
                 <div class="well-block-log">
@@ -252,18 +284,18 @@
                 </div>
             </div>
         </div>
+        <!-- CANVAS-->
         <div class="row slideanim" id="interface">
-           <div class="col-md-12">
-            <div class="well-block-canvas">   
-                <legend>Canvas</legend>
-                <p> Obs: Apenas para testes. Se usar o console com start(canvas, grafo.vertices, grafo.ligacao)
-                    não irá fucionar pois o vetor ligacao sempre tem lenght igual a ZERO!!
-                <canvas id="myCanvas" height="500">
-                    
+            <div class="col-md-12">
+                <div class="well-block-canvas">
+                    <legend>Canvas</legend>
+                        
+                        <canvas id="myCanvas" height="500">
 
-                </canvas>
+
+                        </canvas>
+                </div>
             </div>
-           </div>
         </div>
     </div>
 
@@ -302,13 +334,13 @@
             });
         })
 
-        $(window).scroll(function() {
-            $(".slideanim").each(function(){
+        $(window).scroll(function () {
+            $(".slideanim").each(function () {
                 var pos = $(this).offset().top;
 
                 var winTop = $(window).scrollTop();
                 if (pos < winTop + 600) {
-                $(this).addClass("slide");
+                    $(this).addClass("slide");
                 }
             });
         });
