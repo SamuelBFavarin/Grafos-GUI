@@ -47,11 +47,14 @@
   .well-block-acoes {
       background-color: #fff;
       border: 2px solid #160A47;
-      padding: 40px;
-      height: 650px;
+      padding-bottom: 20px;
+      height: 680px;
       margin-bottom: 10px;
       border-radius: 10px;
       margin-top: 10px;
+      padding-top: 20px;
+      padding-left: 40px;
+      padding-right: 40px;
   }
 
   .well-block-criacao {
