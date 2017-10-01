@@ -125,6 +125,8 @@
         } 
     }
 
+//***********************ÁREA DE BUSCAS**********************
+
     function dfsComDestino(){
         
         var origem = document.getElementById('inputOrigemDfsOrigem');
@@ -177,6 +179,8 @@
         }
     }
 
+//***********************ÁREA DE DIVERSOS**********************
+
     function retornaLigacoes(){
 
         var vertice = document.getElementById('inputRetornarLigacoes');
@@ -214,6 +218,8 @@
             imprimeNotificacao("Valores não podem ser vazios!", "error");
         }
     }
+
+//***********************ÁREA DE IMPRESSÃO**********************
 
     function imprimeVertices() {
         var logger = document.getElementById('log'); 
@@ -271,7 +277,37 @@
      }
  }
 
-    function limparConsole(){
-        var logger = document.getElementById('log');  
-        logger.innerHTML = '<br />';
-    }
+ function imprimeCanvas(){
+     
+     if(grafo.vertices.length > 0){
+         grafo.desenhaCanvasLigacoes();
+     }else{
+        imprimeNotificacao("Não existem Vértices!", "warn"); 
+     }
+     
+ }
+
+function limparConsole(){
+    var logger = document.getElementById('log');  
+    logger.innerHTML = '<br />';
+}
+
+//***********************ÁREA DE COLORAÇÃO**********************
+
+function coloreWelshAndPowell(){
+
+    if(grafo.vertices.length > 0){
+         grafo.welshAndPowell();
+     }else{
+        imprimeNotificacao("Não existem Vértices!", "warn"); 
+     }
+}
+
+function coloreDsatur(){
+
+    if(grafo.vertices.length > 0){
+        imprimeNotificacao("Trolei!", "success"); 
+     }else{
+        imprimeNotificacao("Não existem Vértices!", "warn"); 
+     }
+}

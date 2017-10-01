@@ -375,6 +375,7 @@
 
         troca = 1;
         
+        //Ordenação pelos graus de cada vértice, verificar área do console
         while (troca == 1){
             troca = 0;        
             for (i = 0; i <= grauEmOrdem.length-2; i++){ 
@@ -386,6 +387,10 @@
                 }
             }
         }
+
+       //Imprimindo no console
+       var logger = document.getElementById('log');  
+       logger.innerHTML += '<br />' + grauEmOrdem + '<br />';
             
         return grauEmOrdem;
     };
@@ -413,5 +418,53 @@
         console.log(this.ligacao);
     };
 
+    //Vinícius 01/10/17
+    Grafo.prototype.desenhaCanvasLigacoes = function (){
+        
+        //Config do canvas
+        canvas  = document.getElementById('myCanvas');
+	    ctx     = canvas.getContext('2d');
+	    canvas.width  = 1330;
+	    canvas.height = 650;
+        
+        //Variáveis do vértice
+        var vertices = [];
+        var auxVertices = [];
+	    
+        //Variaveis das ligações
+        var ligacoes = [];
+        var auxLigacoes = [];
+	    
+        //Grafo
+        var grafo = [];
+        grafo['isPonderado'] = false;
+        grafo['isDirecionado'] = true;
+
+        //Percorre todos os vertice
+        for (i = 0; i < this.vertices.length; i++){
+            
+            //Insere no vertices um array com a vertice + cor
+            auxVertices = new Array();
+            auxVertices[0] = this.vertices[i];
+            auxVertices[1] = 'red';
+
+            vertices.push(auxVertices);
+            
+            //Percorre todas as ligacoes com o indice do vertice para jogar no Array de ligacoes
+            for(j = 0; j < (this.ligacao[this.vertices[i]].length); j ++){
+                
+                auxLigacoes = new Array();
+                auxLigacoes[0] = this.vertices[i];
+                auxLigacoes[1] = this.ligacao[this.vertices[i]][j][0];
+                
+                ligacoes.push(auxLigacoes);
+            }
+        }
+         
+         console.log(vertices);
+         console.log(ligacoes);
+         start(canvas, vertices, ligacoes, grafo);
+
+    };
 
     var grafo = new Grafo(false,false);
