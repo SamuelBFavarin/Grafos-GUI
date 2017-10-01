@@ -25,7 +25,7 @@
 
 - [ ] dijkstra(verticeOrigem) -dijkstra sem destino
 - [ ] dijkstra(verticeOrigem, verticeDestino) -dijkstra com destino
-- [ ] Implementar interface de desenho de grafos
-- [ ] Coloração por Welsh e Powell
+- [x] Implementar interface de desenho de grafos
+- [ ] Coloração por Welsh e Powell (Obs: Já está fazendo a parte de ordenar os vértices + pesos)
 - [ ] Coloração por DSATUR
 - [x] Divisão de arquivo (Classe e funções)
