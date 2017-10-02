@@ -85,52 +85,44 @@
                         <!-- ADICIONA VÉRTICE -->
                         <div class="form-group">
                             <input class="form-control" id="inputAddVertice" placeholder="Vértice">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="addVertice" onclick="adicionaVertice()">
+                            <button type="button" class="btn botao-lindao btn-info btn-block" id="addVertice" onclick="adicionaVertice()">
                                  <span class="glyphicon glyphicon-plus"></span>
-                                    Adiciona Vértice
+                                    Adicionar Vértice
                             </button>
                         </div>
-                        <!-- ADICIONA ARESTA -->
+                        <!-- ADICIONA ARESTA/ARCO -->
                         <div class="form-group">
-                            <div class="form-group col-md-6 pull-left">
+                            <div class="dropdown">
                                 <input class="form-control" id="inputAddAresta1" placeholder="Vértice 1">
-                                <button type="button" class="btn botao-lindao btn-info pull-left" id="addAresta" onclick="adicionaAresta()">
-                                 <span class="glyphicon glyphicon-plus"></span>
-                                  Adiciona Aresta
-                                </button>
-                            </div>
-                            <div class="form-group col-md-6 pull-right">
                                 <input class="form-control" id="inputAddAresta2" placeholder="Vértice 2">
-                                <button type="button" class="btn botao-lindao btn-info pull-right" id="addArco" onclick="adicionaArco()">
-                                 <span class="glyphicon glyphicon-plus"></span>
-                                  Adiciona Arco
-                            </button>
+                                <button class="btn botao-lindao btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Clique para Adicionar
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li onclick="adicionaAresta()"><a>Adicionar Aresta</a></li>
+                                    <li onclick="adicionaArco()"><a>Adicionar Arco</a></li>
+                                </ul>
                             </div>
                         </div>
-                        <!-- ADICIONA ARESTA PONDERADA -->
+                        <!-- ADICIONA ARESTA/ARCO PONDERADA -->
                         <div class="form-group">
-                            <div class="form-group col-md-5">
+                            <div class="dropdown">
                                 <input class="form-control" id="inputAddArestaPond1" placeholder="Vértice 1">
-                                <button type="button" class="btn botao-lindao btn-info pull-left" id="addArestaPond" onclick="adicionaArestaPonderada()">
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                    Aresta Ponderada
-                                </button>
-                            </div>
-                            <div class="form-group col-md-5">
-                                <input class="form-control" id="inputAddArestaPond2" placeholder="Vértice 2">
-                            </div>
-                            <div class="form-group col-md-4 pull-right">
-                                <input class="form-control" id="inputAddPesoPond" placeholder="Peso">
-                                <button type="button" class="btn botao-lindao btn-info pull-right" id="addArestaPon" onclick="adicionaArcoPonderado()">
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                Arco Ponderado
-                                </button>
+                                 <input class="form-control" id="inputAddArestaPond2" placeholder="Vértice 2">
+                                 <input class="form-control" id="inputAddPesoPond" placeholder="Peso">
+                                <button class="btn botao-lindao btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Clique para Adicionar
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li onclick="adicionaArestaPonderada()"><a>Aresta Ponderada</a></li>
+                                    <li onclick="adicionaArcoPonderado()"><a>Arco Ponderado</a></li>
+                                </ul>
                             </div>
                         </div>
                         <!-- REMOVE VÉRTICE -->
                         <div class="form-group">
                             <input class="form-control" id="inputDelVertice" placeholder="Vértice">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="delVertice" onclick="removeVertice()">
+                            <button type="button" class="btn botao-lindao btn-info btn-block" id="delVertice" onclick="removeVertice()">
                                 <span class="glyphicon glyphicon-remove"></span>
                                 Remove Vértice
                             </button>
@@ -139,7 +131,7 @@
                         <div class="form-group">
                             <input class="form-control" id="inputDelLigacao1" placeholder="Origem">
                             <input class="form-control" id="inputDelLigacao2" placeholder="Destino">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="delLigacao" onclick="removeLigacao()">
+                            <button type="button" class="btn botao-lindao btn-info btn-block" id="delLigacao" onclick="removeLigacao()">
                                  <span class="glyphicon glyphicon-remove"></span>
                                  Remove Ligação
                             </button>
@@ -154,54 +146,32 @@
                     <form class="form-horizontal">
                         <!-- DFS COM DESTINO -->
                         <div class="form-group">
-                            <input class="form-control" id="inputOrigemDfsOrigem" placeholder="Origem">
-                            <input class="form-control" id="inputDestinoDfsDestino" placeholder="Destino">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="dfsDestino" onclick="dfsComDestino()">
-                                <span class="glyphicon glyphicon-search"></span>
-                                DFS - Destino
-                            </button>
+                            <div class="dropdown">
+                                <input class="form-control" id="inputOrigemBuscaDestino" placeholder="Origem">
+                                <input class="form-control" id="inputDestinoBuscaDestino" placeholder="Destino">
+                                <button class="btn botao-lindao btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Buscas com Destino
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li onclick="dfsComDestino()"><a>DFS - Destino</a></li>
+                                    <li onclick="bfsComDestino()"><a>BFS - Destino</a></li>
+                                    <li onclick=""><a>DIJKSTRA - Destino</a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <!-- BFS COM DESTINO  -->
+                        <!-- BUSCAS SEM DESTINO -->
                         <div class="form-group">
-                            <input class="form-control" id="inputOrigemBfsOrigem" placeholder="Origem">
-                            <input class="form-control" id="inputDestinoBfsDestino" placeholder="Destino">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="bfsDestino" onclick="bfsComDestino()">
-                                <span class="glyphicon glyphicon-search"></span>
-                                BFS - Destino
-                            </button>
-                        </div>
-                        <!-- DFS SEM DESTINO -->
-                        <div class="form-group">
-                            <input class="form-control" id="inputOrigemDfs" placeholder="Origem">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="dfs" onclick="dfsSemDestino()">
-                                <span class="glyphicon glyphicon-search"></span>
-                                DFS - S\Destino
-                            </button>
-                        </div>
-                        <!-- BFS SEM DESTINO -->
-                        <div class="form-group">
-                            <input class="form-control" id="inputOrigemBfs" placeholder="Origem">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="bfs" onclick="bfsSemDestino()">
-                                <span class="glyphicon glyphicon-search"></span>
-                                BFS - S\Destino
-                            </button>
-                        </div>
-                        <!-- DIJKSTRA SEM DESTINO -->
-                        <div class="form-group">
-                            <input class="form-control" id="inputOrigemDijkstra" placeholder="Origem">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="dijkstra" onclick="">
-                                <span class="glyphicon glyphicon-search"></span>
-                                DIJKSTRA - S\Destino
-                            </button>
-                        </div>
-                        <!-- DIJKSTRA COM DESTINO -->
-                        <div class="form-group">
-                            <input class="form-control" id="inputOrigemDijkstraOrigem" placeholder="Origem">
-                            <input class="form-control" id="inputOrigemDijkstraDestino" placeholder="Destino">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="dijkstraDestino" onclick="">
-                                <span class="glyphicon glyphicon-search"></span>
-                                DIJKSTRA - Destino
-                            </button>
+                            <div class="dropdown">
+                                <input class="form-control" id="inputOrigemBuscaSemDestino" placeholder="Origem">
+                                <button class="btn botao-lindao btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Buscas Sem Destino
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li onclick="dfsSemDestino()"><a>DFS - S/Destino</a></li>
+                                    <li onclick="bfsSemDestino()"><a>BFS - S/Destino</a></li>
+                                    <li onclick=""><a>DIJKSTRA - S/Destino</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -214,45 +184,39 @@
                         <!-- RETORNAR LIGAÇÕES -->
                         <div class="form-group">
                             <input class="form-control" id="inputRetornarLigacoes" placeholder="Vértice">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="retornarLigacoes" onclick="retornaLigacoes()">
+                            <button type="button" class="btn botao-lindao btn-info btn-block" id="retornarLigacoes" onclick="retornaLigacoes()">
                                 Retornar Ligações</button>
                         </div>
                         <!-- EXISTE LIGAÇÕES -->
                         <div class="form-group">
                             <input class="form-control" id="inputExisteLigacaoOrigem" placeholder="Origem">
                             <input class="form-control" id="inputExisteLigacaoDestino" placeholder="Destino">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="existeLigacoes" onclick="existeLigacao()">
+                            <button type="button" class="btn botao-lindao btn-info btn-block" id="existeLigacoes" onclick="existeLigacao()">
                                 Existe Ligação</button>
                         </div>
                         <!-- EXISTE VÉRTICE -->
                         <div class="form-group">
                             <input class="form-control" id="inputExisteVertice" placeholder="Vértice">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="existeVertices" onclick="existeVertice()">
+                            <button type="button" class="btn botao-lindao btn-info btn-block" id="existeVertices" onclick="existeVertice()">
                                 Existe Vértice</button>
                         </div>
                         <!-- IMPRIMIR VERTICES -->
                         <div class="form-group">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="imprirmirVertice" onclick="imprimeVertices()">
-                                Imprimir Vértices
-                            </button>
-                            <!-- IMPRIMIR MATRIZ -->
-                            <button type="button" class="btn botao-lindao btn-info pull-right" id="imprirmirAresta" onclick="imprimeMatriz()">
-                                Imprimir Matriz
-                            </button>
-                        </div>
-                        <!-- IMPRIMIR LISTA -->
-                        <div class="form-group">
-                            <button type="button" class="btn botao-lindao btn-info pull-left" id="imprirmirLista" onclick="imprimeLista()">
-                                Imprimir Lista
-                            </button>
-                            <!-- IMPRIMIR CANVAS -->
-                            <button type="button" class="btn botao-lindao btn-info pull-right" id="imprimirCanvas" onclick="imprimeCanvas()">
-                                Imprimir Canvas
-                            </button>
+                            <div class="dropdown">
+                                <button class="btn botao-lindao btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Clique para Impressões
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li onclick="imprimeVertices()"><a>Imprimir Vértices</a></li>
+                                    <li onclick="imprimeMatriz()"><a>Imprimir Matriz</a></li>
+                                    <li onclick="imprimeLista()"><a>Imprimir Lista</a></li>
+                                    <li onclick="imprimeCanvas()"><a>Imprimir Canvas</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <!-- LIMPAR CONSOLE -->
                         <div class="form-group">
-                            <button type="button" class="btn  btn-danger pull-left" onclick="limparConsole()"> Limpar Console</button>
+                            <button type="button" class="btn  btn-danger btn-block" onclick="limparConsole()"> Limpar Console</button>
                         </div>
                     </form>
                 </div>
@@ -263,11 +227,11 @@
                     <legend>Coloração</legend>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <button type="button" class="btn botao-lindao btn-info" id="welshAndPowell" onclick="coloreWelshAndPowell()">
+                            <button type="button" class="btn botao-lindao btn-info btn-block" id="welshAndPowell" onclick="coloreWelshAndPowell()">
                                  Welsh e Powell</button>
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn botao-lindao btn-info" id="dsatur" onclick="coloreDsatur()">
+                            <button type="button" class="btn botao-lindao btn-info btn-block" id="dsatur" onclick="coloreDsatur()">
                                  DSATUR</button>
                         </div>
                     </form>
@@ -289,11 +253,11 @@
             <div class="col-md-12">
                 <div class="well-block-canvas">
                     <legend>Canvas</legend>
-                        
-                        <canvas id="myCanvas" height="500">
+
+                    <canvas id="myCanvas" height="500">
 
 
-                        </canvas>
+                    </canvas>
                 </div>
             </div>
         </div>
