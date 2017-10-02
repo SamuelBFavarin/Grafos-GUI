@@ -129,8 +129,8 @@
 
     function dfsComDestino(){
         
-        var origem = document.getElementById('inputOrigemDfsOrigem');
-        var destino = document.getElementById('inputDestinoDfsDestino');
+        var origem = document.getElementById('inputOrigemBuscaDestino');
+        var destino = document.getElementById('inputDestinoBuscaDestino');
 
         if(origem.value != '' && destino.value != ''){ 
             grafo.dfsComDestino(origem.value, destino.value);  
@@ -143,8 +143,8 @@
 
     function bfsComDestino(){
         
-        var origem = document.getElementById('inputOrigemBfsOrigem');
-        var destino = document.getElementById('inputDestinoBfsDestino');
+        var origem = document.getElementById('inputOrigemBuscaDestino');
+        var destino = document.getElementById('inputDestinoBuscaDestino');
 
         if(origem.value != '' && destino.value != ''){    
             grafo.bfsComDestino(origem.value, destino.value);  
@@ -157,7 +157,7 @@
 
     function dfsSemDestino(){
 
-        var origem = document.getElementById('inputOrigemDfs');
+        var origem = document.getElementById('inputOrigemBuscaSemDestino');
 
         if(origem.value != ''){
             grafo.dfsSemDestino(origem.value);
@@ -169,7 +169,7 @@
 
     function bfsSemDestino(){
 
-        var origem = document.getElementById('inputOrigemBfs');
+        var origem = document.getElementById('inputOrigemBuscaSemDestino');
 
         if(origem.value != ''){
             grafo.bfsSemDestino(origem.value);

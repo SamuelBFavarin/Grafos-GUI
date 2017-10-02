@@ -95,7 +95,7 @@
         if (!this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
             this.ligacao[vertice2].push([vertice1, _peso]);
-            imprimeNotificacao("Aresta Ponderada adicionado com sucesso!", "success");
+            
         } else {
             console.log('Impossível adicionar Aresta em grafos direcionados');
             imprimeNotificacao("Impossível adicionar Aresta em grafos direcionados!", "error");
@@ -357,7 +357,7 @@
 
     };
 
-    //Vinícius Machado 26/09
+    //Vinícius Machado 02/10/17 - WELSH AND POWELL FUNCIONANDO!
     Grafo.prototype.welshAndPowell = function (){
 
         var grauEmOrdem = [];
@@ -418,7 +418,7 @@
               grauEmOrdem[i][2] = CSS_COLOR_NAMES[ Math.floor(Math.random() * CSS_COLOR_NAMES.length) ];
             }
         }else{
-        
+            //Grafo não nulo, verificar cada vértice vizinho e aplicar cor ou não
             var countSemCor = grauEmOrdem.length;
             var corAtual = CSS_COLOR_NAMES[g];
             var flag;
@@ -461,10 +461,14 @@
 
        //Imprimindo no console
        var logger = document.getElementById('log');  
-       logger.innerHTML += '<br />' + grauEmOrdem + '<br />';
-            
+
+       for(i = 0; i < grauEmOrdem.length; i++){
+           logger.innerHTML += grauEmOrdem[i] + '<br />';
+       }
+
        return grauEmOrdem;
     };
+
 
     // DESENHA MATRIZ DE ADJACENCIA
     // --CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
@@ -534,7 +538,8 @@
          
          console.log(vertices);
          console.log(ligacoes);
-         start(canvas, vertices, ligacoes, grafo);
+         //start(canvas, vertices, ligacoes, grafo);
+         start(canvas, this.welshAndPowell(), ligacoes, grafo);
 
     };
 
@@ -562,18 +567,3 @@
     };
 
     var grafo = new Grafo(false, true);
-    grafo.addVertice("1");
-    grafo.addVertice("2");
-    grafo.addVertice("3");
-    grafo.addVertice("4");
-    grafo.addVertice("5");
-    grafo.addVertice("6");
-    grafo.addArestaPonderada("1", "2", 7);
-    grafo.addArestaPonderada("1", "6", 14);
-    grafo.addArestaPonderada("1", "3", 9);
-    grafo.addArestaPonderada("2", "3", 10);
-    grafo.addArestaPonderada("2", "4", 15);
-    grafo.addArestaPonderada("3", "6", 2);
-    grafo.addArestaPonderada("3", "4", 11);
-    grafo.addArestaPonderada("6", "5", 9);
-    grafo.addArestaPonderada("6", "4", 6);
