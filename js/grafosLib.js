@@ -369,13 +369,14 @@
             verticePeso = new Array();
             verticePeso[0] = this.vertices[i]; //Vértice
             verticePeso[1] = this.retornarLigacoes(this.vertices[i]).length; //Grau
+            verticePeso[2] = "Sem Cor"; //Cor inicial como "Sem cor"
 
             grauEmOrdem.push(verticePeso); //Inserindo para poder ver vertice e seus graus!
         } 
 
         troca = 1;
         
-        //Ordenação pelos graus de cada vértice, verificar área do console
+        // 1 . Ordenação pelos graus de cada vértice, verificar área do console
         while (troca == 1){
             troca = 0;        
             for (i = 0; i <= grauEmOrdem.length-2; i++){ 
@@ -388,12 +389,42 @@
             }
         }
 
+        // 2. Criando vetor de cores https://gist.github.com/bobspace/2712980#file-css_colors-js
+        var CSS_COLOR_NAMES = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet",
+        "Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan",
+        "DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon",
+        "DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey",
+        "DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow",
+        "HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral",
+        "LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray",
+        "LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid",
+        "MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose",
+        "Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise",
+        "PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon",
+        "SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan",
+        "Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
+
+        // 3. Iniciar sem Cor ja foi feito. Fazer o loop para coloração
+        var flag = "Sem Cor";
+        var corAtual = CSS_COLOR_NAMES[0];
+        
+            for(i = 0; i < grauEmOrdem.length; i++){
+                if(grauEmOrdem[i][2] == "Sem Cor"){
+                    //Percorro todas as ligações do vertice grauEmOrdem[i][2]
+                    for(j = 0; j < (this.ligacao[grauEmOrdem[i][0]].length); j ++){
+                        console.log(this.ligacao[grauEmOrdem[i][0]][j][0]);
+                    }
+                }
+            } 
+
+
        //Imprimindo no console
        var logger = document.getElementById('log');  
        logger.innerHTML += '<br />' + grauEmOrdem + '<br />';
             
         return grauEmOrdem;
     };
+
 
     // DESENHA MATRIZ DE ADJACENCIA
     // --CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
