@@ -357,7 +357,7 @@
 
     };
 
-        //Vinícius Machado 26/09
+    //Vinícius Machado 26/09
     Grafo.prototype.welshAndPowell = function (){
 
         var grauEmOrdem = [];
@@ -421,28 +421,37 @@
         
             var countSemCor = grauEmOrdem.length;
             var corAtual = CSS_COLOR_NAMES[g];
-            var flag = true;
-            
+            var flag;
+    
             while(countSemCor > 0){
                 
                 g = g + 1;
                 corAtual = CSS_COLOR_NAMES[g];
                 
+                //Percorre todos os vertices + grau
                 for(i = 0; i < grauEmOrdem.length; i++){  
 
-                    if(grauEmOrdem[i][2] == "Sem Cor"){                 
+                    if(grauEmOrdem[i][2] == "Sem Cor"){   
+                        flag = true;              
                         //Percorro todas as ligações do vertice grauEmOrdem[i][2]
-                        for(j = 0; j < this.ligacao[grauEmOrdem[i][0]].length; j ++){                            
-                            //Percorres entao as cores desses vertices vizinhos, e aplicar as cores
+                        for(j = 0; j < this.ligacao[grauEmOrdem[i][0]].length; j ++){                                          
+                            /*
+                                Percorres entao as cores desses vertices vizinhos
+                                e verifico se o vizinho do vertice do indece "i" tem a mesma cor,
+                                caso tenha o flag recebe = false 
+                            */
                             for(k = 0; k < grauEmOrdem.length; k++ ){                                
                                 if(grauEmOrdem[k][0] == this.ligacao[grauEmOrdem[i][0]][j][0]){
-                                    if(grauEmOrdem[k][2] != corAtual) {
-                                        grauEmOrdem[k][2] = corAtual;
+                                    if(grauEmOrdem[k][2] == corAtual) {
+                                        flag = false;
                                     }
                                 }                   
                             }
                         }
-                        
+                        //Caso nenhum vizinho tenha a cor, atribuo a cor ao vertice atual de "I"
+                        if(flag == true){
+                            grauEmOrdem[i][2] = corAtual;
+                        }
                     }else{
                         countSemCor = countSemCor - 1;
                     }
