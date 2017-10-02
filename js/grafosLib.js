@@ -514,4 +514,42 @@
 
     };
 
-    var grafo = new Grafo(false,false);
+    Grafo.prototype.dijkstra = function(origem){
+        var vertices = this.vertices;
+        var distancias = [];
+        var min = [];
+        //iniciar valores
+        $(vertices).each(function(index, value){
+            distancias[value] = Infinity;
+            min = -1;
+        });
+        distancias[origem] = 0;
+
+        while (vertices.length > 0){
+            var vertice = vertices.shift(vertices);
+            $(this.ligacao[vertice]).each(function(index, adjacente){
+                if (distancias[adjacente[0]] > distancias[vertice] + distancias[adjacente[1]]){
+                    distancias[adjacente[0]] = distancias[vertice] + distancias[adjacente[1]];
+                    min[vertice] = adjacente[0];
+                }
+            });
+        }
+        console.log(min);
+    };
+
+    var grafo = new Grafo(false, true);
+    grafo.addVertice("1");
+    grafo.addVertice("2");
+    grafo.addVertice("3");
+    grafo.addVertice("4");
+    grafo.addVertice("5");
+    grafo.addVertice("6");
+    grafo.addArestaPonderada("1", "2", 7);
+    grafo.addArestaPonderada("1", "6", 14);
+    grafo.addArestaPonderada("1", "3", 9);
+    grafo.addArestaPonderada("2", "3", 10);
+    grafo.addArestaPonderada("2", "4", 15);
+    grafo.addArestaPonderada("3", "6", 2);
+    grafo.addArestaPonderada("3", "4", 11);
+    grafo.addArestaPonderada("6", "5", 9);
+    grafo.addArestaPonderada("6", "4", 6);
