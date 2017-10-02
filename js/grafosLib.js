@@ -404,25 +404,41 @@
         "SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan",
         "Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
 
-        // 3. Iniciar sem Cor ja foi feito. Fazer o loop para coloração
-        var flag = "Sem Cor";
-        var corAtual = CSS_COLOR_NAMES[0];
-        
-            for(i = 0; i < grauEmOrdem.length; i++){
-                if(grauEmOrdem[i][2] == "Sem Cor"){
-                    //Percorro todas as ligações do vertice grauEmOrdem[i][2]
-                    for(j = 0; j < (this.ligacao[grauEmOrdem[i][0]].length); j ++){
-                        console.log(this.ligacao[grauEmOrdem[i][0]][j][0]);
-                    }
-                }
-            } 
+        //Caso seja um grafo nulo, sem ligações, aplicar cor g= 1;
+        var g = 1;
+        for(i = 0; i < this.vertices.length; i++){
+            if(this.ligacao[this.vertices[i]].length != 0){
+                g = 0;
+            }
+        }
 
+        //Grafo nulo, cor única!
+        if(g == 1){
+            for(i = 0; i < grauEmOrdem.length; i++){
+              grauEmOrdem[i][2] = CSS_COLOR_NAMES[10];
+            }
+        }else{
+            
+            var flag = "Sem Cor";
+            var corAtual = CSS_COLOR_NAMES[g];
+            
+                for(i = 0; i < grauEmOrdem.length; i++){
+                    if(grauEmOrdem[i][2] == "Sem Cor"){
+                        grauEmOrdem[i][2] = corAtual;
+                        //Percorro todas as ligações do vertice grauEmOrdem[i][2]
+                        for(j = 0; j < (this.ligacao[grauEmOrdem[i][0]].length); j ++){
+                            //Percorres entao as cores desses vertices vizinhos, e aplicar as cores
+                            console.log(this.ligacao[grauEmOrdem[i][0]][j][0]);
+                        }
+                    }
+                } 
+        }
 
        //Imprimindo no console
        var logger = document.getElementById('log');  
        logger.innerHTML += '<br />' + grauEmOrdem + '<br />';
             
-        return grauEmOrdem;
+       return grauEmOrdem;
     };
 
 
