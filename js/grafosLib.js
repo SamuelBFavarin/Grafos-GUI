@@ -357,7 +357,7 @@
 
     };
 
-    //Vinícius Machado 26/09
+        //Vinícius Machado 26/09
     Grafo.prototype.welshAndPowell = function (){
 
         var grauEmOrdem = [];
@@ -415,23 +415,39 @@
         //Grafo nulo, cor única!
         if(g == 1){
             for(i = 0; i < grauEmOrdem.length; i++){
-              grauEmOrdem[i][2] = CSS_COLOR_NAMES[10];
+              grauEmOrdem[i][2] = CSS_COLOR_NAMES[ Math.floor(Math.random() * CSS_COLOR_NAMES.length) ];
             }
         }else{
-            
-            var flag = "Sem Cor";
+        
+            var countSemCor = grauEmOrdem.length;
             var corAtual = CSS_COLOR_NAMES[g];
+            var flag = true;
             
-                for(i = 0; i < grauEmOrdem.length; i++){
-                    if(grauEmOrdem[i][2] == "Sem Cor"){
-                        grauEmOrdem[i][2] = corAtual;
+            while(countSemCor > 0){
+                
+                g = g + 1;
+                corAtual = CSS_COLOR_NAMES[g];
+                
+                for(i = 0; i < grauEmOrdem.length; i++){  
+
+                    if(grauEmOrdem[i][2] == "Sem Cor"){                 
                         //Percorro todas as ligações do vertice grauEmOrdem[i][2]
-                        for(j = 0; j < (this.ligacao[grauEmOrdem[i][0]].length); j ++){
+                        for(j = 0; j < this.ligacao[grauEmOrdem[i][0]].length; j ++){                            
                             //Percorres entao as cores desses vertices vizinhos, e aplicar as cores
-                            console.log(this.ligacao[grauEmOrdem[i][0]][j][0]);
+                            for(k = 0; k < grauEmOrdem.length; k++ ){                                
+                                if(grauEmOrdem[k][0] == this.ligacao[grauEmOrdem[i][0]][j][0]){
+                                    if(grauEmOrdem[k][2] != corAtual) {
+                                        grauEmOrdem[k][2] = corAtual;
+                                    }
+                                }                   
+                            }
                         }
+                        
+                    }else{
+                        countSemCor = countSemCor - 1;
                     }
-                } 
+                }
+            }
         }
 
        //Imprimindo no console
@@ -440,7 +456,6 @@
             
        return grauEmOrdem;
     };
-
 
     // DESENHA MATRIZ DE ADJACENCIA
     // --CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
