@@ -1,76 +1,56 @@
-function drawLine(Inx,Iny,Outx,Outy, grafo){
-		if(grafo['Direcionado'] === true){
-            
-            var headlen = 35;	
-            //origem -> destino
-            var dx = Inx-Outx;
-            var dy = Iny-Outy;
-            var angle = Math.atan2(dy,dx);
-            ctx.moveTo(Outx, Outy);
-            ctx.lineTo(Inx, Iny);
-            
-            ctx.lineTo(Inx - headlen * Math.cos(angle - Math.PI/17), Iny - headlen * Math.sin(angle - Math.PI/17));
-            ctx.moveTo(Inx, Iny); 
-            ctx.lineTo(Inx  -headlen * Math.cos(angle + Math.PI/17), Iny - headlen * Math.sin(angle + Math.PI/17));
-            ctx.fillStyle="black"; 
-            ctx.stroke();
-            ctx.closePath();
-            
-            ctx.beginPath();
-            if(grafo['Ponderado'] === true) {
-                ctx.font="18px Arial";
-                ctx.fillStyle = 'red';
-                ctx.fillText('peso', Inx, Iny-45);
-                ctx.closePath();
-            }
-            
-        }else{
-                ctx.beginPath();
-                ctx.moveTo(Inx,Iny);
-                ctx.lineTo(Outx,Outy);
+	//DESENHA LINHA
+	function drawLine(Inx,Iny,Outx,Outy, grafo, peso){
+		if(grafo['direcionado'] === true){
+		    if(Outx === Inx && Outy === Iny){
+                ctx.arc(Inx,Iny-25,20,0,2*Math.PI);
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = 'black';
+                ctx.stroke();
+                if(grafo['ponderado'] === true) {
+                    ctx.font="18px Arial";
+                    ctx.fillStyle = 'red';
+                    ctx.fillText(peso, Inx, Iny-45);
+                }
+			}else{
+                var headlen = 35;
+                //origem -> destino
+                var dx = Inx-Outx;
+                var dy = Iny-Outy;
+                var angle = Math.atan2(dy,dx);
+                //desenha arco
+                ctx.moveTo(Outx, Outy);
+                ctx.lineTo(Inx, Iny);
+                ctx.lineTo(Inx - headlen * Math.cos(angle - Math.PI/17), Iny - headlen * Math.sin(angle - Math.PI/17));
+                ctx.moveTo(Inx, Iny);
+                ctx.lineTo(Inx - headlen * Math.cos(angle + Math.PI/17), Iny - headlen * Math.sin(angle + Math.PI/17));
                 ctx.fillStyle="black";
                 ctx.stroke();
                 ctx.closePath();
-            }
-		var posXPeso = 0, posYPeso = 0;
-		if(Inx < Outx){
-			if(Iny < Outy){
-				posXPeso = (Outx+Inx)/2;
-				posYPeso = (Outy + Iny)/2;
-			}else{
-				posXPeso = (Outx+Inx)/2;
-				posYPeso = (Iny + Outy)/2
 			}
-		}else{
-			if(Iny < Outy){
-				posXPeso = (Inx + Outx)/2 ;
-				posYPeso = (Outy + Iny)/2;
-			}else{
-				posXPeso = (Inx + Outx)/2 ;
-				posYPeso = (Iny + Outy)/2;
-			}
+        }else{
+		    //desenha aresta
+			ctx.beginPath();
+			ctx.moveTo(Inx,Iny);
+			ctx.lineTo(Outx,Outy);
+			ctx.fillStyle="black";
+			ctx.stroke();
+			ctx.closePath();
 		}
-		if(grafo['Ponderado'] === true){
+        if(grafo['ponderado'] === true){
+			var posYPeso = Iny - 35 * Math.sin(angle - Math.PI/17);
+            var posXPeso = Inx - 35 * Math.cos(angle - Math.PI/17);
+			
+			console.log(Inx, headlen, Math.sin(angle - Math.PI/17));
+			console.log(peso,posXPeso,posYPeso);
             ctx.beginPath();
             ctx.font="18px Arial";
             ctx.fillStyle = 'red';
-            ctx.fillText('peso', posXPeso, posYPeso);
+            ctx.fillText(peso, posXPeso, posYPeso);
             ctx.closePath();
+			
 		}
 	}
-    
-    function getPointOnCircle(Inx, Iny) {
-        radius = 20;
-        var angleInDegrees = getAngleBetweenPoints(Inx, endPt);
 
-    
-        var x = radius * Math.cos(angleInDegrees * Math.PI / 180) + Inx;
-        var y = radius * Math.sin(angleInDegrees * Math.PI / 180) + Iny;
-
-        return { x: x, y: y };
-    }
-
-    
 	function drawCircle(name,x,y,color){
 		ctx.beginPath();
 		ctx.arc(x,y,20,0,2*Math.PI);
@@ -99,14 +79,14 @@ function drawLine(Inx,Iny,Outx,Outy, grafo){
                     destino = circles[k];
                 }
             }
-            drawLine(origem[1],origem[2],destino[1],destino[2],grafo);
+            drawLine(origem[1],origem[2],destino[1],destino[2],grafo,ligacoes[j][2]);
         }
         //desenha os circulos
         for(var l=0; l<circles.length;l++){
             drawCircle(circles[l][0],circles[l][1],circles[l][2],circles[l][3]);
         }
 	}
-	//INICIA 
+	//INICIA
 	function start(canvas,vertices,ligacoes,grafo){
 	    circles = [];
 	    // cria vetor de circulos com a posição e o nome do vertice
@@ -132,7 +112,7 @@ function drawLine(Inx,Iny,Outx,Outy, grafo){
                 }
             }
 		};
-		
+
 		canvas.onmouseup = function(e){
 			var rect = canvas.getBoundingClientRect();
 			posX = e.clientX - rect.left;
@@ -144,7 +124,7 @@ function drawLine(Inx,Iny,Outx,Outy, grafo){
                 update(circles,ligacoes,grafo);
             }
 		};
-		
+
 		canvas.onmousemove = function(e){
 			var rect = canvas.getBoundingClientRect();
 			posX = e.clientX - rect.left;
@@ -166,6 +146,5 @@ function drawLine(Inx,Iny,Outx,Outy, grafo){
             if(onCircle>0) canvas.style.cursor = "pointer";
 			else canvas.style.cursor = "auto";
 		};
-		
+
 	};
-;
