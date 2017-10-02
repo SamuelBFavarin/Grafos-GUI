@@ -1,5 +1,5 @@
 function drawLine(Inx,Iny,Outx,Outy, grafo){
-		if(grafo['isDirecionado'] === true){
+		if(grafo['Direcionado'] === true){
             
             var headlen = 35;	
             //origem -> destino
@@ -17,7 +17,7 @@ function drawLine(Inx,Iny,Outx,Outy, grafo){
             ctx.closePath();
             
             ctx.beginPath();
-            if(grafo['isPonderado'] === true) {
+            if(grafo['Ponderado'] === true) {
                 ctx.font="18px Arial";
                 ctx.fillStyle = 'red';
                 ctx.fillText('peso', Inx, Iny-45);
@@ -50,7 +50,7 @@ function drawLine(Inx,Iny,Outx,Outy, grafo){
 				posYPeso = (Iny + Outy)/2;
 			}
 		}
-		if(grafo['isPonderado'] === true){
+		if(grafo['Ponderado'] === true){
             ctx.beginPath();
             ctx.font="18px Arial";
             ctx.fillStyle = 'red';
@@ -113,7 +113,7 @@ function drawLine(Inx,Iny,Outx,Outy, grafo){
 	    for(var i=0; i<vertices.length;i++){
 	        posX = Math.floor((Math.random() * 1330) + 1);
 	        posY = Math.floor((Math.random() * 650) + 1);
-            circle = [vertices[i][0],posX,posY,vertices[i][1]];
+            circle = [vertices[i][0],posX,posY,vertices[i][2]];
             circles.push(circle);
 		}
 		update(circles,ligacoes,grafo);
