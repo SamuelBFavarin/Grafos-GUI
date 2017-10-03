@@ -23,7 +23,7 @@
 
 ### Entrega dia 06/10/2017 :coffee:
 
-- [ ] dijkstra(verticeOrigem) -dijkstra sem destino
+- [x] dijkstra(verticeOrigem) -dijkstra sem destino
 - [ ] dijkstra(verticeOrigem, verticeDestino) -dijkstra com destino
 - [x] Implementar interface de desenho de grafos
 - [x] Coloração por Welsh e Powell
