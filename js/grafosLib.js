@@ -627,6 +627,16 @@
         return css;
     };
 
+ Grafo.prototype._menorCaminho = function(abertos, pesos){
+        var menorCaminho = abertos[0];
+        for (var i = 0; i < abertos.length; i++){
+            if (pesos[abertos[i]] < pesos[menorCaminho]){
+                menorCaminho = abertos[i];
+            }
+        }
+        return menorCaminho;
+    };
+
     Grafo.prototype._dijkstra = function(origem){
         var vertices = this.vertices;
 		if (vertices.indexOf(origem) === -1){
@@ -635,6 +645,7 @@
         var distancias = [];
         var anterior = [];
         var abertos = [];
+
         //iniciar valores
         $(vertices).each(function(index, v){
             distancias[v] = Infinity;
@@ -644,14 +655,11 @@
 
         distancias[origem] = 0;
         while (abertos.length > 0){
-            var vertice = abertos.shift();			
+            var vertice = this._menorCaminho(abertos, distancias);
             $(this.ligacao[vertice]).each(function(index, adjacente){
-				if (abertos.indexOf(adjacente[0]) === -1){
-					return;
-				}
 				if (distancias[adjacente[0]] === Infinity){
-					//se infinito, atribui o peso
-					distancias[adjacente[0]] = adjacente[1];
+                    //se infinito, atribui o peso
+                    distancias[adjacente[0]] = distancias[vertice] + adjacente[1];
 					//atribui o vertice analisado como anterior
 					anterior[adjacente[0]] = vertice;
 				} else{
@@ -662,28 +670,28 @@
 					}
 				}
             });
+            abertos.splice(abertos.indexOf(vertice), 1);
         }
 		return distancias;
     };
 
 	Grafo.prototype.dijkstra = function(origem, destino){
 		var distancias = this._dijkstra(origem);
-		var logger = document.getElementById('log'); 
-		
+		var logger = document.getElementById('log');
+
 		if (destino !== undefined){
-			console.log(distancias[destino]);
 			logger.innerHTML = "Distância: "+distancias[destino];
 		} else {
-			console.log(distancias);
-			$(distancias).each(function(i, v){
-				logger.innerHTML += v + '<br />';
-			});
-		}
-	}
+            for (var i = 0; i < Object.keys(distancias).length; i++) {
+                var key = Object.keys(distancias)[i];
+                logger.innerHTML += key + ": "+distancias[key] + '<br />';
+            }
+        }
+    };
+
 
     var grafo = new Grafo(false, true);
 /*
-var grafo = new Grafo(false, true);
     grafo.addVertice("A");
     grafo.addVertice("B");
     grafo.addVertice("C");
