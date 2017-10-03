@@ -627,7 +627,7 @@
         return css;
     };
 
-    Grafo.prototype.dijkstra = function(origem){
+    Grafo.prototype._dijkstra = function(origem){
         var vertices = this.vertices;
 		if (vertices.indexOf(origem) === -1){
 			return false;
@@ -663,8 +663,16 @@
 				}
             });
         }
-		console.log(distancias);
-		console.log(anterior);
+		return distancias;
     };
+
+	Grafo.prototype.dijkstra = function(origem, destino){
+		var distancias = this._dijkstra(origem);
+		if (destino !== undefined){
+			console.log(distancias[destino]);
+		} else {
+			console.log(distancias);
+		}
+	}
 
     var grafo = new Grafo(false, true);
