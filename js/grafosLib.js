@@ -73,14 +73,13 @@
         }
     };
 
-    //ADICIONA ARESTA NÃO PONDERADA
+    //ADICIONA ARESTA NÃO 
     //--RECEBE UM VERTICE DE ORIGEM, E UM VÉRTICE DE DESTINO
     //--ATRIBUI 1 AO PESO E CHAMA a função addAresta() PONDERADA
     Grafo.prototype.addAresta = function (vertice1,vertice2) {
         if(!this.direcionado) {
             this.peso = 1;
             this.addArestaPonderada(vertice1, vertice2, this.peso);
-            imprimeNotificacao("Aresta adicionado com sucesso!", "success");
         }else{
             console.log('Impossível adicionar Aresta em grafos direcionados');
             imprimeNotificacao("Impossível adicionar Aresta em grafos direcionados!", "error");
@@ -95,7 +94,7 @@
         if (!this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
             this.ligacao[vertice2].push([vertice1, _peso]);
-            
+	    imprimeNotificacao("Aresta adicionado com sucesso!", "success");
         } else {
             console.log('Impossível adicionar Aresta em grafos direcionados');
             imprimeNotificacao("Impossível adicionar Aresta em grafos direcionados!", "error");
