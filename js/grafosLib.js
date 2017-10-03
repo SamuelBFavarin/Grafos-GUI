@@ -668,11 +668,32 @@
 
 	Grafo.prototype.dijkstra = function(origem, destino){
 		var distancias = this._dijkstra(origem);
+		var logger = document.getElementById('log'); 
+		
 		if (destino !== undefined){
 			console.log(distancias[destino]);
+			logger.innerHTML = "Distância: "+distancias[destino];
 		} else {
 			console.log(distancias);
+			$(distancias).each(function(i, v){
+				logger.innerHTML += v + '<br />';
+			});
 		}
 	}
 
     var grafo = new Grafo(false, true);
+/*
+var grafo = new Grafo(false, true);
+    grafo.addVertice("A");
+    grafo.addVertice("B");
+    grafo.addVertice("C");
+    grafo.addVertice("D");
+    grafo.addVertice("E");
+    grafo.addArestaPonderada("A", "B", 3);
+    grafo.addArestaPonderada("A", "C", 5);
+    grafo.addArestaPonderada("A", "D", 6);
+    grafo.addArestaPonderada("A", "E", 8);
+    grafo.addArestaPonderada("B", "D", 2);
+    grafo.addArestaPonderada("B", "E", 11);
+    grafo.addArestaPonderada("E", "C", 2);
+*/
