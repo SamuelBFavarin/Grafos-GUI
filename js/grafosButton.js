@@ -84,10 +84,7 @@
      var vertice1 = document.getElementById('inputAddArestaPond1');
      var vertice2 = document.getElementById('inputAddArestaPond2');
      var peso = document.getElementById('inputAddPesoPond');
-
-     alert(vertice1.value);
-     alert(vertice2.value);
-     alert(peso.value);
+	 
      if(vertice1.value != '' && vertice2.value != '' && peso.value != ''){
          grafo.addArcoPonderado(vertice1.value, vertice2.value, peso.value);
          vertice1.value = '';
