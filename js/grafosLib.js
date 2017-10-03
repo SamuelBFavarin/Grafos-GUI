@@ -629,25 +629,42 @@
 
     Grafo.prototype.dijkstra = function(origem){
         var vertices = this.vertices;
+		if (vertices.indexOf(origem) === -1){
+			return false;
+		}
         var distancias = [];
-        var min = [];
+        var anterior = [];
+        var abertos = [];
         //iniciar valores
-        $(vertices).each(function(index, value){
-            distancias[value] = Infinity;
-            min = -1;
+        $(vertices).each(function(index, v){
+            distancias[v] = Infinity;
+            anterior[v] = undefined;
+			abertos.push(v);
         });
-        distancias[origem] = 0;
 
-        while (vertices.length > 0){
-            var vertice = vertices.shift(vertices);
+        distancias[origem] = 0;
+        while (abertos.length > 0){
+            var vertice = abertos.shift();			
             $(this.ligacao[vertice]).each(function(index, adjacente){
-                if (distancias[adjacente[0]] > distancias[vertice] + distancias[adjacente[1]]){
-                    distancias[adjacente[0]] = distancias[vertice] + distancias[adjacente[1]];
-                    min[vertice] = adjacente[0];
-                }
+				if (abertos.indexOf(adjacente[0]) === -1){
+					return;
+				}
+				if (distancias[adjacente[0]] === Infinity){
+					//se infinito, atribui o peso
+					distancias[adjacente[0]] = adjacente[1];
+					//atribui o vertice analisado como anterior
+					anterior[adjacente[0]] = vertice;
+				} else{
+					var novo = distancias[vertice] + adjacente[1];
+					if (novo < distancias[adjacente[0]]){
+						distancias[adjacente[0]] = novo;
+						anterior[[adjacente[0]]] = vertice;
+					}
+				}
             });
         }
-        console.log(min);
+		console.log(distancias);
+		console.log(anterior);
     };
 
     var grafo = new Grafo(false, true);
