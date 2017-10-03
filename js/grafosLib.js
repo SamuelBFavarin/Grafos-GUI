@@ -505,25 +505,37 @@
               grauEmOrdem[i][2] = CSS_COLOR_NAMES[ Math.floor(Math.random() * CSS_COLOR_NAMES.length) ];
             }
         }else{
-            //Grafo não nulo, verificar cada vértice vizinho e aplicar cor ou não
-            var countSemCor = grauEmOrdem.length;
+        
             var corAtual = CSS_COLOR_NAMES[g];
+            var verticeMaiorGrau;
             var flag;
     
-            while(countSemCor > 0){
+            while(this.retornaTotalSemCor(grauEmOrdem) > 0){
                 
                 g = g + 1;
                 corAtual = CSS_COLOR_NAMES[g];
                 
                 //Percorre todos os vertices e escolhe o de maior grau de saturação
-                for(i = 0; i < grauEmOrdem.length; i++){  
+                
+                verticeMaiorGrau = this.retornaMaiorGrauSaturacao(grauEmOrdem);
 
-                    if(grauEmOrdem[i][2] == "Sem Cor"){   
-                       
-                    }else{
-                        countSemCor = countSemCor - 1;
-                    }
-                }
+                    flag = true;
+                    //Percorro todas as ligações do vertice grauEmOrdem[i][2]
+                        for(j = 0; j < this.ligacao[verticeMaiorGrau[0]].length; j ++){                                          
+                            for(k = 0; k < grauEmOrdem.length; k++ ){                                
+                                if(grauEmOrdem[k][0] == this.ligacao[verticeMaiorGrau[0]][j][0]){
+                                    if(grauEmOrdem[k][2] == corAtual) {
+                                        flag = false;
+                                    }else{
+                                        grauEmOrdem[k][3] = grauEmOrdem[k][3] + 1;
+                                    }
+                                }                   
+                            }
+                        }
+                //Caso nenhum vizinho tenha a cor, atribuo a cor ao vertice atual de "I"
+                if(flag == true){
+                    verticeMaiorGrau[2] = corAtual;
+                }                
             }
         }
 
@@ -538,6 +550,39 @@
 
     }
 
+    //Vinícius Machado 03/10/17 - Retorna o vetor de vertice que tenha maior grua de saturação, ou em caso de empate, maior grau de ligação
+    Grafo.prototype.retornaMaiorGrauSaturacao = function(listaDsatur){
+
+    var maior = listaDsatur[0];
+
+        for(i = 0; i < listaDsatur.length; i++){
+            if(listaDsatur[i][3] > maior[3]){
+                maior = listaDsatur[i];
+            }
+            if(listaDsatur[i][3] = maior[3]){
+                if(listaDsatur[i][1] > maior[3]){
+                    maior = listaDsatur[i];
+                }
+            }
+        }
+
+        return maior;
+    };
+	
+   //Vinicius 03/10 - Retorna o total de vértices sem cores
+    Grafo.prototype.retornaTotalSemCor = function(listaVertices){
+
+    var total = 0;
+
+        for ( i = 0; i < listaVertices.length; i++){
+            if(listaVertices[i][2] == "Sem Cor"){
+                total = total + 1;
+            }
+        }
+    
+    return total;
+
+    };
 
     // DESENHA MATRIZ DE ADJACENCIA
     // --CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
