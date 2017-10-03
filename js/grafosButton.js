@@ -179,6 +179,32 @@
         }
     }
 
+	function dijkstraSemDestino(){
+		var origem = document.getElementById('inputOrigemBuscaSemDestino');
+		if (origem.value != ''){
+			if (grafo.vertices.indexOf(origem.value) == -1){
+				imprimeNotificacao("Vértice não existe!", "error");
+				return false;
+			}
+			grafo.dijkstra(origem.value);
+		} else{
+			imprimeNotificacao("Valores não podem ser vazios!", "error");
+		}
+	}
+	
+	function dijkstraComDestino(){
+		var origem   = document.getElementById('inputOrigemBuscaDestino');
+		var destino  = document.getElementById('inputDestinoBuscaDestino');
+		if (origem.value != '' && destino.value != ''){
+			if (grafo.vertices.indexOf(origem.value) == -1 || grafo.vertices.indexOf(destino.value) == -1){
+				imprimeNotificacao("Vértice não existe!", "error");
+				return false;
+			}
+			grafo.dijkstra(origem.value, destino.value);
+		} else{
+			imprimeNotificacao("Valores não podem ser vazios!", "error");
+		}
+	}
 //***********************ÁREA DE DIVERSOS**********************
 
     function retornaLigacoes(){
