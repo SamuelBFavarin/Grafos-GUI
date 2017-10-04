@@ -108,8 +108,8 @@
                         <div class="form-group">
                             <div class="dropdown">
                                 <input class="form-control" id="inputAddArestaPond1" placeholder="Vértice 1">
-                                 <input class="form-control" id="inputAddArestaPond2" placeholder="Vértice 2">
-                                 <input class="form-control" id="inputAddPesoPond" placeholder="Peso">
+                                <input class="form-control" id="inputAddArestaPond2" placeholder="Vértice 2">
+                                <input class="form-control" id="inputAddPesoPond" placeholder="Peso">
                                 <button class="btn botao-lindao btn-block dropdown-toggle" type="button" data-toggle="dropdown">
                                     Clique para Adicionar
                                 <span class="caret"></span></button>
@@ -210,13 +210,20 @@
                                     <li onclick="imprimeVertices()"><a>Imprimir Vértices</a></li>
                                     <li onclick="imprimeMatriz()"><a>Imprimir Matriz</a></li>
                                     <li onclick="imprimeLista()"><a>Imprimir Lista</a></li>
-                                    <li onclick="imprimeCanvas()"><a>Imprimir Canvas</a></li>
                                 </ul>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="radio-inline"><input type="radio" name="optradio" id="radioDsatur">DSATUR</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" id="radioWelsh">WELSH</label>
+                             <button type="button" class="btn  botao-lindao btn-block" data-toggle="tooltip" 
+                                title="Não esqueça de escolher o tipo de coloração para impressão!" onclick="imprimeCanvas()"> Imprimir Canvas</button>
+                        </div>
+                        <br> </br>
+                        <br> </br>
                         <!-- LIMPAR CONSOLE -->
                         <div class="form-group">
-                            <button type="button" class="btn  btn-danger btn-block" onclick="limparConsole()"> Limpar Console</button>
+                            <button type="button" class="btn  btn-danger btn-block"  onclick="limparConsole()"> Limpar Console</button>
                         </div>
                     </form>
                 </div>
@@ -228,7 +235,7 @@
                     <form class="form-horizontal">
                         <div class="form-group">
                             <button type="button" class="btn botao-lindao btn-info btn-block" id="welshAndPowell" onclick="coloreWelshAndPowell()">
-                                 Welsh e Powell</button>
+                                 WELSH AND POWELL</button>
                         </div>
                         <div class="form-group">
                             <button type="button" class="btn botao-lindao btn-info btn-block" id="dsatur" onclick="coloreDsatur()">
@@ -254,7 +261,7 @@
                 <div class="well-block-canvas">
                     <legend>Canvas</legend>
 
-                    <canvas id="myCanvas" height="500">
+                    <canvas id="myCanvas" height="300">
 
 
                     </canvas>
@@ -273,6 +280,13 @@
     <script src="js/notify.js"></script>
     <script>
         $(document).ready(function () {
+
+            //Tooltip
+            $('[data-toggle="tooltip"]').tooltip(); 
+
+            //Checar Radio de Welsh
+            document.getElementById("radioWelsh").checked = true;
+
             // Add smooth scrolling to all links in navbar + footer link
             $(".navbar a, footer a[href='#myPage']").on('click', function (event) {
 
