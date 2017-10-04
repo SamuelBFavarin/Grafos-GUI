@@ -302,8 +302,14 @@
 
  function imprimeCanvas(){
      
-     if(grafo.vertices.length > 0){
-         grafo.desenhaCanvasLigacoes();
+    if(grafo.vertices.length > 0){
+
+        if( document.getElementById('radioDsatur').checked == true ){
+            grafo.desenhaCanvasLigacoes("dsatur");
+        }else{
+            grafo.desenhaCanvasLigacoes("welshAndPowell");
+        }
+         
      }else{
         imprimeNotificacao("Não existem Vértices!", "warn"); 
      }
