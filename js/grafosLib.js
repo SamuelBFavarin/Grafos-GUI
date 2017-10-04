@@ -456,7 +456,7 @@
        return grauEmOrdem;
     };
 
-    //02/10/17 - Vinícius Machado
+     //02/10/17 - Vinícius Machado
     Grafo.prototype.dsatur = function (){
 
         var grauEmOrdem = [];
@@ -509,46 +509,114 @@
             var corAtual = CSS_COLOR_NAMES[g];
             var verticeMaiorGrau;
             var flag;
+            var teste = 5;
     
             while(this.retornaTotalSemCor(grauEmOrdem) > 0){
-                
-                g = g + 1;
+
+                console.log(this.retornaTotalSemCor(grauEmOrdem));
+
                 corAtual = CSS_COLOR_NAMES[g];
-                
+
                 //Percorre todos os vertices e escolhe o de maior grau de saturação
-                
-                verticeMaiorGrau = this.retornaMaiorGrauSaturacao(grauEmOrdem);
+                verticeMaiorGrau = this.retornaMaiorGrauSaturacao(grauEmOrdem); 
 
-                    flag = true;
-                    //Percorro todas as ligações do vertice grauEmOrdem[i][2]
-                        for(j = 0; j < this.ligacao[verticeMaiorGrau[0]].length; j ++){                                          
-                            for(k = 0; k < grauEmOrdem.length; k++ ){                                
-                                if(grauEmOrdem[k][0] == this.ligacao[verticeMaiorGrau[0]][j][0]){
-                                    if(grauEmOrdem[k][2] == corAtual) {
-                                        flag = false;
-                                    }else{
-                                        grauEmOrdem[k][3] = grauEmOrdem[k][3] + 1;
-                                    }
-                                }                   
-                            }
-                        }
-                //Caso nenhum vizinho tenha a cor, atribuo a cor ao vertice atual de "I"
-                if(flag == true){
+                if(grauEmOrdem.length == this.retornaTotalSemCor(grauEmOrdem)){
                     verticeMaiorGrau[2] = corAtual;
-                }                
+                }
+
+                grauEmOrdem = this.atualizaGrauSaturacao(grauEmOrdem);
+
+                g = g +1;
+                corAtual = CSS_COLOR_NAMES[g];
+
+                    console.log("Maior Saturação - > " + verticeMaiorGrau[0]);
+                    //Percorro todas as ligações do vertice de maior grau. De B por exemplo
+                     for(j = 0; j < this.ligacao[verticeMaiorGrau[0]].length; j ++){  
+                        //Aqui vou procurar na lista ordenada as ligações para ter acesso as cores, saturação e etc                                       
+                        for(k = 0; k < grauEmOrdem.length; k++ ){                    
+                            if(grauEmOrdem[k][0] == this.ligacao[verticeMaiorGrau[0]][j][0]){ //Encontrei C por exemplo
+                                flag = true;
+                                for(l = 0; l < this.ligacao[grauEmOrdem[k][0]].length; l++){ //Agora vou buscar as ligações de C
+                                    for( m = 0; m < grauEmOrdem.length; m++){
+                                        if(this.ligacao[grauEmOrdem[k][0]][l][0] == grauEmOrdem[m][0]){ //Primeiro vizinho
+                                             //Se a cor de um vizinho de C por exemplo for igual, flag = false
+                                            if(grauEmOrdem[m][2] == grauEmOrdem[k][2] && grauEmOrdem[m][2] != "Sem Cor"){
+                                                flag = false;
+                                            }
+                                        }
+                                    }
+                                }
+                                //Passei por todos os vizinhos e nao encontrei cor igual, posso pintar C por exemploo
+                                if(flag == true){
+                                    grauEmOrdem[k][2] = corAtual;
+                                    
+                                }
+                            }
+                        }          
+                    }
+    
             }
+
+        //Imprimindo no console
+        var logger = document.getElementById('log');  
+
+        for(i = 0; i < grauEmOrdem.length; i++){
+            logger.innerHTML += grauEmOrdem[i] + '<br />';
+            }
+        
         }
-
-       //Imprimindo no console
-       var logger = document.getElementById('log');  
-
-       for(i = 0; i < grauEmOrdem.length; i++){
-           logger.innerHTML += grauEmOrdem[i] + '<br />';
-       }
 
        return grauEmOrdem;
 
     }
+
+    Grafo.prototype.atualizaGrauSaturacao = function(listaDsatur){
+
+        //Percorro a lista, encontro B
+        for(i = 0; i < listaDsatur.length; i ++){
+            //Busco o total de ligações de B por exemplo, sera retornado 3 (A, C, E)
+            for(j = 0; j < this.ligacao[listaDsatur[i][0]].length; j ++){   
+                
+                //Preciso percorrer os vizinhos de A por exemplo e testar as cores para somar (D, B)
+                for(k = 0; k < this.ligacao[this.ligacao[listaDsatur[i][0]][j][0]].length; k ++){ 
+
+                    //Agora vou acessar as cores de cada vizinho
+                    for(l = 0; l < listaDsatur.length; l++){
+                        
+                        //Encontro as informações de D por exemplo. Agora vou testar se a cor de D é diferente de A, e diferente de B
+                        if(listaDsatur[l][0] == this.ligacao[this.ligacao[listaDsatur[i][0]][j][0]][k][0]){
+
+                            //Procuro as informações de A
+                            for(m = 0; m < listaDsatur.length; m++){
+                                
+                                if(listaDsatur[m][0] == this.ligacao[listaDsatur[i][0]][j][0]){
+                                    //Se cor de A é diferente de cor de D, e cor de D é diferente de Sem Cor
+                                    if(listaDsatur[m][2] != listaDsatur[l][2] && listaDsatur[l][2] != "Sem Cor"){
+
+                                        if(listaDsatur[l][2] != listaDsatur[i][2]){
+
+                                            listaDsatur[m][3] = listaDsatur[m][3] + 1;
+
+                                        }
+
+                                    }
+                                
+                                }
+
+                            }
+                            
+                        }
+
+                    }
+
+                }
+
+            }
+            
+        }
+
+        return listaDsatur;
+    };
 
     //Vinícius Machado 03/10/17 - Retorna o vetor de vertice que tenha maior grua de saturação, ou em caso de empate, maior grau de ligação
     Grafo.prototype.retornaMaiorGrauSaturacao = function(listaDsatur){
@@ -568,8 +636,8 @@
 
         return maior;
     };
-	
-   //Vinicius 03/10 - Retorna o total de vértices sem cores
+
+    //Vinícius Machado 04/10/17
     Grafo.prototype.retornaTotalSemCor = function(listaVertices){
 
     var total = 0;
