@@ -456,7 +456,7 @@
        return grauEmOrdem;
     };
 
-//02/10/17 - Vinícius Machado
+    //02/10/17 - Vinícius Machado
     Grafo.prototype.dsatur = function (){
 
         var grauEmOrdem = [];
@@ -520,7 +520,8 @@
 
                 if(grauEmOrdem.length == this.retornaTotalSemCor(grauEmOrdem)){
                     verticeMaiorGrau[2] = corAtual;
-                    this.atualizaGrauSaturacao(verticeMaiorGrau[0], grauEmOrdem);
+                    verticeMaiorGrau[3] = verticeMaiorGrau[3] + 1; 
+
                 }
 
                 g = g +1;
@@ -535,9 +536,11 @@
                                     for( m = 0; m < grauEmOrdem.length; m++){
                                         if(this.ligacao[grauEmOrdem[k][0]][l][0] == grauEmOrdem[m][0]){ //Primeiro vizinho
                                              //Se a cor de um vizinho de C por exemplo for igual, flag = false
-                                            if(grauEmOrdem[m][2] != grauEmOrdem[k][2] || grauEmOrdem[k][2] == "Sem Cor" && grauEmOrdem[m][2] != verticeMaiorGrau[2]){
+                                             console.log(grauEmOrdem[m][0] + " | " + grauEmOrdem[k][0] + " | " + verticeMaiorGrau[0]);
+                                            if(grauEmOrdem[m][2] != grauEmOrdem[k][2] && grauEmOrdem[m][2] != verticeMaiorGrau[2] || grauEmOrdem[k][2] == "Sem Cor" && grauEmOrdem[m][2] != verticeMaiorGrau[2]){
+                                                console.log("Entrou");
                                                 grauEmOrdem[k][2] = corAtual;
-                                                this.atualizaGrauSaturacao(grauEmOrdem[k], grauEmOrdem);
+                                                grauEmOrdem[k][3] = grauEmOrdem[k][3] + 1;
                                             }
                                         }
                                     }
@@ -559,31 +562,6 @@
 
        return grauEmOrdem;
 
-    }
-
-    //Aqui preciso arrumar para receber apenas 1 vértice...
-    Grafo.prototype.atualizaGrauSaturacao = function(verticePintado, grauEmOrdem){
-
-        //Busco o total de ligações do vertice pintado
-        for(j = 0; j < this.ligacao[verticePintado[0]].length; j ++){   
-            //Preciso percorrer os vizinhos das ligações do vértice pintado
-            for(k = 0; k < this.ligacao[this.ligacao[verticePintado[0]][j][0]].length; k ++){ 
-                //Agora vou acessar as cores desses vizinhos
-                for(l = 0; l < grauEmOrdem.length; l++){
-                    //Quando encontro...
-                    if(grauEmOrdem[l][0] == this.ligacao[this.ligacao[verticePintado[0]][j][0]][k][0]){
-                        if(grauEmOrdem[l][2] != verticePintado[2]){
-                            for(m = 0; m < grauEmOrdem.length; m++){
-                                if(grauEmOrdem[m][0] == this.ligacao[verticePintado[0]][j][0]){
-                                    grauEmOrdem[m][3] = grauEmOrdem[m][3] + 1;
-                                }
-                            }
-                        }
-                    }
-                }         
-            }
-        }
-        return grauEmOrdem;
     };
 
     //Vinícius Machado 03/10/17 - Retorna o vetor de vertice que tenha maior grua de saturação, ou em caso de empate, maior grau de ligação
