@@ -652,8 +652,9 @@
             for(j = 0; j < (this.ligacao[this.vertices[i]].length); j ++){
                 
                 auxLigacoes = new Array();
-                auxLigacoes[0] = this.vertices[i];
-                auxLigacoes[1] = this.ligacao[this.vertices[i]][j][0];
+                auxLigacoes[0] = this.ligacao[this.vertices[i]][j][0];
+                auxLigacoes[1] = this.vertices[i];
+                auxLigacoes[2] = this.ligacao[this.vertices[i]][j][1];
                 
                 ligacoes.push(auxLigacoes);
             }
