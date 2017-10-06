@@ -456,13 +456,24 @@
        return grauEmOrdem;
     };
 
+    Grafo.prototype._getAdjacencias = function(grauEmOrdem, adjacentes){
+        var arrayAdjacentes = [];
+        for (var i = 0; i < grauEmOrdem.length; i++){
+            for (var j = 0; j < adjacentes.length; j++){
+                if (grauEmOrdem[i][0] == adjacentes[j][0]){
+                    arrayAdjacentes.push(grauEmOrdem[i]);
+                }
+            }
+        }
+        return arrayAdjacentes;
+    };
+
     //02/10/17 - Vinícius Machado
     Grafo.prototype.dsatur = function (){
-
         var grauEmOrdem = [];
         var verticePeso;
         var troca;
-
+        var nao_verificados = [];
         for(var i=0;i < this.vertices.length; i++) {
             verticePeso = new Array();
             verticePeso[0] = this.vertices[i]; //Vértice
@@ -471,10 +482,9 @@
             verticePeso[3] = 0; //Grau Saturaão
 
             grauEmOrdem.push(verticePeso); //Inserindo para poder ver vertice e seus graus!
-        } 
-	
+            nao_verificados.push(this.vertices[i]);
+        }
         troca = 1;
-     
         // 1 . Ordenação pelos graus de cada vértice, verificar área do console
         while (troca == 1){
             troca = 0;        
@@ -487,7 +497,6 @@
                 }
             }
         }
-		
 
         // 2. Criando vetor de cores https://gist.github.com/bobspace/2712980#file-css_colors-js
         var CSS_COLOR_NAMES = this.retornaCssColors();
@@ -499,58 +508,41 @@
                 g = 0;
             }
         }
-				
+		var loop = 0;
         //Grafo nulo, cor única!
         if(g == 1){
             for(i = 0; i < grauEmOrdem.length; i++){
               grauEmOrdem[i][2] = CSS_COLOR_NAMES[ Math.floor(Math.random() * CSS_COLOR_NAMES.length) ];
             }
         }else{
-        
             var corAtual = CSS_COLOR_NAMES[g];
             var verticeMaiorGrau;
             var flag;
-            var teste = 5 //this.retornaTotalSemCor(grauEmOrdem);
-			
+            var teste = this.retornaTotalSemCor(grauEmOrdem);
             while(teste	> 0){
 
                 corAtual = CSS_COLOR_NAMES[g];
 				
                 //Percorre todos os vertices e escolhe o de maior grau de saturação
-                verticeMaiorGrau = this.retornaMaiorGrauSaturacao(grauEmOrdem); 
+                verticeMaiorGrau = this.retornaMaiorGrauSaturacao(grauEmOrdem, nao_verificados);
 
-                if(grauEmOrdem.length == this.retornaTotalSemCor(grauEmOrdem)){
-                    verticeMaiorGrau[2] = corAtual;
-                    verticeMaiorGrau[3] = verticeMaiorGrau[3] + 1; 
-
-                }
-				console.log(this.retornaMaiorGrauSaturacao(grauEmOrdem));
-                g = g +1;
+                g++;
                 corAtual = CSS_COLOR_NAMES[g];
-				console.log(verticeMaiorGrau);
-                    //Percorro todas as ligações do vertice de maior grau. De B por exemplo
-                     for(j = 0; j < this.ligacao[verticeMaiorGrau[0]].length; j ++){  
-                        //Aqui vou procurar na lista ordenada as ligações para ter acesso as cores, saturação e etc                                       
-                        for(k = 0; k < grauEmOrdem.length; k++ ){                    
-                            if(grauEmOrdem[k][0] == this.ligacao[verticeMaiorGrau[0]][j][0]){ //Encontrei C por exemplo
-                                for(l = 0; l < this.ligacao[grauEmOrdem[k][0]].length; l++){ //Agora vou buscar as ligações de C
-                                    for( m = 0; m < grauEmOrdem.length; m++){
-                                        if(this.ligacao[grauEmOrdem[k][0]][l][0] == grauEmOrdem[m][0]){ //Primeiro vizinho
-                                             //Se a cor de um vizinho de C por exemplo for igual, flag = false
-                                             console.log(grauEmOrdem[m][0] + " | " + grauEmOrdem[k][0] + " | " + verticeMaiorGrau[0]);
-                                            if((grauEmOrdem[m][2] != grauEmOrdem[k][2] && grauEmOrdem[m][2] != verticeMaiorGrau[2]) || (grauEmOrdem[k][2] == "Sem Cor" && grauEmOrdem[m][2] != verticeMaiorGrau[2])){
-                                                console.log("Pintou");
-												
-                                                grauEmOrdem[k][2] = corAtual;
-                                                grauEmOrdem[k][3] = grauEmOrdem[k][3] + 1;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }   
-                    }
-                teste = teste - 1;//this.retornaTotalSemCor(grauEmOrdem);
+                var adjacencias = this._getAdjacencias(grauEmOrdem, this.ligacao[verticeMaiorGrau[0]]);
+                //Percorro todas as ligações do vertice de maior grau
+                for(var j = 0; j < adjacencias.length; j ++){
+                    adjacencias[j][2] = corAtual;
+                    adjacencias[j][3]++;
+                }
+
+                nao_verificados.splice(verticeMaiorGrau[0], 1);
+
+                teste = this.retornaTotalSemCor(grauEmOrdem, nao_verificados);
+
+                loop++;
+                if (loop == 10){
+                    return "deu ruim, chapa";
+                }
             }
 
         //Imprimindo no console
@@ -567,19 +559,24 @@
     };
 
     //Vinícius Machado 03/10/17 - Retorna o vetor de vertice que tenha maior grua de saturação, ou em caso de empate, maior grau de ligação
-    Grafo.prototype.retornaMaiorGrauSaturacao = function(listaDsatur){
-		var maior = listaDsatur[0];
+    Grafo.prototype.retornaMaiorGrauSaturacao = function(listaDsatur, naoVerificado){
+        for (var i = 0; i < listaDsatur.length; i++){
+            if (listaDsatur[i][0] == naoVerificado[0]){
+                var maior = listaDsatur[i];
+            }
+        }
+
         for(i = 0; i < listaDsatur.length; i++){
             if(listaDsatur[i][3] > maior[3]){
                 maior = listaDsatur[i];
             }
-            if(listaDsatur[i][3] == maior[3]){
-                if(listaDsatur[i][1] > maior[1]){
+
+            if (listaDsatur[i][3] == maior[3]){
+                if (listaDsatur[i][1] > maior[1]){
                     maior = listaDsatur[i];
                 }
             }
         }
-
         return maior;
     };
 
@@ -762,4 +759,4 @@
 	grafo.addAresta("E", "B");
 	grafo.addAresta("E", "D");
 	grafo.addAresta("E", "C");
-	
+
