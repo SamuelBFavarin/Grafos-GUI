@@ -27,6 +27,6 @@
 - [X] dijkstra(verticeOrigem, verticeDestino) -dijkstra com destino
 - [x] Implementar interface de desenho de grafos
 - [x] Coloração por Welsh e Powell
-- [ ] Coloração por DSATUR
+- [x] Coloração por DSATUR
 - [x] Divisão de arquivo (Classe e funções)
 - [x] Perfumaria da Interface Web
