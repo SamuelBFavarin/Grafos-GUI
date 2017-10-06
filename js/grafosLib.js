@@ -94,7 +94,7 @@
         if (!this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
             this.ligacao[vertice2].push([vertice1, _peso]);
-	    imprimeNotificacao("Aresta adicionado com sucesso!", "success");
+	    // imprimeNotificacao("Aresta adicionado com sucesso!", "success");
         } else {
             console.log('Impossível adicionar Aresta em grafos direcionados');
             imprimeNotificacao("Impossível adicionar Aresta em grafos direcionados!", "error");
@@ -472,9 +472,9 @@
 
             grauEmOrdem.push(verticePeso); //Inserindo para poder ver vertice e seus graus!
         } 
-
+	
         troca = 1;
-        
+     
         // 1 . Ordenação pelos graus de cada vértice, verificar área do console
         while (troca == 1){
             troca = 0;        
@@ -487,6 +487,7 @@
                 }
             }
         }
+		
 
         // 2. Criando vetor de cores https://gist.github.com/bobspace/2712980#file-css_colors-js
         var CSS_COLOR_NAMES = this.retornaCssColors();
@@ -498,7 +499,7 @@
                 g = 0;
             }
         }
-
+				
         //Grafo nulo, cor única!
         if(g == 1){
             for(i = 0; i < grauEmOrdem.length; i++){
@@ -509,12 +510,12 @@
             var corAtual = CSS_COLOR_NAMES[g];
             var verticeMaiorGrau;
             var flag;
-            var teste = this.retornaTotalSemCor(grauEmOrdem);
-    
-            while(teste> 0){
+            var teste = 5 //this.retornaTotalSemCor(grauEmOrdem);
+			
+            while(teste	> 0){
 
                 corAtual = CSS_COLOR_NAMES[g];
-
+				
                 //Percorre todos os vertices e escolhe o de maior grau de saturação
                 verticeMaiorGrau = this.retornaMaiorGrauSaturacao(grauEmOrdem); 
 
@@ -523,10 +524,10 @@
                     verticeMaiorGrau[3] = verticeMaiorGrau[3] + 1; 
 
                 }
-
+				console.log(this.retornaMaiorGrauSaturacao(grauEmOrdem));
                 g = g +1;
                 corAtual = CSS_COLOR_NAMES[g];
-
+				console.log(verticeMaiorGrau);
                     //Percorro todas as ligações do vertice de maior grau. De B por exemplo
                      for(j = 0; j < this.ligacao[verticeMaiorGrau[0]].length; j ++){  
                         //Aqui vou procurar na lista ordenada as ligações para ter acesso as cores, saturação e etc                                       
@@ -537,8 +538,9 @@
                                         if(this.ligacao[grauEmOrdem[k][0]][l][0] == grauEmOrdem[m][0]){ //Primeiro vizinho
                                              //Se a cor de um vizinho de C por exemplo for igual, flag = false
                                              console.log(grauEmOrdem[m][0] + " | " + grauEmOrdem[k][0] + " | " + verticeMaiorGrau[0]);
-                                            if(grauEmOrdem[m][2] != grauEmOrdem[k][2] && grauEmOrdem[m][2] != verticeMaiorGrau[2] || grauEmOrdem[k][2] == "Sem Cor" && grauEmOrdem[m][2] != verticeMaiorGrau[2]){
-                                                console.log("Entrou");
+                                            if((grauEmOrdem[m][2] != grauEmOrdem[k][2] && grauEmOrdem[m][2] != verticeMaiorGrau[2]) || (grauEmOrdem[k][2] == "Sem Cor" && grauEmOrdem[m][2] != verticeMaiorGrau[2])){
+                                                console.log("Pintou");
+												
                                                 grauEmOrdem[k][2] = corAtual;
                                                 grauEmOrdem[k][3] = grauEmOrdem[k][3] + 1;
                                             }
@@ -548,7 +550,7 @@
                             }
                         }   
                     }
-                teste = this.retornaTotalSemCor(grauEmOrdem);
+                teste = teste - 1;//this.retornaTotalSemCor(grauEmOrdem);
             }
 
         //Imprimindo no console
@@ -566,15 +568,13 @@
 
     //Vinícius Machado 03/10/17 - Retorna o vetor de vertice que tenha maior grua de saturação, ou em caso de empate, maior grau de ligação
     Grafo.prototype.retornaMaiorGrauSaturacao = function(listaDsatur){
-
-    var maior = listaDsatur[0];
-
+		var maior = listaDsatur[0];
         for(i = 0; i < listaDsatur.length; i++){
             if(listaDsatur[i][3] > maior[3]){
                 maior = listaDsatur[i];
             }
-            if(listaDsatur[i][3] = maior[3]){
-                if(listaDsatur[i][1] > maior[3]){
+            if(listaDsatur[i][3] == maior[3]){
+                if(listaDsatur[i][1] > maior[1]){
                     maior = listaDsatur[i];
                 }
             }
@@ -669,16 +669,16 @@
 
     Grafo.prototype.retornaCssColors = function (){
 
-        var css = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet",
+        var css = ["PaleGreen","Magenta","Aqua","Moccasin","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet",
         "Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan",
         "DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon",
         "DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey",
         "DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow",
         "HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral",
         "LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray",
-        "LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid",
+        "LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid",
         "MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose",
-        "Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise",
+        "NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleTurquoise",
         "PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon",
         "SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan",
         "Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
@@ -749,18 +749,17 @@
     };
 
 
-    var grafo = new Grafo(false, true);
-/*
+    var grafo = new Grafo(false, false);
+	//TESTE DE DSATUR
     grafo.addVertice("A");
     grafo.addVertice("B");
     grafo.addVertice("C");
     grafo.addVertice("D");
     grafo.addVertice("E");
-    grafo.addArestaPonderada("A", "B", 3);
-    grafo.addArestaPonderada("A", "C", 5);
-    grafo.addArestaPonderada("A", "D", 6);
-    grafo.addArestaPonderada("A", "E", 8);
-    grafo.addArestaPonderada("B", "D", 2);
-    grafo.addArestaPonderada("B", "E", 11);
-    grafo.addArestaPonderada("E", "C", 2);
-*/
+    grafo.addAresta("A", "B");
+	grafo.addAresta("A", "D");
+	grafo.addAresta("B", "C");
+	grafo.addAresta("E", "B");
+	grafo.addAresta("E", "D");
+	grafo.addAresta("E", "C");
+	
