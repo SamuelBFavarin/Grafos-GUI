@@ -538,11 +538,6 @@
                 nao_verificados.splice(verticeMaiorGrau[0], 1);
 
                 teste = this.retornaTotalSemCor(grauEmOrdem, nao_verificados);
-
-                loop++;
-                if (loop == 10){
-                    return "deu ruim, chapa";
-                }
             }
 
         //Imprimindo no console
