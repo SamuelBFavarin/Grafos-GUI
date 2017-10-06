@@ -538,6 +538,7 @@
                     }
                     if(flag == true){
                         verticeMaiorGrau[2] = CSS_COLOR_NAMES[x];
+			break;
                     }
                 }
 
