@@ -538,7 +538,6 @@
                     }
                     if(flag == true){
                         verticeMaiorGrau[2] = CSS_COLOR_NAMES[x];
-                        break;
                     }
                 }
 
@@ -553,7 +552,7 @@
                 }
 
                 nao_verificados.splice(verticeMaiorGrau[0], 1);
-                total = this.retornaTotalSemCor(grauEmOrdem); //, nao_verificados);
+                total = this.retornaTotalSemCor(grauEmOrdem);
             }
 
         //Imprimindo no console
