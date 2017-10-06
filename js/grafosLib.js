@@ -509,35 +509,51 @@
             }
         }
 		var loop = 0;
+        var flag;
         //Grafo nulo, cor única!
         if(g == 1){
             for(i = 0; i < grauEmOrdem.length; i++){
               grauEmOrdem[i][2] = CSS_COLOR_NAMES[ Math.floor(Math.random() * CSS_COLOR_NAMES.length) ];
             }
         }else{
-            var corAtual = CSS_COLOR_NAMES[g];
             var verticeMaiorGrau;
-            var flag;
-            var teste = this.retornaTotalSemCor(grauEmOrdem);
-            while(teste	> 0){
+            var vizinhosAdjacencias;
+            var total = this.retornaTotalSemCor(grauEmOrdem);
 
-                corAtual = CSS_COLOR_NAMES[g];
+            while(total	> 0){   
 				
                 //Percorre todos os vertices e escolhe o de maior grau de saturação
-                verticeMaiorGrau = this.retornaMaiorGrauSaturacao(grauEmOrdem, nao_verificados);
-
-                g++;
-                corAtual = CSS_COLOR_NAMES[g];
+                verticeMaiorGrau = this.retornaMaiorGrauSaturacao(grauEmOrdem);
                 var adjacencias = this._getAdjacencias(grauEmOrdem, this.ligacao[verticeMaiorGrau[0]]);
+    
+                //Encontrei a menor cor possivel no vetor de cores
+                for(var x = 0; x < CSS_COLOR_NAMES.length; x++){
+                    flag = true;
+                    for(var z = 0; z < adjacencias.length; z++){
+                        if(verticeMaiorGrau[2] != CSS_COLOR_NAMES[x]){
+                            if(CSS_COLOR_NAMES[x] == adjacencias[z][2]){
+                                flag = false;
+                            }
+                        }        
+                    }
+                    if(flag == true){
+                        verticeMaiorGrau[2] = CSS_COLOR_NAMES[x];
+                        break;
+                    }
+                }
+
                 //Percorro todas as ligações do vertice de maior grau
                 for(var j = 0; j < adjacencias.length; j ++){
-                    adjacencias[j][2] = corAtual;
-                    adjacencias[j][3]++;
+                    vizinhosAdjacencias = this._getAdjacencias(grauEmOrdem, this.ligacao[adjacencias[j][0]]);
+                    for(var k = 0;k < vizinhosAdjacencias.length; k++){
+                        if((vizinhosAdjacencias[k][2] != verticeMaiorGrau[2]) && (vizinhosAdjacencias[k][0] != verticeMaiorGrau[0])){
+                            adjacencias[j][3]++;
+                        }
+                    }                    
                 }
 
                 nao_verificados.splice(verticeMaiorGrau[0], 1);
-
-                teste = this.retornaTotalSemCor(grauEmOrdem, nao_verificados);
+                total = this.retornaTotalSemCor(grauEmOrdem); //, nao_verificados);
             }
 
         //Imprimindo no console
@@ -554,24 +570,30 @@
     };
 
     //Vinícius Machado 03/10/17 - Retorna o vetor de vertice que tenha maior grua de saturação, ou em caso de empate, maior grau de ligação
-    Grafo.prototype.retornaMaiorGrauSaturacao = function(listaDsatur, naoVerificado){
-        for (var i = 0; i < listaDsatur.length; i++){
-            if (listaDsatur[i][0] == naoVerificado[0]){
-                var maior = listaDsatur[i];
-            }
-        }
+    Grafo.prototype.retornaMaiorGrauSaturacao = function(listaDsatur){
+
+        var naoPintados = [];
 
         for(i = 0; i < listaDsatur.length; i++){
-            if(listaDsatur[i][3] > maior[3]){
-                maior = listaDsatur[i];
-            }
-
-            if (listaDsatur[i][3] == maior[3]){
-                if (listaDsatur[i][1] > maior[1]){
-                    maior = listaDsatur[i];
-                }
+            if(listaDsatur[i][2] == "Sem Cor"){
+                naoPintados.push(listaDsatur[i]);
             }
         }
+
+        var maior = naoPintados[0];
+
+        for(j = 0; j < naoPintados.length; j++){
+
+            if(naoPintados[j][3] > maior[3]){
+                maior = naoPintados[j];
+            }
+
+            if(naoPintados[j][1] > maior[1]){
+                maior = naoPintados[j];
+            }
+
+        }
+        
         return maior;
     };
 
@@ -614,7 +636,7 @@
     };
 
     //Vinícius 01/10/17
-    Grafo.prototype.desenhaCanvasLigacoes = function (){
+    Grafo.prototype.desenhaCanvasLigacoes = function (tipo){
         
         //Config do canvas
         canvas  = document.getElementById('myCanvas');
@@ -654,8 +676,13 @@
          
          console.log(vertices);
          console.log(ligacoes);
-         //start(canvas, vertices, ligacoes, grafo);
-         start(canvas, this.welshAndPowell(), ligacoes, grafo);
+         
+         if(tipo == "welshAndPowell"){
+            start(canvas, this.welshAndPowell(), ligacoes, grafo);
+         }else if(tipo == "dsatur"){
+            start(canvas, this.dsatur(), ligacoes, grafo);
+         }
+         
 
     };
 
