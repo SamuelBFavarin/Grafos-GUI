@@ -519,6 +519,7 @@
             var verticeMaiorGrau;
             var vizinhosAdjacencias;
             var total = this.retornaTotalSemCor(grauEmOrdem);
+            var cores = [];
 
             while(total	> 0){   
 				
@@ -538,18 +539,28 @@
                     }
                     if(flag == true){
                         verticeMaiorGrau[2] = CSS_COLOR_NAMES[x];
-			break;
+                        break;
                     }
                 }
-
+                
                 //Percorro todas as ligações do vertice de maior grau
                 for(var j = 0; j < adjacencias.length; j ++){
                     vizinhosAdjacencias = this._getAdjacencias(grauEmOrdem, this.ligacao[adjacencias[j][0]]);
+                    cores = [];
+
+                    //Insere todas as cores dos vizinhos dos adjacentes em um vetor de cores
                     for(var k = 0;k < vizinhosAdjacencias.length; k++){
-                        if((vizinhosAdjacencias[k][2] != verticeMaiorGrau[2]) && (vizinhosAdjacencias[k][0] != verticeMaiorGrau[0])){
-                            adjacencias[j][3]++;
-                        }
-                    }                    
+                        cores.push(vizinhosAdjacencias[k][2]);
+                    }
+
+                    //Remove cores duplicadas
+                    var unique = cores.filter(function(elem, index, self) {
+                        return index == self.indexOf(elem);
+                    })     
+
+                    //Atualizo o grua de saturação pelo total de cores diferente que foi inserido no vetor de cores
+                    adjacencias[j][3] = unique.length;
+
                 }
 
                 nao_verificados.splice(verticeMaiorGrau[0], 1);
