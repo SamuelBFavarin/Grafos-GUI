@@ -94,7 +94,7 @@
         if (!this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
             this.ligacao[vertice2].push([vertice1, _peso]);
-	    // imprimeNotificacao("Aresta adicionado com sucesso!", "success");
+	        //imprimeNotificacao("Aresta adicionado com sucesso!", "success");
         } else {
             console.log('Impossível adicionar Aresta em grafos direcionados');
             imprimeNotificacao("Impossível adicionar Aresta em grafos direcionados!", "error");
@@ -716,7 +716,7 @@
         return css;
     };
 
- Grafo.prototype._menorCaminho = function(abertos, pesos){
+Grafo.prototype._menorCaminho = function(abertos, pesos){
         var menorCaminho = abertos[0];
         for (var i = 0; i < abertos.length; i++){
             if (pesos[abertos[i]] < pesos[menorCaminho]){
@@ -777,19 +777,3 @@
             }
         }
     };
-
-
-    var grafo = new Grafo(false, false);
-	//TESTE DE DSATUR
-    grafo.addVertice("A");
-    grafo.addVertice("B");
-    grafo.addVertice("C");
-    grafo.addVertice("D");
-    grafo.addVertice("E");
-    grafo.addAresta("A", "B");
-	grafo.addAresta("A", "D");
-	grafo.addAresta("B", "C");
-	grafo.addAresta("E", "B");
-	grafo.addAresta("E", "D");
-	grafo.addAresta("E", "C");
-
