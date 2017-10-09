@@ -21,7 +21,7 @@
 - [x] bfs(verticeOrigem, verticeDestino) -Busca em largura com destino
 - [x] dfs(verticeOrigem, verticeDestino) -Busca em profundidade com destino
 
-### Entrega dia 06/10/2017 :coffee:
+### Entrega dia 06/10/2017 :heavy_check_mark:
 
 - [x] dijkstra(verticeOrigem) -dijkstra sem destino
 - [X] dijkstra(verticeOrigem, verticeDestino) -dijkstra com destino
@@ -30,3 +30,7 @@
 - [x] Coloração por DSATUR
 - [x] Divisão de arquivo (Classe e funções)
 - [x] Perfumaria da Interface Web
+
+### Entrega dia 03/11/2017 :clock11:
+- Em breve...
+
