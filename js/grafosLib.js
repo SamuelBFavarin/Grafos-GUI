@@ -777,3 +777,10 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
             }
         }
     };
+
+/*
+	SAMUEL B FAVARIN
+	AG.: 1242 
+	CONTA: 01048777-3
+	Santander
+*/
