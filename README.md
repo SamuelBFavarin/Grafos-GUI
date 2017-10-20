@@ -31,6 +31,7 @@
 - [x] Divisão de arquivo (Classe e funções)
 - [x] Perfumaria da Interface Web
 
-### Entrega dia 03/11/2017 :clock11:
-- Em breve...
+### Entrega dia 03/11/2017 :beer:
+- [ ] Árvore geradora mínima com Kruskal
+- [ ] Árvore geradora mínima com Prim
 
