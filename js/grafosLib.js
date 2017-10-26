@@ -623,6 +623,23 @@
 
     };
 
+
+    //PRIM
+
+    Grafo.prototype.prim = function(){
+        // conjunto de arestas
+        var s = new Array();  
+        var q = this.vertices;
+        
+        
+        
+        console.log(q);
+        
+        
+    }
+
+    
+
     // DESENHA MATRIZ DE ADJACENCIA
     // --CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
     //   SE NÃO FOR ENCONTRADO É ATRIBUIDO 0 A POSIÇÃO SEM PESO
@@ -778,9 +795,8 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         }
     };
 
-/*
-	SAMUEL B FAVARIN
-	AG.: 1242 
-	CONTA: 01048777-3
-	Santander
-*/
+
+grafo = new Grafo(false, true);
+grafo.addVertice('q1');
+grafo.addVertice('q2');
+
