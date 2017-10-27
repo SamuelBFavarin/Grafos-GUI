@@ -256,6 +256,8 @@
         console.log(visitado);
     };
 
+    //BFS COM DESTINO
+    //
     Grafo.prototype.bfsComDestino = function(origem,destino){
         var fila = [];
         fila.push(origem);
@@ -291,6 +293,8 @@
         imprimeNotificacao("Vértice não encontrado!", "warn");
     };
 
+    //BFS SEM DESTINO
+
     Grafo.prototype.dfsSemDestino = function (origem){
         var visitados   = [];
         var pilha       = [];
@@ -324,6 +328,7 @@
         }
     };
 
+    // DFS COM DESTINO
     Grafo.prototype.dfsComDestino = function (origem,destino){
         var visitados   = [];
         var pilha       = [];
@@ -623,23 +628,6 @@
 
     };
 
-
-    //PRIM
-
-    Grafo.prototype.prim = function(){
-        // conjunto de arestas
-        var s = new Array();  
-        var q = this.vertices;
-        
-        
-        
-        console.log(q);
-        
-        
-    }
-
-    
-
     // DESENHA MATRIZ DE ADJACENCIA
     // --CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
     //   SE NÃO FOR ENCONTRADO É ATRIBUIDO 0 A POSIÇÃO SEM PESO
@@ -796,7 +784,35 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
     };
 
 
+    // PRIM
+    // ALGORITMO DE GERADOR DA ÁRVORE MÍNIMA
+    // Samuel Favarin 27/10/17
+    Grafo.prototype.prim = function(){
+        // conjunto de arestas
+        var s = new Array();
+        var q = this.vertices;
+        console.log(q);
+
+
+    };
+
+
 grafo = new Grafo(false, true);
-grafo.addVertice('q1');
-grafo.addVertice('q2');
+grafo.addVertice('A');
+grafo.addVertice('B');
+grafo.addVertice('C');
+grafo.addVertice('D');
+grafo.addVertice('E');
+grafo.addVertice('F');
+grafo.addArestaPonderada('A','C',7);
+grafo.addArestaPonderada('A','D',2);
+grafo.addArestaPonderada('A','E',10);
+grafo.addArestaPonderada('B','C',3);
+grafo.addArestaPonderada('B','F',2);
+grafo.addArestaPonderada('C','F',3);
+grafo.addArestaPonderada('C','E',9);
+grafo.addArestaPonderada('D','E',7);
+grafo.addArestaPonderada('D','F',4);
+grafo.addArestaPonderada('F','E',8);
+
 
