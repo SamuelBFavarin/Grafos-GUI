@@ -841,6 +841,91 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         return novoArray;
     };
 
+/*####################################################################################################################################/
+                                            Vinícius A.M 27/10/17 - INÍCIO DO KRUSKAL E SEUS DERIVADOS 
+/*###################################################################################################################################*/
+    Grafo.prototype.kruskal = function () {
+        
+        var s = new Array();// conjunto de arestas vazias
+        var q = this.iniciaControle(this.ligacao, this.vertices);// conjunto de arestas do grafo. Ex : {AC, BD, EF}
+        var floresta = this.iniciaFloresta(); //Retorna a floresta inicada com os vértices do grafo       
+        
+        //Enquanto Q não estiver vazio
+        while(q.length != 0){
+            
+        }
+
+    };
+
+    Grafo.prototype.iniciaFloresta = function (){
+
+        var floresta = new Array();
+
+        //Preenchendo a floresta com os vértices já existentes
+        for(var i = 0; i < this.vertices.length; i++){
+            floresta.push(this.vertices[i]);
+        }
+
+        return floresta; //Ex : {{A}, {B}, {C}, {D}}
+    };
+   
+    Grafo.prototype.iniciaControle = function (conjuntoArestas, conjuntoVertices){
+
+        var conjuntoControle = new Array();
+        var temp = [];
+        var verticeAtual;
+        var ligacaoAtual;
+        var pesoAtual;
+        var flag;
+
+        //Monta um array com ligações e peso
+        for(var i = 0; i < conjuntoVertices.length; i++){
+            for(var j = 0; j < conjuntoArestas[conjuntoVertices[i]].length; j++){
+
+                flag = true;
+                temp = [];
+                verticeAtual = conjuntoVertices[i];
+                ligacaoAtual = conjuntoArestas[conjuntoVertices[i]][j][0];
+                pesoAtual = conjuntoArestas[conjuntoVertices[i]][j][1];
+
+                //Veritico se existe duplicidade de ligação, exemplo AD e DA
+                for(var k = 0; k < conjuntoControle.length; k++){
+
+                    if( (conjuntoControle[k][0] == ligacaoAtual) &&
+                         (conjuntoControle[k][1] == verticeAtual) && 
+                            (conjuntoControle[k][2] == pesoAtual) ){
+                            flag = false;
+                    }
+                }
+
+                //Se não encontrou duplicidade...
+                if(flag == true){
+                    temp[0] = verticeAtual; 
+                    temp[1] = ligacaoAtual;
+                    temp[2] = pesoAtual;
+                    conjuntoControle.push(temp); //Irei juntar tudo em um vetor mais organizado
+                }
+            }
+        }
+
+        return conjuntoControle;        
+    };
+
+    Grafo.prototype.menorAresta = function(conjuntoControle){
+
+        var menor = conjuntoControle[0];
+        //Busca a menor aresta e retorna
+        for(var i = 0; i < conjuntoControle.length; i++){
+            if(conjuntoControle[i][2] < menor[2]){
+                menor = conjuntoControle[i];
+            }
+        }
+
+        return menor;
+    };
+/*####################################################################################################################################/
+                                                FIM DO KRUSKAL E SEUS DERIVADOS 
+/*###################################################################################################################################*/
 
 
 
@@ -862,4 +947,5 @@ grafo.addArestaPonderada('D','E',7);
 grafo.addArestaPonderada('D','F',4);
 grafo.addArestaPonderada('F','E',8);
 
-
+//grafo.iniciaControle(grafo.ligacao, grafo.vertices)
+//grafo.menorAresta(grafo.iniciaControle(grafo.ligacao, grafo.vertices));
