@@ -34,4 +34,5 @@
 ### Entrega dia 03/11/2017 :beer:
 - [ ] Árvore geradora mínima com Kruskal
 - [ ] Árvore geradora mínima com Prim
+- [ ] Clique
 
