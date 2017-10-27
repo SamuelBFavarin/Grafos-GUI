@@ -783,18 +783,61 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         }
     };
 
-
     // PRIM
     // ALGORITMO DE GERADOR DA ÁRVORE MÍNIMA
     // Samuel Favarin 27/10/17
-    Grafo.prototype.prim = function(){
+    Grafo.prototype.prim = function() {
         // conjunto de arestas
         var s = new Array();
+        // conjunto de vertices já utilizados
+        var u = new Array();
+        // conjunto de vértices
         var q = this.vertices;
-        console.log(q);
+        // vertice inicial - arbitrário
+        u.push(this.vertices.pop());
 
+        // algoritmo roda enquanto tiver vertices a ser procurado
+        // while(q.length > 0){
+        // busca em todos os vertices usados, o menor peso da aresta
+        for (var i = 0; i < u.length; i++) {
+            // vertice ligacao que recebe destino da aresta e seu peso
+            var vertice_ligacoes = (this.ligacao[this.vertices[i]]);
+            // variavel de menor peso inicial
+            var menorPeso = 999999999999999999999999999;
+            // variavel que recebe a menor aresta
+            var menorAresta;
+            // percorre todas as ligaçoes do meu vertice pesquisado
+            for (var j = 0; j < vertice_ligacoes.length; j++) {
+                if (q.indexOf(vertice_ligacoes[j][1])) {
+                    if (menorPeso > vertice_ligacoes[j][1]) {
+                        menorAresta = vertice_ligacoes[j];
+                        menorPeso = vertice_ligacoes[j][1];
+                    }
+                }
+            }
+            var ligacao = this.vertices[i] + menorAresta[0];
+            s.push(ligacao);
+            q = this.removeElementoArray(q, menorAresta[0]);
+            console.log(q);
+
+            //}
+            //console.log(s);
+        }
 
     };
+
+    Grafo.prototype.removeElementoArray = function (array, elemento) {
+        var index = array.indexOf(elemento);
+        var novoArray = new Array();
+        for (var i = 0; i < array.length; i++) {
+            if (i != index) {
+                novoArray.push(array[i])
+            }
+        }
+        return novoArray;
+    };
+
+
 
 
 grafo = new Grafo(false, true);
