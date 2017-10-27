@@ -797,32 +797,36 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         u.push(this.vertices.pop());
 
         // algoritmo roda enquanto tiver vertices a ser procurado
-        // while(q.length > 0){
+       // while(q.length > 0){
         // busca em todos os vertices usados, o menor peso da aresta
-        for (var i = 0; i < u.length; i++) {
-            // vertice ligacao que recebe destino da aresta e seu peso
-            var vertice_ligacoes = (this.ligacao[this.vertices[i]]);
-            // variavel de menor peso inicial
-            var menorPeso = 999999999999999999999999999;
-            // variavel que recebe a menor aresta
-            var menorAresta;
-            // percorre todas as ligaçoes do meu vertice pesquisado
-            for (var j = 0; j < vertice_ligacoes.length; j++) {
-                if (q.indexOf(vertice_ligacoes[j][1])) {
-                    if (menorPeso > vertice_ligacoes[j][1]) {
-                        menorAresta = vertice_ligacoes[j];
-                        menorPeso = vertice_ligacoes[j][1];
+            for (var i = 0; i < u.length; i++) {
+                // vertice ligacao que recebe destino da aresta e seu peso
+                var vertice_ligacoes = (this.ligacao[this.vertices[i]]);
+                // variavel de menor peso inicial
+                var menorPeso = 999999999999999999999999999;
+                // variavel que recebe a menor aresta
+                var menorAresta;
+                // percorre todas as ligaçoes do meu vertice pesquisado
+                if(vertice_ligacoes){
+                    for (var j = 0; j < vertice_ligacoes.length; j++) {
+                        if (q.indexOf(vertice_ligacoes[j][1])) {
+                            if (menorPeso > vertice_ligacoes[j][1]) {
+                                menorAresta = vertice_ligacoes[j];
+                                menorPeso = vertice_ligacoes[j][1];
+                            }
+                        }
                     }
+                    var ligacao = this.vertices[i] + menorAresta[0];
+                    u.push(this.ligacao[this.vertices[i]]);
+                    s.push(ligacao);
+                    q = this.removeElementoArray(q, menorAresta[0]);
+                    console.log('aqui');
                 }
             }
-            var ligacao = this.vertices[i] + menorAresta[0];
-            s.push(ligacao);
-            q = this.removeElementoArray(q, menorAresta[0]);
-            console.log(q);
-
-            //}
-            //console.log(s);
-        }
+        //}
+        console.log(s);
+        console.log(u);
+        console.log(q);
 
     };
 
