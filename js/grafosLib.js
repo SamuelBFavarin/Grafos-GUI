@@ -849,21 +849,45 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         var s = new Array();// conjunto de arestas vazias
         var q = this.iniciaControle(this.ligacao, this.vertices);// conjunto de arestas do grafo. Ex : {AC, BD, EF}
         var floresta = this.iniciaFloresta(); //Retorna a floresta inicada com os vértices do grafo       
-        
+        var menor;
+        var indexU, indexV;
+
         //Enquanto Q não estiver vazio
-        while(q.length != 0){
+        while(q.length > 0){
             
+            menor = this.menorAresta(q); //Aresta {u, v}
+
+            //Remove a aresta {u, v} do conjunto Q
+            for(var i = 0; i < q.length; i++){
+                if(q[i] == menor){
+                    q.splice(i, 1);
+                }
+            }
+
+            indexU = this.retornaIndex(menor[0], floresta); 
+            indexV = this.retornaIndex(menor[1], floresta);
+            //Irei comparar os indexes de u, v dentro da floresta
+            if(indexU != indexV){
+                s.push(menor);
+                floresta[indexU] += floresta[indexV];
+                floresta.splice(indexV, 1);
+            }
         }
 
+        //Arvóre mínima
+        console.log(s);    
     };
 
     Grafo.prototype.iniciaFloresta = function (){
 
         var floresta = new Array();
+        var temp;
 
         //Preenchendo a floresta com os vértices já existentes
         for(var i = 0; i < this.vertices.length; i++){
-            floresta.push(this.vertices[i]);
+            temp = new Array();
+            temp.push(this.vertices[i])
+            floresta.push(temp);
         }
 
         return floresta; //Ex : {{A}, {B}, {C}, {D}}
@@ -922,6 +946,21 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         }
 
         return menor;
+    };
+
+    Grafo.prototype.retornaIndex = function(aresta, floresta){
+        
+        for(var i = 0; i < floresta.length; i++){
+            if(floresta[i] == aresta){
+                return i;
+            }
+            for(var j = 0; j < floresta[i].length; j++){
+                if(floresta[i][j] == aresta){
+                    return i;
+                }
+            }
+        }
+
     };
 /*####################################################################################################################################/
                                                 FIM DO KRUSKAL E SEUS DERIVADOS 
