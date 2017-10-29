@@ -32,7 +32,7 @@
 - [x] Perfumaria da Interface Web
 
 ### Entrega dia 03/11/2017 :beer:
-- [ ] Árvore geradora mínima com Kruskal
+- [x] Árvore geradora mínima com Kruskal (Falta perfumaria, e inserir na interface, mas está funcionando!)
 - [ ] Árvore geradora mínima com Prim
 - [ ] Clique
 
