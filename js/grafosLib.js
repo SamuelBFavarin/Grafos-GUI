@@ -675,7 +675,7 @@
         console.log(this.ligacao);
     };
 
-    //Vinícius 01/10/17
+    //Vinícius 30/10/17
     Grafo.prototype.desenhaCanvasLigacoes = function (tipo){
         
         //Config do canvas
@@ -688,11 +688,11 @@
         var vertices = [];
         var auxVertices = [];
 	    
-        //Variaveis das ligações
-        var ligacoes = [];
+        //Variaveis das ligações - Atualizado por Vinícius A.M 30/10/2017
+        var ligacoes = this.iniciaControle(this.ligacao, this.vertices);
         var auxLigacoes = [];
 
-        //Percorre todos os vertice
+        //Percorre todos os vertice - Atualizado por Vinícius A.M 30/10/2017
         for (i = 0; i < this.vertices.length; i++){
             
             //Insere no vertices um array com a vertice + cor
@@ -701,30 +701,24 @@
             auxVertices[1] = 'red';
 
             vertices.push(auxVertices);
-            
-            //Percorre todas as ligacoes com o indice do vertice para jogar no Array de ligacoes
-            for(j = 0; j < (this.ligacao[this.vertices[i]].length); j ++){
-                
-                auxLigacoes = new Array();
-                auxLigacoes[0] = this.ligacao[this.vertices[i]][j][0];
-                auxLigacoes[1] = this.vertices[i];
-                auxLigacoes[2] = this.ligacao[this.vertices[i]][j][1];
-                
-                ligacoes.push(auxLigacoes);
-            }
         }
          
          console.log(vertices);
          console.log(ligacoes);
          
+         //Atualizado por Vinícius A.M 30/10/2017
          if(tipo == "welshAndPowell"){
             start(canvas, this.welshAndPowell(), ligacoes, grafo);
          }else if(tipo == "dsatur"){
             start(canvas, this.dsatur(), ligacoes, grafo);
+         }else if(tipo == "kruskal"){
+            start(canvas, this.welshAndPowell(), this.kruskal(), grafo);
+         }else if(tipo == "prim"){
+            start(canvas, this.welshAndPowell(), this.prim(), grafo);
          }
-         
 
     };
+
 
     Grafo.prototype.retornaCssColors = function (){
 
@@ -947,7 +941,16 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         }
 
         //Arvóre mínima
-        console.log(s);    
+        console.log(s);  
+        var logger = document.getElementById('log');        
+
+        for(var i = 0; i < s.length; i ++){
+
+            logger.innerHTML += s[i] + '<br />';
+        }
+
+        return s;
+        
     };
 
     Grafo.prototype.iniciaFloresta = function (){
