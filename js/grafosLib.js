@@ -980,7 +980,21 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
     };
 
     Grafo.prototype.temCicloTres = function () {
-
+        for(var i=0; i<this.vertices.length; i++){
+            var nodo = this.vertices[i];
+            for(var j=0; j<this.ligacao[nodo].length; j++){
+                var vizinho = this.ligacao[nodo][j][0];
+                for(var k=0; k< this.ligacao[vizinho].length; k++){
+                    var vizinho_de_vizinho = this.ligacao[vizinho][k][0];
+                    for(l=0; l< this.ligacao[vizinho_de_vizinho].length; l++){
+                        if(this.ligacao[vizinho_de_vizinho][l][0] === nodo){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     };
 
 
