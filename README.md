@@ -34,6 +34,6 @@
 ### Entrega dia 03/11/2017 :beer:
 - [x] Algoritmo Árvore geradora mínima com Kruskal 
 - [x] Algoritmo Árvore geradora mínima com Prim
-- [ ] Algoritmo Planaridade 
+- [x] Algoritmo Planaridade 
 - [x] Implementação dos algoritmos de geração de árvore mínima na interface
 
