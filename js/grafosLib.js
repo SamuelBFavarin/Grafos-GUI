@@ -1,5 +1,4 @@
 /***************************************************************************************************************************
- Vinícius Machado 24/09/17
  As funções a seguir são usadas como bibliotecas para os botões e interações com os usuários.
  Este arquivo deve ser SEMPRE carregado antes de qualquer script que for utilizar a classe GRAFO
 ****************************************************************************************************************************/
@@ -783,51 +782,52 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         }
     };
 
-    // PRIM
-    // ALGORITMO DE GERADOR DA ÁRVORE MÍNIMA
-    // Samuel Favarin 27/10/17
+    /*####################################################################################################################################/
+     Samuel Brati Favarin  30/10/10 - ALGORITMO DE GERADOR DA ÁRVORE MÍNIMA PRIM
+    /*###################################################################################################################################*/
     Grafo.prototype.prim = function() {
         // conjunto de arestas
         var s = new Array();
-        // conjunto de vertices já utilizados
-        var u = new Array();
-        // conjunto de vértices
+        // conjuntos de vertices não utilizados
         var q = this.vertices;
-        // vertice inicial - arbitrário
-        u.push(this.vertices.pop());
+        // conjunto de vertices utilizados
+        var utilizados = new Array();
+        // controles de arestas
+        var arestas = this.iniciaControle(this.ligacao, this.vertices);
+        //console.log(arestas);
+        utilizados.push(q[2]);
+        q = this.removeElementoArray(q,'C');
+        var menorAresta = null;
 
-        // algoritmo roda enquanto tiver vertices a ser procurado
-       // while(q.length > 0){
-        // busca em todos os vertices usados, o menor peso da aresta
-            for (var i = 0; i < u.length; i++) {
-                // vertice ligacao que recebe destino da aresta e seu peso
-                var vertice_ligacoes = (this.ligacao[this.vertices[i]]);
-                // variavel de menor peso inicial
-                var menorPeso = 999999999999999999999999999;
-                // variavel que recebe a menor aresta
-                var menorAresta;
-                // percorre todas as ligaçoes do meu vertice pesquisado
-                if(vertice_ligacoes){
-                    for (var j = 0; j < vertice_ligacoes.length; j++) {
-                        if (q.indexOf(vertice_ligacoes[j][1])) {
-                            if (menorPeso > vertice_ligacoes[j][1]) {
-                                menorAresta = vertice_ligacoes[j];
-                                menorPeso = vertice_ligacoes[j][1];
+        while(q.length>0){
+            var menorPeso = 999;
+            for(var i=0; i<utilizados.length; i++){
+                for(var j=0; j< q.length; j++){
+                    for(var k=0; k< arestas.length; k++){
+                        if(arestas[k][0] === utilizados[i] && arestas[k][1] === q[j] ||
+                            arestas[k][0] === q[j] && arestas[k][1] === utilizados[i]){
+                            if(menorPeso> arestas[k][2]){
+                                menorPeso = arestas[k][2];
+                                menorAresta = arestas[k];
                             }
                         }
                     }
-                    var ligacao = this.vertices[i] + menorAresta[0];
-                    u.push(this.ligacao[this.vertices[i]]);
-                    s.push(ligacao);
-                    q = this.removeElementoArray(q, menorAresta[0]);
-                    console.log('aqui');
                 }
             }
-        //}
-        console.log(s);
-        console.log(u);
-        console.log(q);
+            //atualização dos vetores nos vetores
+            if (utilizados.indexOf(menorAresta[0]) === -1) utilizados.push(menorAresta[0]);
+            if (utilizados.indexOf(menorAresta[1]) === -1) utilizados.push(menorAresta[1]);
+            q = this.removeElementoArray(q,menorAresta[0]);
+            q = this.removeElementoArray(q,menorAresta[1]);
+            s.push(menorAresta[0]+menorAresta[1]);
+        }
 
+        console.log('Vetor de ligações: ');
+        console.log(s);
+        console.log('Vetor de vertices não utilizados: ');
+        console.log(q);
+        console.log('Vetor de vertices utilizados: ');
+        console.log(utilizados);
     };
 
     Grafo.prototype.removeElementoArray = function (array, elemento) {
@@ -839,6 +839,53 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
             }
         }
         return novoArray;
+    };
+
+
+    /*####################################################################################################################################/
+     Samuel Brati e Vinicius Adriano - 30/10/10 - FUNÇÃO CONTROLE, UTILIZADA NO KURSKAL E NO PRIM
+     /*###################################################################################################################################*/
+
+    Grafo.prototype.iniciaControle = function (conjuntoArestas, conjuntoVertices){
+
+        var conjuntoControle = new Array();
+        var temp = [];
+        var verticeAtual;
+        var ligacaoAtual;
+        var pesoAtual;
+        var flag;
+
+        //Monta um array com ligações e peso
+        for(var i = 0; i < conjuntoVertices.length; i++){
+            for(var j = 0; j < conjuntoArestas[conjuntoVertices[i]].length; j++){
+
+                flag = true;
+                temp = [];
+                verticeAtual = conjuntoVertices[i];
+                ligacaoAtual = conjuntoArestas[conjuntoVertices[i]][j][0];
+                pesoAtual = conjuntoArestas[conjuntoVertices[i]][j][1];
+
+                //Veritico se existe duplicidade de ligação, exemplo AD e DA
+                for(var k = 0; k < conjuntoControle.length; k++){
+
+                    if( (conjuntoControle[k][0] == ligacaoAtual) &&
+                        (conjuntoControle[k][1] == verticeAtual) &&
+                        (conjuntoControle[k][2] == pesoAtual) ){
+                        flag = false;
+                    }
+                }
+
+                //Se não encontrou duplicidade...
+                if(flag == true){
+                    temp[0] = verticeAtual;
+                    temp[1] = ligacaoAtual;
+                    temp[2] = pesoAtual;
+                    conjuntoControle.push(temp); //Irei juntar tudo em um vetor mais organizado
+                }
+            }
+        }
+
+        return conjuntoControle;
     };
 
 /*####################################################################################################################################/
@@ -893,47 +940,7 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         return floresta; //Ex : {{A}, {B}, {C}, {D}}
     };
    
-    Grafo.prototype.iniciaControle = function (conjuntoArestas, conjuntoVertices){
 
-        var conjuntoControle = new Array();
-        var temp = [];
-        var verticeAtual;
-        var ligacaoAtual;
-        var pesoAtual;
-        var flag;
-
-        //Monta um array com ligações e peso
-        for(var i = 0; i < conjuntoVertices.length; i++){
-            for(var j = 0; j < conjuntoArestas[conjuntoVertices[i]].length; j++){
-
-                flag = true;
-                temp = [];
-                verticeAtual = conjuntoVertices[i];
-                ligacaoAtual = conjuntoArestas[conjuntoVertices[i]][j][0];
-                pesoAtual = conjuntoArestas[conjuntoVertices[i]][j][1];
-
-                //Veritico se existe duplicidade de ligação, exemplo AD e DA
-                for(var k = 0; k < conjuntoControle.length; k++){
-
-                    if( (conjuntoControle[k][0] == ligacaoAtual) &&
-                         (conjuntoControle[k][1] == verticeAtual) && 
-                            (conjuntoControle[k][2] == pesoAtual) ){
-                            flag = false;
-                    }
-                }
-
-                //Se não encontrou duplicidade...
-                if(flag == true){
-                    temp[0] = verticeAtual; 
-                    temp[1] = ligacaoAtual;
-                    temp[2] = pesoAtual;
-                    conjuntoControle.push(temp); //Irei juntar tudo em um vetor mais organizado
-                }
-            }
-        }
-
-        return conjuntoControle;        
-    };
 
     Grafo.prototype.menorAresta = function(conjuntoControle){
 
@@ -962,10 +969,6 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         }
 
     };
-/*####################################################################################################################################/
-                                                FIM DO KRUSKAL E SEUS DERIVADOS 
-/*###################################################################################################################################*/
-
 
 
 grafo = new Grafo(false, true);
