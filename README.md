@@ -35,5 +35,5 @@
 - [x] Algoritmo Árvore geradora mínima com Kruskal 
 - [x] Algoritmo Árvore geradora mínima com Prim
 - [ ] Algoritmo Planaridade 
-- [ ] Implementação dos algoritmos de geração de árvore mínima na interface
+- [x] Implementação dos algoritmos de geração de árvore mínima na interface
 
