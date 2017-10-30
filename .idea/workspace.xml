@@ -17,8 +17,8 @@
       <file leaf-file-name="grafosLib.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/grafosLib.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="1089" column="36" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="1133" selection-end-column="73" />
+            <state relative-caret-position="267">
+              <caret line="854" column="35" lean-forward="true" selection-start-line="854" selection-start-column="35" selection-end-line="854" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -211,13 +211,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34639000" />
+    <option name="totallyTimeSpent" value="36503000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1384" y="0" width="1340" height="754" extended-state="1" />
+    <frame x="1384" y="0" width="1340" height="754" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.05625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1546875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -336,8 +336,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/grafosLib.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="1089" column="36" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="1133" selection-end-column="73" />
+        <state relative-caret-position="267">
+          <caret line="854" column="35" lean-forward="true" selection-start-line="854" selection-start-column="35" selection-end-line="854" selection-end-column="35" />
           <folding />
         </state>
       </provider>

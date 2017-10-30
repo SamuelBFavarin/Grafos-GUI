@@ -805,8 +805,10 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
      Samuel Brati Favarin  30/10/10 - ALGORITMO DE GERADOR DA ÁRVORE MÍNIMA PRIM
     /*###################################################################################################################################*/
     Grafo.prototype.prim = function() {
-        // conjunto de arestas
+        // conjunto de resultante de arestas
         var s = new Array();
+        //vertor pronto para printar no canvas
+        var resultatoParaCanvas = new Array();
         // conjuntos de vertices não utilizados
         var q = this.vertices;
         // conjunto de vertices utilizados
@@ -819,7 +821,7 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         var menorAresta = null;
 
         while(q.length>0){
-            var menorPeso = 999;
+            var menorPeso = 99*99*99*99*99*99*99*99;
             for(var i=0; i<utilizados.length; i++){
                 for(var j=0; j< q.length; j++){
                     for(var k=0; k< arestas.length; k++){
@@ -839,6 +841,7 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
             q = this.removeElementoArray(q,menorAresta[0]);
             q = this.removeElementoArray(q,menorAresta[1]);
             s.push(menorAresta[0]+menorAresta[1]);
+            resultatoParaCanvas.push(menorAresta);
         }
 
         console.log('Vetor de ligações: ');
@@ -847,6 +850,9 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         console.log(q);
         console.log('Vetor de vertices utilizados: ');
         console.log(utilizados);
+        console.log('Vetor para canvas');
+        console.log(resultatoParaCanvas);
+        return resultatoParaCanvas;
     };
 
     Grafo.prototype.removeElementoArray = function (array, elemento) {
