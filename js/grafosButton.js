@@ -329,7 +329,7 @@ function coloreDsatur(){
 function desenhaPrim(){
 
     if(grafo.vertices.length > 0){
-        grafo.prim();
+        grafo.desenhaCanvasLigacoes("prim");
      }else{
         imprimeNotificacao("Não existem Vértices!", "warn"); 
      }
@@ -339,7 +339,7 @@ function desenhaPrim(){
 function desenhaKruskal(){
     
     if(grafo.vertices.length > 0){
-        grafo.kruskal();
+        grafo.desenhaCanvasLigacoes("kruskal");
      }else{
         imprimeNotificacao("Não existem Vértices!", "warn"); 
      }
