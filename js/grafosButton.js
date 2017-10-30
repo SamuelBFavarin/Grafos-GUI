@@ -300,33 +300,17 @@
      }
  }
 
- function imprimeCanvas(){
-     
-    if(grafo.vertices.length > 0){
-
-        if( document.getElementById('radioDsatur').checked == true ){
-            grafo.desenhaCanvasLigacoes("dsatur");
-        }else{
-            grafo.desenhaCanvasLigacoes("welshAndPowell");
-        }
-         
-     }else{
-        imprimeNotificacao("Não existem Vértices!", "warn"); 
-     }
-     
- }
-
 function limparConsole(){
     var logger = document.getElementById('log');  
     logger.innerHTML = '<br />';
 }
 
-//***********************ÁREA DE COLORAÇÃO**********************
+//*********************** ÁREA DE COLORAÇÃO **********************
 
 function coloreWelshAndPowell(){
 
     if(grafo.vertices.length > 0){
-         grafo.welshAndPowell();
+         grafo.desenhaCanvasLigacoes("welshAndPowell");
      }else{
         imprimeNotificacao("Não existem Vértices!", "warn"); 
      }
@@ -335,7 +319,27 @@ function coloreWelshAndPowell(){
 function coloreDsatur(){
 
     if(grafo.vertices.length > 0){
-        imprimeNotificacao("Trolei!", "success"); 
+        grafo.desenhaCanvasLigacoes("dsatur");
+     }else{
+        imprimeNotificacao("Não existem Vértices!", "warn"); 
+     }
+}
+//*********************** ÁREA DE ÁRVORE MÍNIMA **********************
+
+function desenhaPrim(){
+
+    if(grafo.vertices.length > 0){
+        grafo.prim();
+     }else{
+        imprimeNotificacao("Não existem Vértices!", "warn"); 
+     }
+}
+
+
+function desenhaKruskal(){
+    
+    if(grafo.vertices.length > 0){
+        grafo.kruskal();
      }else{
         imprimeNotificacao("Não existem Vértices!", "warn"); 
      }
