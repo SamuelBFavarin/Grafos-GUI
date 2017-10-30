@@ -971,6 +971,19 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
     };
 
 
+    /*####################################################################################################################################/
+     Samuel Brati Favarin  30/10/10 - PLANARIDADE
+     /*###################################################################################################################################*/
+
+    Grafo.prototype.ePlanar = function () {
+
+    };
+
+    Grafo.prototype.temCicloTres = function () {
+
+    };
+
+
 grafo = new Grafo(false, true);
 grafo.addVertice('A');
 grafo.addVertice('B');

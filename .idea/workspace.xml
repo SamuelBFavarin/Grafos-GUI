@@ -17,8 +17,8 @@
       <file leaf-file-name="grafosLib.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/grafosLib.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1260">
-              <caret line="841" column="6" lean-forward="true" selection-start-line="841" selection-start-column="6" selection-end-line="841" selection-end-column="6" />
+            <state relative-caret-position="376">
+              <caret line="978" column="0" lean-forward="true" selection-start-line="978" selection-start-column="0" selection-end-line="978" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -211,7 +211,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28493000" />
+    <option name="totallyTimeSpent" value="29224000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1384" y="0" width="1340" height="754" extended-state="0" />
@@ -336,8 +336,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/grafosLib.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1260">
-          <caret line="841" column="6" lean-forward="true" selection-start-line="841" selection-start-column="6" selection-end-line="841" selection-end-column="6" />
+        <state relative-caret-position="376">
+          <caret line="978" column="0" lean-forward="true" selection-start-line="978" selection-start-column="0" selection-end-line="978" selection-end-column="0" />
           <folding />
         </state>
       </provider>
