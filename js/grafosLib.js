@@ -134,6 +134,31 @@
         }
     };
 
+    // mesma implementação da função existeLigacao() porém sem print no console
+    // utilizada na contagem do numero de arestas, implementada na função
+    // calculaNumAresta()
+    Grafo.prototype._existeLigacao = function (origem,destino) {
+        if(this.direcionado){
+            for(i =0; i<this.ligacao[origem].length; i++ ) {
+                if (this.ligacao[origem][i][0] === destino) {
+                    return true;
+                }
+            }
+            return false;
+        }else{
+            for(i =0; i<this.ligacao[origem].length; i++ ) {
+                if (this.ligacao[origem][i][0] === destino) {
+                    for(j =0; j<this.ligacao[destino].length; j++){
+                        if(this.ligacao[destino][j][0] === origem){
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+    };
+
     // RETORNAR LIGAÇÕES
     // --RETORNA A LISTA DE TODAS AS LIGAÇÕES DE UM VERTICE
     Grafo.prototype.retornarLigacoes = function (vertice) {
@@ -975,8 +1000,35 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
      Samuel Brati Favarin  30/10/10 - PLANARIDADE
      /*###################################################################################################################################*/
 
+    // O retorno dessa função não pode ser binário
+    // 0 -> é planar
+    // 1 -> pode ser planar
+    // 2 -> não pode ser planar
     Grafo.prototype.ePlanar = function () {
-
+        var v = this.vertices.length;
+        var a = this.calculaNumArestas();
+        if(v<=2){
+            console.log('É PLANAR');
+            return 0;
+        }
+        else if (v>=3 && a <= (3*v)-6){
+            if(this.temCicloTres()){
+                console.log('PODE SER PLANAR');
+                return 1;
+            }else{
+                console.log('NÃO PODE SER PLANAR');
+                return 2;
+            }
+        }
+        else if (v>=3 && a <= (2*v)-4){
+            if(this.temCicloTres()){
+                console.log('NÃO PODE SER PLANAR');
+                return 2;
+            }else{
+                console.log('PODE SER PLANAR');
+                return 1;
+            }
+        }
     };
 
     Grafo.prototype.temCicloTres = function () {
@@ -997,8 +1049,29 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         return false;
     };
 
+    Grafo.prototype.calculaNumArestas = function () {
+        var cont=0;
+        for(var i=0; i<this.vertices.length; i++){
+            for(var j=0; j<this.vertices.length; j++){
+                var origem = this.vertices[i];
+                var destino = this.vertices[j];
+                if(this._existeLigacao(origem,destino)){
+                    cont++;
+                }
+            }
+        }
+        if(this.isDirecionado){
+            return cont;
+        }else{
+            return cont/2;
+        }
+
+    };
+
 
 grafo = new Grafo(false, true);
+
+//GRAFO DE TESTE DO PRIM E KRUSKAL
 grafo.addVertice('A');
 grafo.addVertice('B');
 grafo.addVertice('C');
@@ -1015,6 +1088,47 @@ grafo.addArestaPonderada('C','E',9);
 grafo.addArestaPonderada('D','E',7);
 grafo.addArestaPonderada('D','F',4);
 grafo.addArestaPonderada('F','E',8);
+
+
+//É PLANAR
+/*grafo.addVertice('A');
+grafo.addVertice('B');
+grafo.addAresta('A','B');*/
+
+// NÃO PODE SER PLANAR
+/*grafo.addVertice('A');
+grafo.addVertice('B');
+grafo.addVertice('C');
+grafo.addVertice('D');
+grafo.addVertice('E');
+grafo.addVertice('F');
+grafo.addAresta('A','E');
+grafo.addAresta('A','D');
+grafo.addAresta('A','F');
+grafo.addAresta('B','E');
+grafo.addAresta('B','F');
+grafo.addAresta('B','D');
+grafo.addAresta('C','E');
+grafo.addAresta('C','F');
+grafo.addAresta('C','D');*/
+
+// PODE SER PLANAR
+/*grafo.addVertice('A');
+grafo.addVertice('B');
+grafo.addVertice('C');
+grafo.addVertice('D');
+grafo.addVertice('E');
+grafo.addAresta('A','E');
+grafo.addAresta('A','C');
+grafo.addAresta('A','D');
+grafo.addAresta('B','C');
+grafo.addAresta('B','D');
+grafo.addAresta('B','E');
+grafo.addAresta('C','D');
+grafo.addAresta('C','E');
+grafo.addAresta('E','D');*/
+
+
 
 //grafo.iniciaControle(grafo.ligacao, grafo.vertices)
 //grafo.menorAresta(grafo.iniciaControle(grafo.ligacao, grafo.vertices));
