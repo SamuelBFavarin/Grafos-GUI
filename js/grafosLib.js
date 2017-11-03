@@ -1,32 +1,85 @@
 /***************************************************************************************************************************
- As funções a seguir são usadas como bibliotecas para os botões e interações com os usuários.
- Este arquivo deve ser SEMPRE carregado antes de qualquer script que for utilizar a classe GRAFO
+ *
+ * grafosLib.js
+ *
+ * Principal função do projeto.
+ * As funções a seguir são usadas como bibliotecas para os botões e interações com os usuários.
+ * Este arquivo deve ser SEMPRE carregado antes de qualquer script que for utilizar a classe GRAFO
+ *
+ *
+ * Contém:
+ *  >>Funçoes Básicas: Criação do Grafo, Vertices, Arestas, definção de Ponderado e Direcionado
+ *  >>Funções de Busca: BFS, DFS e Djikstra
+ *  >>Funções de Coloração: Desatur e Welsh And Powell
+ *  >>Funções de Árvore mínima: Kruskal e Prim
+ *  >>Funções de verificação: Planaridade
+ *  >>Funções de Desenho: Desenho de Matriz de Adjacencia, Lista de Adjacencia
+ *
+ *
+ *  Estrutura de um Grafo:
+ *      >>vertices
+ *          >>Array de nomes dos vértices criados
+ *          >> estrutura: [nomeVertice,nomeVertice]
+ *          >> ex.: ['A','B','C','D']
+ *      >>ligacao
+ *          >>Array com ligrações dos vértices.
+ *          >>Cada vértice representa uma posição no array
+ *          >>Cada posição tem um array das ligações do vértices,
+ *            onde a posição 0 representa o vizinho e a posição 1 representa o peso da ligação
+ *          >> estrutura: [
+ *                          A[
+ *                              [nomeVizinho,peso],
+ *                              [nomeVizinho,peso],
+ *                          ],
+ *                          B[
+ *                              [nomeVizinho,peso]
+ *                          ]
+ *                        ]
+ *      >>dicerionado
+ *          >>Representa com tipo boolean se o grafo é direcionado ou não
+ *      >>ponderado
+ *          >>Representa com tipo boolean se o grafo é direcionado ou não
+ *
+
 ****************************************************************************************************************************/
 
 
-    // --GRAFO POSSUI UM CONJUNTO DE VÉRTICES E UM CONJUNTO DE LIGAÇÕES (ARESTAS OU ARCOS)
-    // --GRAFO PODE SER PONDERADO E/OU DIRECIONADO
+    /*####################################################################################################################################/
+     CLASSE GRAFO - Samuel Brati Favarin
+
+     >> GRAFO POSSUI UM CONJUNTO DE VÉRTICES E UM CONJUNTO DE LIGAÇÕES (ARESTAS OU ARCOS)
+     >> GRAFO PODE SER PONDERADO E/OU DIRECIONADO
+     /*###############################################################################################################################*/
+
     function Grafo(_direcionado,_ponderado){
         this.vertices = [];
         this.ligacao  = [];
         this.direcionado = _direcionado;
         this.ponderado = _ponderado;
-    };
+    }
 
-    // ADICIONA VERTICE PELO NOME
-    // --INSERE O VERTICE NO CONJUNTO DE VERTICES
-    // --CRIA NO CONJUNTO DE LIGAÇÃO UM ARRAY ONDE RECEBERÁ TODAS AS LIGAÇÕES DO VÉRTICE
+    /*####################################################################################################################################/
+     ADICIONA VERTICE PELO NOME - Samuel Brati Favarin
+
+     >> INSERE O VERTICE NO CONJUNTO DE VERTICES
+     >> CRIA NO CONJUNTO DE LIGAÇÃO UM ARRAY ONDE RECEBERÁ TODAS AS LIGAÇÕES DO VÉRTICE
+     /*###############################################################################################################################*/
+
     Grafo.prototype.addVertice = function (vertice){
         this.vertices.push(vertice);
         this.ligacao[vertice] = [];
     };
 
-    //EXISTE VERTICE
-    // --RECEBE O NOME DO VERTICE POR PARAMETRO, PROCURA NO OCNJUNTO DE VÉRTICES SE EXISTE
+    /*####################################################################################################################################/
+        EXISTE VERTICE - Samuel Brati Favarin
+
+     >> RECEBE O NOME DO VERTICE POR PARAMETRO, PROCURA NO OCNJUNTO DE VÉRTICES SE EXISTE
+     /*###############################################################################################################################*/
+
     Grafo.prototype.existeVertice = function (vertice) {
         var logger = document.getElementById('log');
 
-        for(i=0; i<this.vertices.length; i++){
+        for(var i=0; i<this.vertices.length; i++){
             if(this.vertices[i] === vertice){
                 console.log(this.vertices[i]);
                 console.log('Existe vértice!!!');
@@ -46,9 +99,13 @@
         return false;
     };
 
-    //ADICIONA ARCO NÃO PONDERADO
-    //--RECEBE UM VERTICE DE ORIGEM, E UM VÉRTICE DE DESTINO
-    //--ATRIBUI 1 AO PESO E CHAMA a função addArco() PONDERADO
+    /*####################################################################################################################################/
+     ADICIONA ARCO NÃO PONDERADO - Samuel Brati Favarin
+
+     >> RECEBE UM VERTICE DE ORIGEM, E UM VÉRTICE DE DESTINO
+     >> ATRIBUI 1 AO PESO E CHAMA a função addArco() PONDERADO
+     /*###############################################################################################################################*/
+
     Grafo.prototype.addArco = function (vertice1,vertice2) {
         if(this.direcionado) {
             this.peso = 1;
@@ -59,9 +116,13 @@
         }
     };
 
-    //ADICIONA ARCO PONDERADO
-    //--RECEBE O VERTICE DE ORIGEM, O VERTICE DE DESTINO E O PESO
-    //--INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE UM ARRAY COM O DESTINO E O PESO
+    /*####################################################################################################################################/
+     ADICIONA ARCO PONDERADO - Samuel Brati Favarin
+
+     >> RECEBE O VERTICE DE ORIGEM, O VERTICE DE DESTINO E O PESO
+     >> INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE UM ARRAY COM O DESTINO E O PESO
+     /*###############################################################################################################################*/
+
     Grafo.prototype.addArcoPonderado = function (vertice1,vertice2,_peso){
         if (this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);  
@@ -72,9 +133,13 @@
         }
     };
 
-    //ADICIONA ARESTA NÃO 
-    //--RECEBE UM VERTICE DE ORIGEM, E UM VÉRTICE DE DESTINO
-    //--ATRIBUI 1 AO PESO E CHAMA a função addAresta() PONDERADA
+    /*####################################################################################################################################/
+     ADICIONA ARESTA NÃO PONDERADA - Samuel Brati Favarin
+
+     >> RECEBE UM VERTICE DE ORIGEM, E UM VÉRTICE DE DESTINO
+     >> ATRIBUI 1 AO PESO E CHAMA a função addAresta() PONDERADA
+     /*###############################################################################################################################*/
+
     Grafo.prototype.addAresta = function (vertice1,vertice2) {
         if(!this.direcionado) {
             this.peso = 1;
@@ -85,10 +150,14 @@
         }
     };
 
-    //ADICIONA ARESTA PONDERADA
-    //--RECEBE O VERTICE DE ORIGEM, O VERTICE DE DESTINO E O PESO
-    //--INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE DE ORIGEM UM ARRAY COM O DESTINO NA POSIÇÃO 0 E O PESO NA POSIÇÃO 1
-    //--INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE DE DESTINO UM ARRAY COM O ORIGEM NA POSIÇÃO 0 E O PESO NA POSIÇÃO 1
+    /*####################################################################################################################################/
+     ADICIONA ARESTA PONDERADA - Samuel Brati Favarin
+
+     >> RECEBE O VERTICE DE ORIGEM, O VERTICE DE DESTINO E O PESO
+     >> INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE DE ORIGEM UM ARRAY COM O DESTINO NA POSIÇÃO 0 E O PESO NA POSIÇÃO 1
+     >> INSERE NO CONJUNTO DE LIGAÇÕES, NA POSIÇÃO DO VERTICE DE DESTINO UM ARRAY COM O ORIGEM NA POSIÇÃO 0 E O PESO NA POSIÇÃO 1
+     /*###############################################################################################################################*/
+
     Grafo.prototype.addArestaPonderada = function (vertice1,vertice2,_peso){
         if (!this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);
@@ -100,13 +169,21 @@
         }
     };
 
-    // EXISTE LIGAÇÃO
-    //-- SE FOR DIRECIONADO - PROCURA SE EXISTE O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES DO VERTICE ORIGEM
-    //-- SE NÃO FOR DIRECIONADO - PROCURA SE EXISTE O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES DO VERTICE ORIGEM E
-    //                            E SE  EXISTE O VERTICE ORIGEM NO CONJUNTO DE LIGAÇÕES DO VERTICE DESTINO
+    /*####################################################################################################################################/
+     EXISTE LIGAÇÕES - Samuel Brati Favarin
+
+     >>SE FOR DIRECIONADO - PROCURA SE EXISTE O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES DO VERTICE ORIGEM
+     >> SE NÃO FOR DIRECIONADO - PROCURA SE EXISTE O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES DO VERTICE ORIGEM E
+        SE  EXISTE O VERTICE ORIGEM NO CONJUNTO DE LIGAÇÕES DO VERTICE DESTINO
+
+
+     >>  _existeLigacao() = Mesma implementação da função existeLigacao() porém sem print no console
+                         >> utilizada na contagem do numero de arestas, implementada na função calculaNumAresta()
+     /*###############################################################################################################################*/
+
     Grafo.prototype.existeLigacao = function (origem,destino) {
         if(this.direcionado){
-            for(i =0; i<this.ligacao[origem].length; i++ ) {
+            for(var i =0; i<this.ligacao[origem].length; i++ ) {
                 if (this.ligacao[origem][i][0] === destino) {
                     console.log('Existe Arco!!!');
                     imprimeNotificacao("Existe Arco!", "success");
@@ -119,7 +196,7 @@
         }else{
             for(i =0; i<this.ligacao[origem].length; i++ ) {
                 if (this.ligacao[origem][i][0] === destino) {
-                    for(j =0; j<this.ligacao[destino].length; j++){
+                    for(var j =0; j<this.ligacao[destino].length; j++){
                         if(this.ligacao[destino][j][0] === origem){
                             console.log('Existe Aresta!!!');
                             imprimeNotificacao("Existe Aresta!", "success");
@@ -134,12 +211,10 @@
         }
     };
 
-    // mesma implementação da função existeLigacao() porém sem print no console
-    // utilizada na contagem do numero de arestas, implementada na função
-    // calculaNumAresta()
+
     Grafo.prototype._existeLigacao = function (origem,destino) {
         if(this.direcionado){
-            for(i =0; i<this.ligacao[origem].length; i++ ) {
+            for(var i =0; i<this.ligacao[origem].length; i++ ) {
                 if (this.ligacao[origem][i][0] === destino) {
                     return true;
                 }
@@ -148,7 +223,7 @@
         }else{
             for(i =0; i<this.ligacao[origem].length; i++ ) {
                 if (this.ligacao[origem][i][0] === destino) {
-                    for(j =0; j<this.ligacao[destino].length; j++){
+                    for(var j =0; j<this.ligacao[destino].length; j++){
                         if(this.ligacao[destino][j][0] === origem){
                             return true;
                         }
@@ -159,26 +234,34 @@
         }
     };
 
-    // RETORNAR LIGAÇÕES
-    // --RETORNA A LISTA DE TODAS AS LIGAÇÕES DE UM VERTICE
+     /*####################################################################################################################################/
+        RETORNAR LIGAÇÕES - Samuel Brati Favarin
+
+            >>RETORNA A LISTA DE TODAS AS LIGAÇÕES DE UM VERTICE
+     /*###############################################################################################################################*/
+
     Grafo.prototype.retornarLigacoes = function (vertice) {
 
         imprimeNotificacao("Ligações retornadas! Verifica o console", "success");
         var logger = document.getElementById('log');  
-        for(i=0;i < this.ligacao[vertice].length; i++) {           
+        for(var i=0;i < this.ligacao[vertice].length; i++) {
             logger.innerHTML += ' [ ' + this.ligacao[vertice][i][0] + ' ] ';     
         }
 
         return this.ligacao[vertice];
     };
 
-    // REMOVE ARESTA OU ARCO
-    //--SE FOR DIRECIONADO - BUSCA O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES ORIGEM E EXCLUI
-    //--SE NÃO FOR DIRECIONADO - BUSCA O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES ORIGEM E
-    //                           O VERTICE ORIGEM NO CONJUNTO DE LIGAÇÕES DESTINO E EXCLUI
+    /*####################################################################################################################################/
+     REMOVE ARESTA OU ARCO - Samuel Brati Favarin
+
+         >>SE FOR DIRECIONADO - BUSCA O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES ORIGEM E EXCLUI
+         >>SE NÃO FOR DIRECIONADO - BUSCA O VERTICE DESTINO NO CONJUNTO DE LIGAÇÕES ORIGEM E
+           O VERTICE ORIGEM NO CONJUNTO DE LIGAÇÕES DESTINO E EXCLUI
+     /*###############################################################################################################################*/
+
     Grafo.prototype.removerLigacao = function (origem,destino) {
         if(this.direcionado){
-            for(i =0; i<this.ligacao[origem].length; i++ ) {
+            for(var i =0; i<this.ligacao[origem].length; i++ ) {
                 if (this.ligacao[origem][i][0] === destino) {
                     //DELETA PESO
 					this.ligacao[origem][i].pop();
@@ -191,7 +274,7 @@
         }else{
             for(i =0; i<this.ligacao[origem].length; i++ ) {
                 if (this.ligacao[origem][i][0] === destino) {
-                    for(j =0; j<this.ligacao[destino].length; j++){
+                    for(var j =0; j<this.ligacao[destino].length; j++){
                         if(this.ligacao[destino][j][0] === origem){
 							// DELETA PESO
                             this.ligacao[origem][i].pop();
@@ -211,9 +294,13 @@
         }
     };
 
-    //REMOVE VERTICE PELO NOME, VERIFICANDO SE EXISTE O VERTICE NA POSIÇÃO PASSADA POR PARAMETRO.
-	//CASO NÃO EXISTA RETORNA -1;
-	//BUSCA EM TODOS OS VERTICES E EXCLUÍ A LIGAÇÃO
+    /*####################################################################################################################################/
+     REMOVE VERTICE PELO NOME, VERIFICANDO SE EXISTE O VERTICE NA POSIÇÃO PASSADA POR PARAMETRO - Samuel Brati Favarin
+
+         >>CASO NÃO EXISTA RETORNA -1;
+         >>BUSCA EM TODOS OS VERTICES E EXCLUÍ A LIGAÇÃO
+     /*###############################################################################################################################*/
+
     Grafo.prototype.removerVertice = function (vertice) {
         var index_vertice = this.vertices.indexOf(vertice);
         if (index_vertice == -1){
@@ -230,17 +317,21 @@
         imprimeNotificacao("Vértice removido com sucesso!", "success");
     };
 
-	//BFS SEM DESTINO
-	//PROCURA AS LIGAÇÕES DA PRIMEIRA POSIÇÃO DA FILA E TESTA SE JA FORAM VISITADAS
-	//COLOCA OS VERTICES ENCONTRADOS NA FILA
-	//DELETA O PRIMEIRO DA FILA
+
+    /*####################################################################################################################################/
+     BFS SEM DESTINO - Samuel Brati Favarin
+
+        >>PROCURA AS LIGAÇÕES DA PRIMEIRA POSIÇÃO DA FILA E TESTA SE JA FORAM VISITADAS
+        >>COLOCA OS VERTICES ENCONTRADOS NA FILA
+        >>DELETA O PRIMEIRO DA FILA
+     /*###############################################################################################################################*/
     Grafo.prototype.bfsSemDestino = function (origem){
         var fila = [];
         fila.push(origem);
         var visitado = [];
         var naoVisitado = [];
 
-        for(l=0;l<this.vertices.length;l++){
+        for(var l=0;l<this.vertices.length;l++){
             naoVisitado[this.vertices[l]] = true;
         }
 
@@ -280,8 +371,9 @@
         console.log(visitado);
     };
 
-    //BFS COM DESTINO
-    //
+    /*####################################################################################################################################/
+        BFS COM DESTINO - Samuel Brati Favarin
+     /*###############################################################################################################################*/
     Grafo.prototype.bfsComDestino = function(origem,destino){
         var fila = [];
         fila.push(origem);
@@ -306,8 +398,8 @@
                     var logger = document.getElementById('log');
                     logger.innerHTML += temp + '<br />';  
 
-                    for(var i = 0; i < visitado.length; i++) {
-                        logger.innerHTML += visitado[i] + '<br />';  
+                    for(var j = 0; j < visitado.length; j++) {
+                        logger.innerHTML += visitado[j] + '<br />';
                     }
                     return;
                 }
@@ -317,7 +409,9 @@
         imprimeNotificacao("Vértice não encontrado!", "warn");
     };
 
-    //BFS SEM DESTINO
+    /*####################################################################################################################################/
+        DFS SEM DESTINO - José
+     /*###############################################################################################################################*/
 
     Grafo.prototype.dfsSemDestino = function (origem){
         var visitados   = [];
@@ -352,7 +446,9 @@
         }
     };
 
-    // DFS COM DESTINO
+    /*####################################################################################################################################/
+         DFS COM DESTINO - José
+     /*##################################################################################################################################*/
     Grafo.prototype.dfsComDestino = function (origem,destino){
         var visitados   = [];
         var pilha       = [];
@@ -385,13 +481,16 @@
 
     };
 
-    //Vinícius Machado 02/10/17 - WELSH AND POWELL FUNCIONANDO!
+    /*####################################################################################################################################/
+     WELSH and POWELL E SUAS FUNÇÕES AUXILIARES /02/10/17 - Vinícius Machado
+
+     /*##################################################################################################################################*/
     Grafo.prototype.welshAndPowell = function (){
 
         var grauEmOrdem = [];
         var verticePeso;
         var troca;
-        var temp;
+        //var temp;
 
         for(var i=0;i < this.vertices.length; i++) {
             verticePeso = new Array();
@@ -497,7 +596,12 @@
         return arrayAdjacentes;
     };
 
-    //02/10/17 - Vinícius Machado
+    /*####################################################################################################################################/
+            DSATUR E SUAS FUNÇÕES AUXILIARES /02/10/17 - Vinícius Machado
+
+            retornaMaiorGrauSaturaçao() = Retorna o vetor de vertice que tenha maior grua de saturação, ou em caso de empate, maior grau de ligação
+     /*##################################################################################################################################*/
+
     Grafo.prototype.dsatur = function (){
         var grauEmOrdem = [];
         var verticePeso;
@@ -604,58 +708,48 @@
             }
         
         }
-
        return grauEmOrdem;
-
     };
 
-    //Vinícius Machado 03/10/17 - Retorna o vetor de vertice que tenha maior grua de saturação, ou em caso de empate, maior grau de ligação
+
     Grafo.prototype.retornaMaiorGrauSaturacao = function(listaDsatur){
-
         var naoPintados = [];
-
         for(i = 0; i < listaDsatur.length; i++){
             if(listaDsatur[i][2] == "Sem Cor"){
                 naoPintados.push(listaDsatur[i]);
             }
         }
-
         var maior = naoPintados[0];
-
         for(j = 0; j < naoPintados.length; j++){
 
             if(naoPintados[j][3] > maior[3]){
                 maior = naoPintados[j];
             }
-
             if(naoPintados[j][1] > maior[1]){
                 maior = naoPintados[j];
             }
-
         }
-        
         return maior;
     };
 
-    //Vinícius Machado 04/10/17
     Grafo.prototype.retornaTotalSemCor = function(listaVertices){
-
     var total = 0;
-
         for ( i = 0; i < listaVertices.length; i++){
             if(listaVertices[i][2] == "Sem Cor"){
                 total = total + 1;
             }
         }
-    
     return total;
-
     };
 
-    // DESENHA MATRIZ DE ADJACENCIA
-    // --CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
-    //   SE NÃO FOR ENCONTRADO É ATRIBUIDO 0 A POSIÇÃO SEM PESO
-    // -- PRINTA A MATRIZ DE ADJACENCIA E A LISTA DE ADJACENCIA
+    /*####################################################################################################################################/
+            DESENHA MATRIZ DE ADJACENCIA Samuel Brati Favarin
+
+        >>CRIA UMA MATRIZ COM TODOS OS VERTICES, E BUSCA NO CONJUNTO DE LIGAÇÕES DE DETERMINADO VERTICE SE DETERMINADO PESO
+            SE NÃO FOR ENCONTRADO É ATRIBUIDO 0 A POSIÇÃO SEM PESO
+        >> PRINTA A MATRIZ DE ADJACENCIA E A LISTA DE ADJACENCIA
+
+     /*##################################################################################################################################*/
     Grafo.prototype.imprimirGrafo = function () {
         this.matriz = new Array();
         for(i=0;i < this.vertices.length; i++) {
@@ -673,28 +767,30 @@
         console.log(this.matriz);
         console.log('Lista de Adjacencia: ');
         console.log(this.ligacao);
-    };
 
-    //Vinícius 30/10/17
+    };
+    /*####################################################################################################################################/
+               DESENHAR GRAFO EM CANVAS 30/10/17 VINÍCIUS
+     /*##################################################################################################################################*/
     Grafo.prototype.desenhaCanvasLigacoes = function (tipo){
-        
+
         //Config do canvas
         canvas  = document.getElementById('myCanvas');
 	    ctx     = canvas.getContext('2d');
 	    canvas.width  = 1330;
 	    canvas.height = 650;
-        
+
         //Variáveis do vértice
         var vertices = [];
         var auxVertices = [];
-	    
+
         //Variaveis das ligações - Atualizado por Vinícius A.M 30/10/2017
         var ligacoes = this.iniciaControle(this.ligacao, this.vertices);
         var auxLigacoes = [];
 
         //Percorre todos os vertice - Atualizado por Vinícius A.M 30/10/2017
         for (i = 0; i < this.vertices.length; i++){
-            
+
             //Insere no vertices um array com a vertice + cor
             auxVertices = new Array();
             auxVertices[0] = this.vertices[i];
@@ -702,11 +798,10 @@
 
             vertices.push(auxVertices);
         }
-         
+
          console.log(vertices);
          console.log(ligacoes);
-         
-         //Atualizado por Vinícius A.M 30/10/2017
+
          if(tipo == "welshAndPowell"){
             start(canvas, this.welshAndPowell(), ligacoes, grafo);
          }else if(tipo == "dsatur"){
@@ -714,30 +809,32 @@
          }else if(tipo == "kruskal"){
             start(canvas, this.welshAndPowell(), this.kruskal(), grafo);
          }else if(tipo == "prim"){
-            start(canvas, this.welshAndPowell(), this.prim(), grafo);
+            start(canvas, this.dsatur(), this.prim(), grafo);
          }
-
     };
 
-
     Grafo.prototype.retornaCssColors = function (){
-
         var css = ["PaleGreen","Magenta","Aqua","Moccasin","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet",
-        "Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan",
-        "DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon",
-        "DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey",
-        "DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow",
-        "HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral",
-        "LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray",
-        "LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid",
-        "MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose",
-        "NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleTurquoise",
-        "PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon",
-        "SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan",
-        "Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
+            "Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan",
+            "DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon",
+            "DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey",
+            "DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow",
+            "HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral",
+            "LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray",
+            "LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid",
+            "MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose",
+            "NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleTurquoise",
+            "PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon",
+            "SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan",
+            "Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
 
         return css;
     };
+
+
+    /*####################################################################################################################################/
+        DIJKSTRA e FUNÇÕES AUXILIARES - José
+     /*##################################################################################################################################*/
 
     Grafo.prototype._menorCaminho = function(abertos, pesos){
         var menorCaminho = abertos[0];
@@ -802,7 +899,7 @@
     };
 
     /*####################################################################################################################################/
-     Samuel Brati Favarin  30/10/10 - ALGORITMO DE GERADOR DA ÁRVORE MÍNIMA PRIM
+            Samuel Brati Favarin  30/10/10 - ALGORITMO DE GERADOR DA ÁRVORE MÍNIMA PRIM
     /*###################################################################################################################################*/
     Grafo.prototype.prim = function() {
         // conjunto de resultante de arestas
@@ -815,12 +912,17 @@
         var utilizados = new Array();
         // controles de arestas
         var arestas = this.iniciaControle(this.ligacao, this.vertices);
-        var primeiroElemento = q[2];
-        utilizados.push(q[2]);
+        //definindo posição arbitrária iniciar a arvore
+        var primeiroElemento = q[0];
+        //coloca o primeiro elemento no vertice de utilizados
+        utilizados.push(q[0]);
+        //remove o primeiro elemento do vertices que não utilizados
         q = this.removeElementoArray(q,primeiroElemento);
+        //cria uma variavel para receber menor aresta temporária
         var menorAresta = null;
 
         while(q.length>0){
+            //recebe um peso maior para compara com as outras arestas
             var menorPeso = this.recebeMaiorPeso(arestas);
             for(var i=0; i<utilizados.length; i++){
                 for(var j=0; j< q.length; j++){
@@ -835,6 +937,7 @@
                     }
                 }
             }
+            console.log(menorAresta);
             //atualização dos vetores nos vetores
             if (utilizados.indexOf(menorAresta[0]) === -1) utilizados.push(menorAresta[0]);
             if (utilizados.indexOf(menorAresta[1]) === -1) utilizados.push(menorAresta[1]);
@@ -872,12 +975,12 @@
                 maiorValor = arestas[i][2];
             }
         }
-        return maiorValor;
+        return maiorValor+1;
     };
 
 
     /*####################################################################################################################################/
-     Samuel Brati e Vinicius Adriano - 30/10/10 - FUNÇÃO CONTROLE, UTILIZADA NO KURSKAL E NO PRIM
+        FUNÇÃO CONTROLE, UTILIZADA NO KURSKAL E NO PRIM Samuel Brati e Vinicius Adriano - 30/10/10
      /*###################################################################################################################################*/
 
     Grafo.prototype.iniciaControle = function (conjuntoArestas, conjuntoVertices){
@@ -922,9 +1025,9 @@
         return conjuntoControle;
     };
 
-/*####################################################################################################################################/
-                                            Vinícius A.M 27/10/17 - INÍCIO DO KRUSKAL E SEUS DERIVADOS 
-/*###################################################################################################################################*/
+    /*####################################################################################################################################/
+           Vinícius A.M 27/10/17 - INÍCIO DO KRUSKAL E SEUS DERIVADOS
+    /*###################################################################################################################################*/
     Grafo.prototype.kruskal = function () {
         
         var s = new Array();// conjunto de arestas vazias
@@ -980,7 +1083,7 @@
             floresta.push(temp);
         }
 
-        return floresta; //Ex : {{A}, {B}, {C}, {D}}
+        return floresta;
     };
 
     Grafo.prototype.menorAresta = function(conjuntoControle){
@@ -1008,14 +1111,16 @@
     };
 
 
-/*####################################################################################################################################/
-    Samuel Brati Favarin  30/10/10 - PLANARIDADE
- /*###################################################################################################################################*/
+    /*####################################################################################################################################/
+        Samuel Brati Favarin  30/10/17 - PLANARIDADE e FUNÇÕES AUXILIARES
 
-    // O retorno dessa função não pode ser binário
-    // 0 -> é planar
-    // 1 -> pode ser planar
-    // 2 -> não pode ser planar
+          >> O retorno dessa função não pode ser binário
+          >> 0 = é planar
+          >> 1 = pode ser planar
+          >> 2 = não pode ser planar
+
+     /*###################################################################################################################################*/
+
     Grafo.prototype.ePlanar = function () {
         var v = this.vertices.length;
         var a = this.calculaNumArestas();
@@ -1083,7 +1188,7 @@
 grafo = new Grafo(false, true);
 
 //GRAFO DE TESTE DO PRIM E KRUSKAL
-grafo.addVertice('A');
+/*grafo.addVertice('A');
 grafo.addVertice('B');
 grafo.addVertice('C');
 grafo.addVertice('D');
@@ -1098,7 +1203,7 @@ grafo.addArestaPonderada('C','F',3);
 grafo.addArestaPonderada('C','E',9);
 grafo.addArestaPonderada('D','E',7);
 grafo.addArestaPonderada('D','F',4);
-grafo.addArestaPonderada('F','E',8);
+grafo.addArestaPonderada('F','E',8);*/
 
 
 //É PLANAR

@@ -40,8 +40,8 @@
             var posYPeso = Iny - 35 * Math.sin(angle - Math.PI/17);
             var posXPeso = Inx - 35 * Math.cos(angle - Math.PI/17);
 
-            console.log(Inx, headlen, Math.sin(angle - Math.PI/17));
-            console.log(peso,posXPeso,posYPeso);
+            //console.log(Inx, headlen, Math.sin(angle - Math.PI/17));
+            //console.log(peso,posXPeso,posYPeso);
             ctx.beginPath();
             ctx.font="18px Arial";
             ctx.fillStyle = 'red';
@@ -68,7 +68,7 @@
                    posYPeso = (Iny + Outy)/2;
                 }
             }
-            console.log(posXPeso,posYPeso);
+            //.log(posXPeso,posYPeso);
             ctx.font="18px Arial";
             ctx.fillStyle = 'red';
             ctx.fillText(peso, posXPeso, posYPeso);
@@ -132,7 +132,7 @@
             for(var h=0; h<circles.length; h++){
                 if(posX < circles[h][1]+20 && posX > circles[h][1]-20){
                     if(posY < circles[h][2]+20 && posY > circles[h][2]-20){
-                        console.log('clicou: '+circles[h][0]);
+                        //console.log('clicou: '+circles[h][0]);
                         circuloClicado = h;
                     }
                 }
@@ -156,7 +156,7 @@
             posX = e.clientX - rect.left;
             posY = e.clientY - rect.top;
             if(circuloClicado !== 'vazio'){
-                console.log('x: ',posX,' y: ',posY);
+                //console.log('x: ',posX,' y: ',posY);
                 circles[circuloClicado][1] = posX;
                 circles[circuloClicado][2] = posY;
                 update(circles,ligacoes,grafo);
