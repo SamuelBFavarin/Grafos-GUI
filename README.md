@@ -1,6 +1,19 @@
 # grafos.js 
+Projeto desenvolvido durante o semestre da matéria de grafos, buscando implementar algoritmos de busca, coloração, geração de árvore mínima, além da representação visual, entre outras funcionalidades.
 
-### Entrega dia 15/09/2017 :heavy_check_mark:
+### Descrição dos principais arquivos
+  - js/grafosLib.js -> Algoritmos e implantação do grafo
+  - js/grafosButton.js -> Comunicação entre index.html e grafosLib.js
+  - js/canvas.js -> Implementção do desenho do grafo em canvas
+  - index.html -> Interface gráfica para utilização do projeto
+
+### Autores:
+  - [SamuelBFavarin](https://github.com/SamuelBFavarin)
+  - [vinicius1209](https://github.com/vinicius1209)
+  - [zelucena](https://github.com/zelucena)
+
+### Entregas
+#### Entrega dia 15/09/2017 :heavy_check_mark:
 
 - [x] criarGrafo(isOrientado, isPonderado) - Criar um grafo vazio.
 - [x] inserirVertice(nome) - Inserir um vértice no grafo.
@@ -21,7 +34,7 @@
 - [x] bfs(verticeOrigem, verticeDestino) -Busca em largura com destino
 - [x] dfs(verticeOrigem, verticeDestino) -Busca em profundidade com destino
 
-### Entrega dia 06/10/2017 :heavy_check_mark:
+#### Entrega dia 06/10/2017 :heavy_check_mark:
 
 - [x] dijkstra(verticeOrigem) -dijkstra sem destino
 - [X] dijkstra(verticeOrigem, verticeDestino) -dijkstra com destino
@@ -31,11 +44,11 @@
 - [x] Divisão de arquivo (Classe e funções)
 - [x] Perfumaria da Interface Web
 
-### Entrega dia 03/11/2017 :heavy_check_mark: 
+#### Entrega dia 03/11/2017 :heavy_check_mark: 
 - [x] Algoritmo Árvore geradora mínima com Kruskal 
 - [x] Algoritmo Árvore geradora mínima com Prim
 - [x] Algoritmo Planaridade 
 - [x] Implementação dos algoritmos de geração de árvore mínima na interface
 
-### Entrega dia 24/11/2017 :beer:
+#### Entrega dia 24/11/2017 :beer:
 
