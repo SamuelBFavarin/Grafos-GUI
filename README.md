@@ -31,9 +31,11 @@
 - [x] Divisão de arquivo (Classe e funções)
 - [x] Perfumaria da Interface Web
 
-### Entrega dia 03/11/2017 :heavy_check_mark: :top:
+### Entrega dia 03/11/2017 :heavy_check_mark: 
 - [x] Algoritmo Árvore geradora mínima com Kruskal 
 - [x] Algoritmo Árvore geradora mínima com Prim
 - [x] Algoritmo Planaridade 
 - [x] Implementação dos algoritmos de geração de árvore mínima na interface
+
+### Entrega dia 24/11/2017 :heavy_check_mark: :beer:
 
