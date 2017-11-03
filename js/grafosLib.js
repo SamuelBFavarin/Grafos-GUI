@@ -739,7 +739,7 @@
         return css;
     };
 
-Grafo.prototype._menorCaminho = function(abertos, pesos){
+    Grafo.prototype._menorCaminho = function(abertos, pesos){
         var menorCaminho = abertos[0];
         for (var i = 0; i < abertos.length; i++){
             if (pesos[abertos[i]] < pesos[menorCaminho]){
@@ -815,13 +815,13 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         var utilizados = new Array();
         // controles de arestas
         var arestas = this.iniciaControle(this.ligacao, this.vertices);
-        //console.log(arestas);
+        var primeiroElemento = q[2];
         utilizados.push(q[2]);
-        q = this.removeElementoArray(q,'C');
+        q = this.removeElementoArray(q,primeiroElemento);
         var menorAresta = null;
 
         while(q.length>0){
-            var menorPeso = 99*99*99*99*99*99*99*99;
+            var menorPeso = this.recebeMaiorPeso(arestas);
             for(var i=0; i<utilizados.length; i++){
                 for(var j=0; j< q.length; j++){
                     for(var k=0; k< arestas.length; k++){
@@ -850,8 +850,7 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         console.log(q);
         console.log('Vetor de vertices utilizados: ');
         console.log(utilizados);
-        console.log('Vetor para canvas');
-        console.log(resultatoParaCanvas);
+        console.log('Vetor para canvas: ');
         return resultatoParaCanvas;
     };
 
@@ -864,6 +863,16 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
             }
         }
         return novoArray;
+    };
+
+    Grafo.prototype.recebeMaiorPeso = function (arestas) {
+        var maiorValor = 0;
+        for(var i=0; i<arestas.length; i++){
+            if(arestas[i][2] > maiorValor){
+                maiorValor = arestas[i][2];
+            }
+        }
+        return maiorValor;
     };
 
 
@@ -946,7 +955,7 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
             }
         }
 
-        //Arvóre mínima
+        //Arvore mínima
         console.log(s);  
         var logger = document.getElementById('log');        
 
@@ -967,17 +976,14 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         //Preenchendo a floresta com os vértices já existentes
         for(var i = 0; i < this.vertices.length; i++){
             temp = new Array();
-            temp.push(this.vertices[i])
+            temp.push(this.vertices[i]);
             floresta.push(temp);
         }
 
         return floresta; //Ex : {{A}, {B}, {C}, {D}}
     };
-   
-
 
     Grafo.prototype.menorAresta = function(conjuntoControle){
-
         var menor = conjuntoControle[0];
         //Busca a menor aresta e retorna
         for(var i = 0; i < conjuntoControle.length; i++){
@@ -985,12 +991,10 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
                 menor = conjuntoControle[i];
             }
         }
-
         return menor;
     };
 
     Grafo.prototype.retornaIndex = function(aresta, floresta){
-        
         for(var i = 0; i < floresta.length; i++){
             if(floresta[i] == aresta){
                 return i;
@@ -1001,13 +1005,12 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
                 }
             }
         }
-
     };
 
 
-    /*####################################################################################################################################/
-     Samuel Brati Favarin  30/10/10 - PLANARIDADE
-     /*###################################################################################################################################*/
+/*####################################################################################################################################/
+    Samuel Brati Favarin  30/10/10 - PLANARIDADE
+ /*###################################################################################################################################*/
 
     // O retorno dessa função não pode ser binário
     // 0 -> é planar
@@ -1074,7 +1077,6 @@ Grafo.prototype._menorCaminho = function(abertos, pesos){
         }else{
             return cont/2;
         }
-
     };
 
 
@@ -1136,8 +1138,6 @@ grafo.addAresta('B','E');
 grafo.addAresta('C','D');
 grafo.addAresta('C','E');
 grafo.addAresta('E','D');*/
-
-
 
 //grafo.iniciaControle(grafo.ligacao, grafo.vertices)
 //grafo.menorAresta(grafo.iniciaControle(grafo.ligacao, grafo.vertices));

@@ -344,3 +344,20 @@ function desenhaKruskal(){
         imprimeNotificacao("Não existem Vértices!", "warn"); 
      }
 }
+
+//***************  TESTE DE PLANARIDADE  ***************
+
+function testePlanaridade() {
+    var result = grafo.ePlanar();
+    var resposta = '';
+    if(result === 0){
+        resposta = 'É PLANAR';
+    }
+    else if(result === 1){
+        resposta = 'PODE SER PLANAR';
+    }
+    else if(result === 2){
+        resposta = 'NÃO PODE SER PLANAR';
+    }
+    document.getElementById('resultadoPlanariade').innerHTML = resposta;
+}
