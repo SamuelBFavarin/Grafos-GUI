@@ -1128,25 +1128,31 @@
             console.log('É PLANAR');
             return 0;
         }
-        else if (v>=3 && a <= (3*v)-6){
-            if(this.temCicloTres()){
-                console.log('PODE SER PLANAR');
+		else if(this.temCicloTres()){
+			if (v>=3 && a <= (3*v)-6){
+				console.log('PODE SER PLANAR');
                 return 1;
-            }else{
-                console.log('NÃO PODE SER PLANAR');
-                return 2;
-            }
-        }
-        else if (v>=3 && a <= (2*v)-4){
-            if(this.temCicloTres()){
-                console.log('NÃO PODE SER PLANAR');
-                return 2;
-            }else{
-                console.log('PODE SER PLANAR');
+			}else{
+				return 2;
+			}
+		}else if(!this.temCicloTres()){
+			if (v>=3 && a <= (2*v)-4){
+				console.log('PODE SER PLANAR');
                 return 1;
-            }
-        }
+			}else{
+				return 2;
+			}
+		}
+        else {
+			console.log('NÃO PODE SER PLANAR');
+			return 2;
+		}
+           
     };
+	
+	Grafo.prototype.teste1 = function (){
+		
+	}
 
     Grafo.prototype.temCicloTres = function () {
         for(var i=0; i<this.vertices.length; i++){
@@ -1229,7 +1235,7 @@ grafo.addAresta('C','F');
 grafo.addAresta('C','D');*/
 
 // PODE SER PLANAR
-/*grafo.addVertice('A');
+grafo.addVertice('A');
 grafo.addVertice('B');
 grafo.addVertice('C');
 grafo.addVertice('D');
@@ -1242,7 +1248,8 @@ grafo.addAresta('B','D');
 grafo.addAresta('B','E');
 grafo.addAresta('C','D');
 grafo.addAresta('C','E');
-grafo.addAresta('E','D');*/
+grafo.addAresta('E','D');
+grafo.addAresta('A','B');
 
 //grafo.iniciaControle(grafo.ligacao, grafo.vertices)
 //grafo.menorAresta(grafo.iniciaControle(grafo.ligacao, grafo.vertices));
