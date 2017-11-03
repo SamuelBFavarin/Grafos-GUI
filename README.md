@@ -37,5 +37,5 @@
 - [x] Algoritmo Planaridade 
 - [x] Implementação dos algoritmos de geração de árvore mínima na interface
 
-### Entrega dia 24/11/2017 :heavy_check_mark: :beer:
+### Entrega dia 24/11/2017 :beer:
 
