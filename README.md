@@ -51,4 +51,6 @@ Projeto desenvolvido durante o semestre da matéria de grafos, buscando implemen
 - [x] Implementação dos algoritmos de geração de árvore mínima na interface
 
 #### Entrega dia 24/11/2017 :beer:
+- [ ] Método de Ford-Fukerson
+- [x] Nubank ser foda
 
