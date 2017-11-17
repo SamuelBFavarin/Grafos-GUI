@@ -52,5 +52,7 @@ Projeto desenvolvido durante o semestre da matéria de grafos, buscando implemen
 
 #### Entrega dia 24/11/2017 :beer:
 - [ ] Método de Ford-Fukerson
-- [x] Nubank ser foda
+- [ ] Identificar vértice fonte e sorvedouro
+- [ ] Usar busca de caminho com DFS
+- [ ] Usar grafo auxiliar, sem alterar o original
 
