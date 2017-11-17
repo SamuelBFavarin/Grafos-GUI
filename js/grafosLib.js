@@ -126,10 +126,10 @@
     Grafo.prototype.addArcoPonderado = function (vertice1,vertice2,_peso){
         if (this.direcionado) {
             this.ligacao[vertice1].push([vertice2, _peso]);  
-            imprimeNotificacao("Arco adicionado com sucesso!", "success");
+            //imprimeNotificacao("Arco adicionado com sucesso!", "success");
         } else {
             console.log('Impossível adicionar Arco em grafos não direcionados');
-            imprimeNotificacao("Impossível adicionar Arco em grafos não direcionados!", "error");
+            //imprimeNotificacao("Impossível adicionar Arco em grafos não direcionados!", "error");
         }
     };
 
@@ -462,21 +462,18 @@
                 for (var i = 0; i < this.ligacao[nodo].length; i++){
                     pilha.push(this.ligacao[nodo][i][0]);
                     if(this.ligacao[nodo][i][0] === destino){
-                        console.log('Caminho encontrado');
+                        //console.log('Caminho encontrado');
                         visitados.push(this.ligacao[nodo][i][0]);
-                        console.log(visitados);
-
+                        //console.log(visitados);
                         imprimeNotificacao("Caminho encontrado! Veja o Console", "success");
-
                         var logger = document.getElementById('log');  
                         logger.innerHTML += visitados + '<br />';
-
-                        return;
+                        return visitados;
                     }
                 }
             }
-        }
-        console.log('Caminho não encontrado');
+        }return false;
+        //console.log('Caminho não encontrado');
         imprimeNotificacao("Caminho não encontrado!", "warn");
 
     };
@@ -1111,6 +1108,8 @@
     };
 
 
+
+
     /*####################################################################################################################################/
         Samuel Brati Favarin  30/10/17 - PLANARIDADE e FUNÇÕES AUXILIARES
 
@@ -1191,65 +1190,64 @@
     };
 
 
-grafo = new Grafo(false, true);
 
-//GRAFO DE TESTE DO PRIM E KRUSKAL
-/*grafo.addVertice('A');
-grafo.addVertice('B');
-grafo.addVertice('C');
-grafo.addVertice('D');
-grafo.addVertice('E');
+
+    /*####################################################################################################################################/
+        Samuel, José  e Vinícus 17/11/17 - Fluxo Máximo e funções auxiliares
+     /*###################################################################################################################################*/
+
+
+    Grafo.prototype.getFonte = function (){
+        var flag;
+        for(var i = 0; i < this.vertices.length; i++){ 
+            flag = true;
+            for(var j = 0; j <this.vertices.lengh; j++){ 
+                if(this._existeLigacao(this.vertices[i], this.vertices[j]) && this._existeLigacao(this.vertices[j], this.vertices[i])){
+                    flag = false;
+                }
+            }
+            if(flag){return this.vertices[i];}
+        }
+    };
+    
+    Grafo.prototype.getSorvedor = function (){
+        for(var i = 0; i < this.vertices.length; i++){ 
+            if(this.ligacao[this.vertices[i]].length === 0) return this.vertices[i];
+        }
+    };
+
+    Grafo.prototype.atribuirGrafoOriginal = function(){
+        for(var i=0; i<this.vertices.length; i++){
+            for(var j=0; j<this.ligacao[this.vertices[i]].length; j++){
+                this.ligacao[this.vertices[i]][j].push(0);
+            }
+        }
+    }
+    
+    Grafo.prototype.existeCaminho = function(fonte,sorvedor){
+        console.log(this.dfsComDestino(fonte,sorvedor));
+    }
+
+    Grafo.prototype.fordFukerson = function (){
+        var solucao = 0; //Criar um inteiro S para solução iniciado com 0.
+        var fonte = this.getFonte();
+        var sorvedor = this.getSorvedor();
+        var grafoAuxiliar = Object.assign({}, grafo); //Criar um grafo auxiliar como uma cópia do grafo original
+        this.atribuirGrafoOriginal(); // transforma grafo no modelo de grafo original
+        this.existeCaminho(fonte,sorvedor);
+    };
+
+ 
+grafo = new Grafo(true, true);
+
 grafo.addVertice('F');
-grafo.addArestaPonderada('A','C',7);
-grafo.addArestaPonderada('A','D',2);
-grafo.addArestaPonderada('A','E',10);
-grafo.addArestaPonderada('B','C',3);
-grafo.addArestaPonderada('B','F',2);
-grafo.addArestaPonderada('C','F',3);
-grafo.addArestaPonderada('C','E',9);
-grafo.addArestaPonderada('D','E',7);
-grafo.addArestaPonderada('D','F',4);
-grafo.addArestaPonderada('F','E',8);*/
-
-
-//É PLANAR
-/*grafo.addVertice('A');
-grafo.addVertice('B');
-grafo.addAresta('A','B');*/
-
-// NÃO PODE SER PLANAR
-/*grafo.addVertice('A');
 grafo.addVertice('B');
 grafo.addVertice('C');
-grafo.addVertice('D');
-grafo.addVertice('E');
-grafo.addVertice('F');
-grafo.addAresta('A','E');
-grafo.addAresta('A','D');
-grafo.addAresta('A','F');
-grafo.addAresta('B','E');
-grafo.addAresta('B','F');
-grafo.addAresta('B','D');
-grafo.addAresta('C','E');
-grafo.addAresta('C','F');
-grafo.addAresta('C','D');*/
-
-// PODE SER PLANAR
-grafo.addVertice('A');
-grafo.addVertice('B');
-grafo.addVertice('C');
-grafo.addVertice('D');
-grafo.addVertice('E');
-grafo.addAresta('A','E');
-grafo.addAresta('A','C');
-grafo.addAresta('A','D');
-grafo.addAresta('B','C');
-grafo.addAresta('B','D');
-grafo.addAresta('B','E');
-grafo.addAresta('C','D');
-grafo.addAresta('C','E');
-grafo.addAresta('E','D');
-grafo.addAresta('A','B');
+grafo.addVertice('S');
+grafo.addArcoPonderado('F','B', 5);
+grafo.addArcoPonderado('F','C', 4);
+grafo.addArcoPonderado('B','S', 5);
+grafo.addArcoPonderado('C','S', 4);
 
 //grafo.iniciaControle(grafo.ligacao, grafo.vertices)
 //grafo.menorAresta(grafo.iniciaControle(grafo.ligacao, grafo.vertices));
