@@ -1224,17 +1224,78 @@
         }
     }
     
-    Grafo.prototype.existeCaminho = function(fonte,sorvedor){
-        console.log(this.dfsComDestino(fonte,sorvedor));
-    }
-
-    Grafo.prototype.fordFukerson = function (){
-        var solucao = 0; //Criar um inteiro S para solução iniciado com 0.
+    Grafo.prototype.montaCaminhoControle = function(){
+        
         var fonte = this.getFonte();
         var sorvedor = this.getSorvedor();
+        var caminho = this.dfsComDestino(fonte,sorvedor);
+        var caminhoControle = new Array();
+
+        if(caminho == false){
+            return false;
+        }
+
+        for(var i = 0; i < caminho.length-1; i++){
+            var atual = caminho[i];
+            var proximo = caminho[i+1];
+            for(var j = 0; j < this.ligacao[atual].length; j++){
+                if(this.ligacao[atual][j][0] == proximo){
+                    var temp = [];
+                    temp[0] = atual;
+                    temp[1] = this.ligacao[atual][j][0];
+                    temp[2] = this.ligacao[atual][j][1];
+                    caminhoControle.push(temp);
+                }
+            }
+        }
+
+        return caminhoControle;
+
+    };
+
+    Grafo.prototype.retornaMenorArco = function(caminho){
+        var menor = caminho[0][2];
+
+        for(var i = 0; i < caminho.length; i++){
+            if(caminho[i][2] < menor){
+                menor = caminho[i][2];
+            }
+        }
+
+        return menor;
+    };
+
+    Grafo.prototype.fordFukerson = function (){
+        
+        var solucao = 0; //Criar um inteiro S para solução iniciado com 0.
         var grafoAuxiliar = Object.assign({}, grafo); //Criar um grafo auxiliar como uma cópia do grafo original
+        var caminho = this.montaCaminhoControle(); //Monta o caminho com ligação + peso
         this.atribuirGrafoOriginal(); // transforma grafo no modelo de grafo original
-        this.existeCaminho(fonte,sorvedor);
+        var menor;
+        
+        console.log(caminho);
+
+        while(caminho){
+            
+            menor = this.retornaMenorArco(caminho);
+            solucao += menor;
+
+            for(var i = 0; i < caminho.length; i++){
+                caminho[i][2] = caminho[i][2] - menor;
+
+                /*
+                  Se existir um arco (v,u)
+                    Somar o valor de A no arco (v,u)
+                  Senão
+                    Criar um arco (v,u) com o valor de A
+                  */
+            }
+
+            caminho = this.montaCaminhoControle(); //Refaz tudo, dfs + controle
+        }
+
+        return solucao;
+
     };
 
  
