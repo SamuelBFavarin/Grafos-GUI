@@ -472,7 +472,43 @@
                     }
                 }
             }
-        }return false;
+        }
+
+        return false;
+        //console.log('Caminho não encontrado');
+        imprimeNotificacao("Caminho não encontrado!", "warn");
+
+    };
+
+    Grafo.prototype.dfsBalanceadoComDestino = function (origem,destino){
+        var visitados   = [];
+        var pilha       = [];
+        pilha.push(origem);
+        //visita a partir da origem
+        while (pilha.length > 0){
+            var nodo = pilha.pop();
+            //SE O VERTICE NÃO FOI VISITADO
+            if (visitados.indexOf(nodo) == -1){
+                visitados.push(nodo);
+                for (var i = 0; i < this.ligacao[nodo].length; i++){
+                    console.log(this.ligacao[nodo][i][1]);
+                    if (this.ligacao[nodo][i][1] > 0) {
+                        pilha.push(this.ligacao[nodo][i][0]);
+                        if (this.ligacao[nodo][i][0] === destino) {
+                            //console.log('Caminho encontrado');
+                            visitados.push(this.ligacao[nodo][i][0]);
+                            //console.log(visitados);
+                            imprimeNotificacao("Caminho encontrado! Veja o Console", "success");
+                            var logger = document.getElementById('log');
+                            logger.innerHTML += visitados + '<br />';
+                            return visitados;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
         //console.log('Caminho não encontrado');
         imprimeNotificacao("Caminho não encontrado!", "warn");
 
@@ -1228,8 +1264,8 @@
         
         var fonte = this.getFonte();
         var sorvedor = this.getSorvedor();
-        var caminho = this.dfsComDestino(fonte,sorvedor);
-        var caminhoControle = new Array();
+        var caminho = this.dfsBalanceadoComDestino(fonte,sorvedor);
+        var caminhoControle = [];
 
         if(caminho == false){
             return false;
@@ -1313,7 +1349,7 @@
                 if(this.existeArcoNoCaminho(caminho, caminho[i][1], caminho[i][0])){
                     caminho = this.somaValorA(caminho, caminho[i][1], caminho[i][0], menor);
                 }else{
-                    var arcoVU = new Array();
+                    var arcoVU = [];
                     arcoVU[0] = caminho[i][1];
                     arcoVU[1] = caminho[i][0];
                     arcoVU[2] = menor;
@@ -1321,7 +1357,6 @@
                 }
 
             }
-
             caminho = this.montaCaminhoControle(); //Refaz tudo, dfs + controle
        }
 
