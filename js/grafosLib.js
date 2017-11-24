@@ -468,7 +468,8 @@
                         imprimeNotificacao("Caminho encontrado! Veja o Console", "success");
                         var logger = document.getElementById('log');  
                         logger.innerHTML += visitados + '<br />';
-                        return visitados;
+                        console.log(visitados);
+                        return true;
                     }
                 }
             }
@@ -513,6 +514,40 @@
         imprimeNotificacao("Caminho não encontrado!", "warn");
 
     };
+
+Grafo.prototype._dfsComDestino = function (origem,destino,g){
+    console.log(g);
+    console.log(g.ligacao['F']);
+    var visitados   = [];
+    var pilha       = [];
+    pilha.push(origem);
+    //visita a partir da origem
+    while (pilha.length > 0){
+        var nodo = pilha.pop();
+        //SE O VERTICE NÃO FOI VISITADO
+        if (visitados.indexOf(nodo) == -1){
+            visitados.push(nodo);
+            for (var i = 0; i < g.ligacao[nodo].length; i++){
+                pilha.push(g.ligacao[nodo][i][0]);
+                if(g.ligacao[nodo][i][0] === destino){
+                    //console.log('Caminho encontrado');
+                    visitados.push(g.ligacao[nodo][i][0]);
+                    //console.log(visitados);
+                    imprimeNotificacao("Caminho encontrado! Veja o Console", "success");
+                    var logger = document.getElementById('log');
+                    logger.innerHTML += visitados + '<br />';
+                    //console.log(visitados);
+                    return visitados;
+                }
+            }
+        }
+    }
+
+    return false;
+    //console.log('Caminho não encontrado');
+    imprimeNotificacao("Caminho não encontrado!", "warn");
+
+};
 
     /*####################################################################################################################################/
      WELSH and POWELL E SUAS FUNÇÕES AUXILIARES /02/10/17 - Vinícius Machado
@@ -1184,10 +1219,6 @@
 		}
            
     };
-	
-	Grafo.prototype.teste1 = function (){
-		
-	}
 
     Grafo.prototype.temCicloTres = function () {
         for(var i=0; i<this.vertices.length; i++){
@@ -1233,6 +1264,7 @@
      /*###################################################################################################################################*/
 
 
+    // reconhece qual vertice é a fonte
     Grafo.prototype.getFonte = function (){
         var flag;
         for(var i = 0; i < this.vertices.length; i++){ 
@@ -1245,126 +1277,57 @@
             if(flag){return this.vertices[i];}
         }
     };
-    
+
+    //reconhece qual vertice é o sorvedor
     Grafo.prototype.getSorvedor = function (){
         for(var i = 0; i < this.vertices.length; i++){ 
             if(this.ligacao[this.vertices[i]].length === 0) return this.vertices[i];
         }
     };
 
+    //gerar grafo original com a capacidade
     Grafo.prototype.atribuirGrafoOriginal = function(){
         for(var i=0; i<this.vertices.length; i++){
             for(var j=0; j<this.ligacao[this.vertices[i]].length; j++){
                 this.ligacao[this.vertices[i]][j].push(0);
             }
         }
-    }
-    
-    Grafo.prototype.montaCaminhoControle = function(){
-        
-        var fonte = this.getFonte();
-        var sorvedor = this.getSorvedor();
-        var caminho = this.dfsBalanceadoComDestino(fonte,sorvedor);
-        var caminhoControle = [];
-
-        if(caminho == false){
-            return false;
-        }
-
-        for(var i = 0; i < caminho.length-1; i++){
-            var atual = caminho[i];
-            var proximo = caminho[i+1];
-            for(var j = 0; j < this.ligacao[atual].length; j++){
-                if(this.ligacao[atual][j][0] == proximo){
-                    var temp = [];
-                    temp[0] = atual;
-                    temp[1] = this.ligacao[atual][j][0];
-                    temp[2] = this.ligacao[atual][j][1];
-                    caminhoControle.push(temp);
-                }
-            }
-        }
-
-        return caminhoControle;
-
     };
 
-    Grafo.prototype.retornaMenorArco = function(caminho){
-        var menor = caminho[0][2];
-
-        for(var i = 0; i < caminho.length; i++){
-            if(caminho[i][2] < menor){
-                menor = caminho[i][2];
-            }
+    //gerar cópia do grafo original
+    Grafo.prototype.gerarGrafoAux = function () {
+        var ligacao = [];
+        for(var i=0; i<this.vertices.length; i++){
+            ligacao[this.vertices[i]] = JSON.parse(JSON.stringify(this.ligacao[this.vertices[i]]));
         }
-
-        return menor;
+        var grafoAuxiliar = JSON.parse(JSON.stringify(grafo));
+        grafoAuxiliar.ligacao = ligacao;
+        return grafoAuxiliar;
     };
 
-    Grafo.prototype.existeArcoNoCaminho = function(caminho, vertice1, vertice2){
-
-        for(var i = 0; i < caminho.lengh; i++){
-            if(caminho[i][0] == vertice1 && caminho[i][1] == vertice2){
-                return true;
-            }
-        }
-
-        return false;    
-    };
-
-    Grafo.prototype.somaValorA = function(caminho, vertice1, vertice2, a){
-
-       for(var i = 0; i < caminho.lengh; i++){
-            if(caminho[i][0] == vertice1 && caminho[i][1] == vertice2){
-                caminho[i][2] = caminho[i][2] + a;
-            }
-        }
-
+    // testa se há caminho
+    Grafo.prototype.existeCaminhoPositivo = function(fonte,sorvedor,grafo){
+        var caminho = this._dfsComDestino(fonte,sorvedor,grafo);
         return caminho;
-
     };
 
-    Grafo.prototype.fordFukerson = function (){
-        
-        var solucao = 0; //Criar um inteiro S para solução iniciado com 0.
-        var grafoAuxiliar = Object.assign({}, grafo); //Criar um grafo auxiliar como uma cópia do grafo original
-        var caminho = this.montaCaminhoControle(); //Monta o caminho com ligação + peso
+
+
+    Grafo.prototype.fordFukerson = function () {
         this.atribuirGrafoOriginal(); // transforma grafo no modelo de grafo original
-        var menor;
+        var solucao = 0; //Criar um inteiro S para solução iniciado com 0.
+        var sorvedor = this.getSorvedor();
+        var fonte = this.getFonte();
+        var grafoAuxiliar = this.gerarGrafoAux();
+        this.existeCaminhoPositivo(fonte,sorvedor,grafoAuxiliar);
 
-        //Enquanto nao ser falso, ou enquanto existir um caminho...
-        while(caminho){
-            
-            //Busca o menor arco e soma na solução
-            menor = this.retornaMenorArco(caminho);
-            solucao += menor;
-            
-            //Precisei fazer isso pois da loop infinito no for 
-            var tamanho = caminho.length;
-            
-            for(var i = 0; i < tamanho; i++){
-                
-                caminho[i][2] = caminho[i][2] - menor;
-
-                if(this.existeArcoNoCaminho(caminho, caminho[i][1], caminho[i][0])){
-                    caminho = this.somaValorA(caminho, caminho[i][1], caminho[i][0], menor);
-                }else{
-                    var arcoVU = [];
-                    arcoVU[0] = caminho[i][1];
-                    arcoVU[1] = caminho[i][0];
-                    arcoVU[2] = menor;
-                    caminho.push(arcoVU);
-                }
-
-            }
-            caminho = this.montaCaminhoControle(); //Refaz tudo, dfs + controle
-       }
-
-        return solucao;
+        while(this.existeCaminhoPositivo() !== false){
+            console.log('aqui');
+        }
 
     };
 
- 
+
 grafo = new Grafo(true, true);
 
 grafo.addVertice('F');
