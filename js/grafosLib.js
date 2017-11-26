@@ -133,6 +133,8 @@
         }
     };
 
+ 
+
     /*####################################################################################################################################/
      ADICIONA ARESTA NÃO PONDERADA - Samuel Brati Favarin
 
@@ -233,6 +235,31 @@
             return false;
         }
     };
+
+
+
+     Grafo.prototype._existeLigacaoEmGrafo = function (origem,destino,g) {
+        if(g.direcionado){
+            for(var i =0; i<g.ligacao[origem].length; i++ ) {
+                if (g.ligacao[origem][i][0] === destino) {
+                    return true;
+                }
+            }
+            return false;
+        }else{
+            for(i =0; i<g.ligacao[origem].length; i++ ) {
+                if (g.ligacao[origem][i][0] === destino) {
+                    for(var j =0; j<g.ligacao[destino].length; j++){
+                        if(g.ligacao[destino][j][0] === origem){
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+    };
+
 
      /*####################################################################################################################################/
         RETORNAR LIGAÇÕES - Samuel Brati Favarin
@@ -1315,42 +1342,24 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
         return caminho;
     };
 
-    Grafo.prototype.montaCaminhoControle = function(){
-        
-        var fonte = this.getFonte();
-        var sorvedor = this.getSorvedor();
-        //var caminho = this.dfsBalanceadoComDestino(fonte,sorvedor,grafo);
-        var caminho = this._dfsComDestino(fonte,sorvedor,grafo);
-        var caminhoControle = [];
-
-        if(caminho == false){
-            return false;
-        }
-
-        for(var i = 0; i < caminho.length-1; i++){
-            var atual = caminho[i];
-            var proximo = caminho[i+1];
-            for(var j = 0; j < this.ligacao[atual].length; j++){
-                if(this.ligacao[atual][j][0] == proximo){
-                    var temp = [];
-                    temp[0] = atual;
-                    temp[1] = this.ligacao[atual][j][0];
-                    temp[2] = this.ligacao[atual][j][1];
-                    caminhoControle.push(temp);
-                }
-            }
-        }
-
-        return caminhoControle;
-
-    };
-
 
     Grafo.prototype.retornaPeso = function(pai,filho,g){
-        console.log(g.ligacao[pai]);
+        //console.log(g.ligacao[pai]);
         for(var i=0; i<g.ligacao[pai].length; i++){
             if(g.ligacao[pai][i][0] === filho){
                 return g.ligacao[pai][i][1];
+            }
+        }
+    }
+
+    Grafo.prototype.alterarPeso = function(pai,filho,g,valor,op){
+        for(var i=0; i<g.ligacao[pai].length; i++){
+            if(g.ligacao[pai][i][0] === filho){
+                if(op === 'sub'){
+                   g.ligacao[pai][i][1] = g.ligacao[pai][i][1] - valor; 
+                }else if(op === 'sum'){
+                    g.ligacao[pai][i][1] = g.ligacao[pai][i][1] + valor; 
+                }
             }
         }
     }
@@ -1369,29 +1378,6 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
             
         return menor;
     };
-
-    Grafo.prototype.existeArcoNoCaminho = function(caminho, vertice1, vertice2){
-
-        for(var i = 0; i < caminho.lengh; i++){
-            if(caminho[i][0] == vertice1 && caminho[i][1] == vertice2){
-                return true;
-            }
-        }
-
-        return false;    
-    };
-
-    Grafo.prototype.somaValorA = function(caminho, vertice1, vertice2, a){
-
-       for(var i = 0; i < caminho.lengh; i++){
-            if(caminho[i][0] == vertice1 && caminho[i][1] == vertice2){
-                caminho[i][2] = caminho[i][2] + a;
-            }
-        }
-
-        return caminho;
-
-    };
    
 
     Grafo.prototype.fordFukerson = function () {
@@ -1402,34 +1388,25 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
         var grafoAuxiliar = this.gerarGrafoAux();
         var caminho = this.existeCaminhoPositivo(fonte,sorvedor,grafoAuxiliar);
 
-
+        // está com for enquanto isso
         for(var i=0; i<4; i++){
             //Busca o menor arco e soma na solução
             menor = this.retornaMenorArco(caminho,grafoAuxiliar);
-            
             solucao += menor;
-            
-            //Precisei fazer isso pois da loop infinito no for 
-            var tamanho = caminho.length;
-            
+            var tamanho = caminho.length-1;
             for(var i = 0; i < tamanho; i++){
-                
-                caminho[i][2] = caminho[i][2] - menor;
-
-                if(this.existeArcoNoCaminho(caminho, caminho[i][1], caminho[i][0])){
-                    caminho = this.somaValorA(caminho, caminho[i][1], caminho[i][0], menor);
+                this.alterarPeso(caminho[i],caminho[i+1],grafoAuxiliar,menor,'sub');
+                if(this._existeLigacaoEmGrafo(caminho[i+1],caminho[i],grafoAuxiliar)){
+                    this.alterarPeso(caminho[i+1],caminho[i],grafoAuxiliar,'sum');
                 }else{
-                    var arcoVU = [];
-                    arcoVU[0] = caminho[i][1];
-                    arcoVU[1] = caminho[i][0];
-                    arcoVU[2] = menor;
-                    caminho.push(arcoVU);
+                    grafoAuxiliar.ligacao[caminho[i+1]].push([caminho[i], menor]);  
                 }
-
             }
-            caminho = this.montaCaminhoControle(); //Refaz tudo, dfs + controle
-            console.log('Caminho ',caminho);
-        
+
+            caminho = this.existeCaminhoPositivo(fonte,sorvedor,grafoAuxiliar);
+            console.log(caminho);
+            //console.log(solucao);
+           
         }
         return solucao;
     };
