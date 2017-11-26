@@ -547,6 +547,7 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
     var visitados   = [];
     var pilha       = [];
     pilha.push(origem);
+
     //visita a partir da origem
     while (pilha.length > 0){
         var nodo = pilha.pop();
@@ -1380,7 +1381,6 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
     };
 
     Grafo.prototype.foiVisitado = function (caminho,caminhosVisitados){
-        console.log(caminhosVisitados);
         for(var i=0; i<caminhosVisitados.length; i++){
             if(caminhosVisitados[i] === caminho){
                 return true
@@ -1399,14 +1399,26 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
         this.atribuirGrafoOriginal(); // transforma grafo no modelo de grafo original
         var caminho = this.existeCaminhoPositivo(fonte,sorvedor,grafoAuxiliar);
         caminhosVisitados.push(caminho);
+
         // está com for enquanto isso
-        for(var j=0; j<2; j++){
+        while (caminho != false){
             //Busca o menor arco e soma na solução
             menor = this.retornaMenorArco(caminho,grafoAuxiliar);
             solucao += menor;
             var tamanho = caminho.length-1;
             for(var i = 0; i < tamanho; i++){
                 this.alterarPeso(caminho[i],caminho[i+1],grafoAuxiliar,menor,'sub');
+
+                //encontra a ligação entre os vértices
+                for (var k = 0; k < grafoAuxiliar.ligacao[caminho[i]].length; k++){
+                    if (grafoAuxiliar.ligacao[caminho[i]][k][0] == caminho[i+1]){
+                        //se  capacidade == zero
+                        if (grafoAuxiliar.ligacao[caminho[i]][k][1] == 0){
+                            grafoAuxiliar.ligacao[caminho[i]].splice(k, 1);
+                        }
+                    }
+                }
+
                 if(this._existeLigacaoEmGrafo(caminho[i+1],caminho[i],grafoAuxiliar)){
                     this.alterarPeso(caminho[i+1],caminho[i],grafoAuxiliar,'sum');
                 }else{
@@ -1425,14 +1437,15 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
 
 grafo = new Grafo(true, true);
 
-grafo.addVertice('F');
-grafo.addVertice('B');
-grafo.addVertice('C');
 grafo.addVertice('S');
-grafo.addArcoPonderado('F','B', 5);
-grafo.addArcoPonderado('F','C', 4);
-grafo.addArcoPonderado('B','S', 5);
-grafo.addArcoPonderado('C','S', 4);
+grafo.addVertice('D');
+grafo.addVertice('C');
+grafo.addVertice('F');
 
+grafo.addArcoPonderado('S','C', 5);
+grafo.addArcoPonderado('S','D', 4);
+grafo.addArcoPonderado('D','C', 1);
+grafo.addArcoPonderado('C','F', 5);
+grafo.addArcoPonderado('D','F', 4);
 //grafo.iniciaControle(grafo.ligacao, grafo.vertices)
 //grafo.menorAresta(grafo.iniciaControle(grafo.ligacao, grafo.vertices));
