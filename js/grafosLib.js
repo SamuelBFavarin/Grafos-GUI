@@ -1294,16 +1294,21 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
 
     // reconhece qual vertice é a fonte
     Grafo.prototype.getFonte = function (){
-        var flag;
-        for(var i = 0; i < this.vertices.length; i++){ 
-            flag = true;
-            for(var j = 0; j <this.vertices.lengh; j++){ 
-                if(this._existeLigacao(this.vertices[i], this.vertices[j]) && this._existeLigacao(this.vertices[j], this.vertices[i])){
-                    flag = false;
-                }
-            }
-            if(flag){return this.vertices[i];}
+      var controle =  this.iniciaControle(this.ligacao, this.vertices);
+      var flag;
+
+      for(var i = 0; i < this.vertices.length; i++){ //S, F
+        flag = true;
+
+        for(var j = 0; j < controle.length; j++){
+            if(this.vertices[i] == controle[j][1]){
+                flag = false;
+            }  
         }
+         if(flag){
+             return this.vertices[i];
+         }
+      }
     };
 
     //reconhece qual vertice é o sorvedor
@@ -1326,12 +1331,9 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
     //gerar cópia do grafo original
     // função mais robusta, que gera a cópia e não o clone
     Grafo.prototype.gerarGrafoAux = function () {
-        var ligacao = [];
-        for(var i=0; i<this.vertices.length; i++){
-            ligacao[this.vertices[i]] = JSON.parse(JSON.stringify(this.ligacao[this.vertices[i]]));
-        }
+
         var grafoAuxiliar = JSON.parse(JSON.stringify(grafo));
-        grafoAuxiliar.ligacao = ligacao;
+        grafoAuxiliar.ligacao = grafo.ligacao;
         return grafoAuxiliar;
     };
 
@@ -1345,7 +1347,7 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
 
 
     Grafo.prototype.retornaPeso = function(pai,filho,g){
-        //console.log(g.ligacao[pai]);
+
         for(var i=0; i<g.ligacao[pai].length; i++){
             if(g.ligacao[pai][i][0] === filho){
                 return g.ligacao[pai][i][1];
@@ -1430,6 +1432,9 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
             this.foiVisitado(caminho,caminhosVisitados);
         } 
 
+        //Print do fluxo máximo 
+        var logger = document.getElementById('log');        
+        logger.innerHTML += 'Solução = ' + solucao + '<br />';
         
         return solucao;
     };
@@ -1442,10 +1447,9 @@ grafo.addVertice('D');
 grafo.addVertice('C');
 grafo.addVertice('F');
 
-grafo.addArcoPonderado('S','C', 5);
-grafo.addArcoPonderado('S','D', 4);
-grafo.addArcoPonderado('D','C', 1);
-grafo.addArcoPonderado('C','F', 5);
-grafo.addArcoPonderado('D','F', 4);
-//grafo.iniciaControle(grafo.ligacao, grafo.vertices)
-//grafo.menorAresta(grafo.iniciaControle(grafo.ligacao, grafo.vertices));
+
+grafo.addArcoPonderado('C','S', 5);
+grafo.addArcoPonderado('D','S', 4);
+grafo.addArcoPonderado('C','D', 1);
+grafo.addArcoPonderado('F','C', 5);
+grafo.addArcoPonderado('F','D', 4);

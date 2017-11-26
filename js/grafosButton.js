@@ -324,7 +324,7 @@ function coloreDsatur(){
         imprimeNotificacao("Não existem Vértices!", "warn"); 
      }
 }
-//*********************** ÁREA DE ÁRVORE MÍNIMA **********************
+//*********************** ÁREA DE ÁRVORE MÍNIMA / FLUXO MÁXIMO **********************
 
 function desenhaPrim(){
 
@@ -343,6 +343,15 @@ function desenhaKruskal(){
      }else{
         imprimeNotificacao("Não existem Vértices!", "warn"); 
      }
+}
+
+function solucaoFordFukerson(){
+    
+    if(grafo.vertices.length > 0){
+        grafo.fordFukerson();
+    }else{
+        imprimeNotificacao("Não existem Vértices!", "warn"); 
+    }
 }
 
 //***************  TESTE DE PLANARIDADE  ***************
