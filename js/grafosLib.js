@@ -1378,18 +1378,29 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
             
         return menor;
     };
+
+    Grafo.prototype.foiVisitado = function (caminho,caminhosVisitados){
+        console.log(caminhosVisitados);
+        for(var i=0; i<caminhosVisitados.length; i++){
+            if(caminhosVisitados[i] === caminho){
+                return true
+            } 
+        }
+        return false;
+    }
    
 
     Grafo.prototype.fordFukerson = function () {
-        this.atribuirGrafoOriginal(); // transforma grafo no modelo de grafo original
+        var caminhosVisitados = [];
         var solucao = 0; //Criar um inteiro S para solução iniciado com 0.
         var sorvedor = this.getSorvedor();
         var fonte = this.getFonte();
         var grafoAuxiliar = this.gerarGrafoAux();
+        this.atribuirGrafoOriginal(); // transforma grafo no modelo de grafo original
         var caminho = this.existeCaminhoPositivo(fonte,sorvedor,grafoAuxiliar);
-
+        caminhosVisitados.push(caminho);
         // está com for enquanto isso
-        for(var i=0; i<4; i++){
+        for(var j=0; j<2; j++){
             //Busca o menor arco e soma na solução
             menor = this.retornaMenorArco(caminho,grafoAuxiliar);
             solucao += menor;
@@ -1404,10 +1415,10 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
             }
 
             caminho = this.existeCaminhoPositivo(fonte,sorvedor,grafoAuxiliar);
-            console.log(caminho);
-            //console.log(solucao);
-           
-        }
+            this.foiVisitado(caminho,caminhosVisitados);
+        } 
+
+        
         return solucao;
     };
 
