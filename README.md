@@ -51,8 +51,8 @@ Projeto desenvolvido durante o semestre da matéria de grafos, buscando implemen
 - [x] Implementação dos algoritmos de geração de árvore mínima na interface
 
 #### Entrega dia 24/11/2017 :beer:
-- [ ] Método de Ford-Fukerson
+- [x] Método de Ford-Fukerson
 - [x] Identificar vértice fonte e sorvedouro
-- [ ] Usar busca de caminho com DFS
+- [x] Usar busca de caminho com DFS
 - [x] Usar grafo auxiliar, sem alterar o original
 
