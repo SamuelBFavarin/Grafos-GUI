@@ -516,8 +516,7 @@
     };
 
 Grafo.prototype._dfsComDestino = function (origem,destino,g){
-    console.log(g);
-    console.log(g.ligacao['F']);
+    //console.log(g);
     var visitados   = [];
     var pilha       = [];
     pilha.push(origem);
@@ -527,6 +526,7 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
         //SE O VERTICE NÃO FOI VISITADO
         if (visitados.indexOf(nodo) == -1){
             visitados.push(nodo);
+            //console.log(g.ligacao[nodo].length);
             for (var i = 0; i < g.ligacao[nodo].length; i++){
                 pilha.push(g.ligacao[nodo][i][0]);
                 if(g.ligacao[nodo][i][0] === destino){
@@ -1286,6 +1286,7 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
     };
 
     //gerar grafo original com a capacidade
+    // altera o grafo original 
     Grafo.prototype.atribuirGrafoOriginal = function(){
         for(var i=0; i<this.vertices.length; i++){
             for(var j=0; j<this.ligacao[this.vertices[i]].length; j++){
@@ -1295,6 +1296,7 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
     };
 
     //gerar cópia do grafo original
+    // função mais robusta, que gera a cópia e não o clone
     Grafo.prototype.gerarGrafoAux = function () {
         var ligacao = [];
         for(var i=0; i<this.vertices.length; i++){
@@ -1306,12 +1308,91 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
     };
 
     // testa se há caminho
-    Grafo.prototype.existeCaminhoPositivo = function(fonte,sorvedor,grafo){
-        var caminho = this._dfsComDestino(fonte,sorvedor,grafo);
+    // o teste do caminho deve ser aplicado no grafo residual e não no grafo original
+    // por isso envio o grafo para minha função dfs
+    Grafo.prototype.existeCaminhoPositivo = function(fonte,sorvedor,g){
+        var caminho = this._dfsComDestino(fonte,sorvedor,g);
         return caminho;
     };
 
+    Grafo.prototype.montaCaminhoControle = function(){
+        
+        var fonte = this.getFonte();
+        var sorvedor = this.getSorvedor();
+        //var caminho = this.dfsBalanceadoComDestino(fonte,sorvedor,grafo);
+        var caminho = this._dfsComDestino(fonte,sorvedor,grafo);
+        var caminhoControle = [];
 
+        if(caminho == false){
+            return false;
+        }
+
+        for(var i = 0; i < caminho.length-1; i++){
+            var atual = caminho[i];
+            var proximo = caminho[i+1];
+            for(var j = 0; j < this.ligacao[atual].length; j++){
+                if(this.ligacao[atual][j][0] == proximo){
+                    var temp = [];
+                    temp[0] = atual;
+                    temp[1] = this.ligacao[atual][j][0];
+                    temp[2] = this.ligacao[atual][j][1];
+                    caminhoControle.push(temp);
+                }
+            }
+        }
+
+        return caminhoControle;
+
+    };
+
+
+    Grafo.prototype.retornaPeso = function(pai,filho,g){
+        console.log(g.ligacao[pai]);
+        for(var i=0; i<g.ligacao[pai].length; i++){
+            if(g.ligacao[pai][i][0] === filho){
+                return g.ligacao[pai][i][1];
+            }
+        }
+    }
+
+    Grafo.prototype.retornaMenorArco = function(caminho,g){
+        var menor;
+            for(var i=0; i<caminho.length-1; i++){
+                if(i===0){
+                    menor = this.retornaPeso(caminho[i],caminho[i+1],g);
+                }else{
+                    if(menor > this.retornaPeso(caminho[i],caminho[i+1],g)){
+                        menor = this.retornaPeso(caminho[i],caminho[i+1],g);
+                    }
+                }
+            }    
+            
+        return menor;
+    };
+
+    Grafo.prototype.existeArcoNoCaminho = function(caminho, vertice1, vertice2){
+
+        for(var i = 0; i < caminho.lengh; i++){
+            if(caminho[i][0] == vertice1 && caminho[i][1] == vertice2){
+                return true;
+            }
+        }
+
+        return false;    
+    };
+
+    Grafo.prototype.somaValorA = function(caminho, vertice1, vertice2, a){
+
+       for(var i = 0; i < caminho.lengh; i++){
+            if(caminho[i][0] == vertice1 && caminho[i][1] == vertice2){
+                caminho[i][2] = caminho[i][2] + a;
+            }
+        }
+
+        return caminho;
+
+    };
+   
 
     Grafo.prototype.fordFukerson = function () {
         this.atribuirGrafoOriginal(); // transforma grafo no modelo de grafo original
@@ -1319,12 +1400,38 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
         var sorvedor = this.getSorvedor();
         var fonte = this.getFonte();
         var grafoAuxiliar = this.gerarGrafoAux();
-        this.existeCaminhoPositivo(fonte,sorvedor,grafoAuxiliar);
+        var caminho = this.existeCaminhoPositivo(fonte,sorvedor,grafoAuxiliar);
 
-        while(this.existeCaminhoPositivo() !== false){
-            console.log('aqui');
+
+        for(var i=0; i<4; i++){
+            //Busca o menor arco e soma na solução
+            menor = this.retornaMenorArco(caminho,grafoAuxiliar);
+            
+            solucao += menor;
+            
+            //Precisei fazer isso pois da loop infinito no for 
+            var tamanho = caminho.length;
+            
+            for(var i = 0; i < tamanho; i++){
+                
+                caminho[i][2] = caminho[i][2] - menor;
+
+                if(this.existeArcoNoCaminho(caminho, caminho[i][1], caminho[i][0])){
+                    caminho = this.somaValorA(caminho, caminho[i][1], caminho[i][0], menor);
+                }else{
+                    var arcoVU = [];
+                    arcoVU[0] = caminho[i][1];
+                    arcoVU[1] = caminho[i][0];
+                    arcoVU[2] = menor;
+                    caminho.push(arcoVU);
+                }
+
+            }
+            caminho = this.montaCaminhoControle(); //Refaz tudo, dfs + controle
+            console.log('Caminho ',caminho);
+        
         }
-
+        return solucao;
     };
 
 
