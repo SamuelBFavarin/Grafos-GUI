@@ -50,9 +50,13 @@ Projeto desenvolvido durante o semestre da matéria de grafos, buscando implemen
 - [x] Algoritmo Planaridade 
 - [x] Implementação dos algoritmos de geração de árvore mínima na interface
 
-#### Entrega dia 24/11/2017 :beer:
+#### Entrega dia 24/11/2017 :heavy_check_mark:
 - [x] Método de Ford-Fukerson
 - [x] Identificar vértice fonte e sorvedouro
 - [x] Usar busca de caminho com DFS
 - [x] Usar grafo auxiliar, sem alterar o original
+
+#### Entrega dia 08/12/2017 :beer:
+- [ ] Definição do problema
+- [ ] Apresentação
 
