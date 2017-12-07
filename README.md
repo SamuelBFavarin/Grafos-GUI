@@ -57,6 +57,6 @@ Projeto desenvolvido durante o semestre da matéria de grafos, buscando implemen
 - [x] Usar grafo auxiliar, sem alterar o original
 
 #### Entrega dia 08/12/2017 :beer:
-- [ ] Definição do problema
+- [x] Definição do problema
 - [ ] Apresentação
 
