@@ -1,5 +1,8 @@
 # grafos.js 
 Projeto desenvolvido durante o semestre da matéria de grafos, buscando implementar algoritmos de busca, coloração, geração de árvore mínima, além da representação visual, entre outras funcionalidades.
+Por fim uma apresentação sobre o "Problema da galeria de arte", onde mostramos a sulução desse problema com a utilização da coloração com DSATUR.
+
+# CheckList de Atividades Desnvolvida
 
 ### Descrição dos principais arquivos
   - js/grafosLib.js -> Algoritmos e implantação do grafo
@@ -59,7 +62,8 @@ Projeto desenvolvido durante o semestre da matéria de grafos, buscando implemen
 #### Entrega dia 08/12/2017 :beer:
 - [x] Definição do problema
 - [ ] Apresentação
-- [ ] Desenvolvimento do Slide
+- [x] Desenvolvimento do Slide
   
-  https://docs.google.com/presentation/d/1BGeYSa-GnYgF9LqGYgsrf6FVPptt_TsJUS209qMB61M/edit?usp=sharing
+  ![Slide da apresentação](https://docs.google.com/presentation/d/1BGeYSa-GnYgF9LqGYgsrf6FVPptt_TsJUS209qMB61M/edit?usp=sharing)
+  
 
