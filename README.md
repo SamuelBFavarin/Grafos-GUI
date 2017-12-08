@@ -59,4 +59,7 @@ Projeto desenvolvido durante o semestre da matéria de grafos, buscando implemen
 #### Entrega dia 08/12/2017 :beer:
 - [x] Definição do problema
 - [ ] Apresentação
+- [ ] Desenvolvimento do Slide
+  
+  https://docs.google.com/presentation/d/1BGeYSa-GnYgF9LqGYgsrf6FVPptt_TsJUS209qMB61M/edit?usp=sharing
 
