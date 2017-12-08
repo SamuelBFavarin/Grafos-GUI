@@ -2,8 +2,6 @@
 Projeto desenvolvido durante o semestre da matéria de grafos, buscando implementar algoritmos de busca, coloração, geração de árvore mínima, além da representação visual, entre outras funcionalidades.
 Por fim uma apresentação sobre o "Problema da galeria de arte", onde mostramos a sulução desse problema com a utilização da coloração com DSATUR.
 
-# CheckList de Atividades Desnvolvida
-
 ### Descrição dos principais arquivos
   - js/grafosLib.js -> Algoritmos e implantação do grafo
   - js/grafosButton.js -> Comunicação entre index.html e grafosLib.js
@@ -15,7 +13,7 @@ Por fim uma apresentação sobre o "Problema da galeria de arte", onde mostramos
   - [vinicius1209](https://github.com/vinicius1209)
   - [zelucena](https://github.com/zelucena)
 
-### Entregas
+# CheckList de Atividades Desenvolvida
 #### Entrega dia 15/09/2017 :heavy_check_mark:
 
 - [x] criarGrafo(isOrientado, isPonderado) - Criar um grafo vazio.
