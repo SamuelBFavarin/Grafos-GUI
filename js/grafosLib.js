@@ -1440,16 +1440,44 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
     };
 
 
-grafo = new Grafo(true, true);
+grafo = new Grafo(false, false);
 
-grafo.addVertice('S');
-grafo.addVertice('D');
+//VÉRTICES
+grafo.addVertice('A');
+grafo.addVertice('B');
 grafo.addVertice('C');
+grafo.addVertice('D');
+grafo.addVertice('E');
 grafo.addVertice('F');
+grafo.addVertice('G');
+grafo.addVertice('H');
+grafo.addVertice('I');
+grafo.addVertice('J');
+grafo.addVertice('K');
+grafo.addVertice('L');
 
+// ARESTAS DA PAREDE
+grafo.addAresta('A','B');
+grafo.addAresta('B','C');
+grafo.addAresta('C','D');
+grafo.addAresta('D','E');
+grafo.addAresta('E','F');
+grafo.addAresta('F','G');
+grafo.addAresta('G','H');
+grafo.addAresta('H','I');
+grafo.addAresta('I','J');
+grafo.addAresta('J','K');
+grafo.addAresta('K','L');
+grafo.addAresta('L','A');
 
-grafo.addArcoPonderado('C','S', 5);
-grafo.addArcoPonderado('D','S', 4);
-grafo.addArcoPonderado('C','D', 1);
-grafo.addArcoPonderado('F','C', 5);
-grafo.addArcoPonderado('F','D', 4);
+// ARESTAS DE TRIANGULAÇÃO
+grafo.addAresta('A','K');
+grafo.addAresta('B','K');
+grafo.addAresta('C','K');
+grafo.addAresta('C','J');
+grafo.addAresta('C','G');
+grafo.addAresta('C','G');
+grafo.addAresta('G','J');
+grafo.addAresta('G','I');
+grafo.addAresta('C','F');
+grafo.addAresta('C','E');
