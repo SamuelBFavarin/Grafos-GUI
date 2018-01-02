@@ -57,9 +57,9 @@ Por fim uma apresentação sobre o "Problema da galeria de arte", onde mostramos
 - [x] Usar busca de caminho com DFS
 - [x] Usar grafo auxiliar, sem alterar o original
 
-#### Entrega dia 08/12/2017 :beer:
+#### Entrega dia 08/12/2017 :heavy_check_mark:
 - [x] Definição do problema
-- [ ] Apresentação
+- [x] Apresentação
 - [x] Desenvolvimento do Slide
   
   ![Slide da apresentação](https://docs.google.com/presentation/d/1BGeYSa-GnYgF9LqGYgsrf6FVPptt_TsJUS209qMB61M/edit?usp=sharing)
