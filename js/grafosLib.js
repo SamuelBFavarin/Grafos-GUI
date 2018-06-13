@@ -1439,6 +1439,25 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
         return solucao;
     };
 
+	//caixeiro viajante
+	Grafo.prototype._criarRotaAleatoria()
+	{
+		var caminho = [];
+		var cidades = this.vertices;
+		var indice = 0
+		while(cidades.length > 0){
+			indice = ~~(Math.random() * cidades.length-1); //pega um indice aleatorio entre 0-quantidade de vértices
+			caminho.push(cidades);
+			cidades.splice(indice, 1);
+		}
+		return caminho;
+	}
+	Grafo.prototype.caixeiroViajante = function(populacao) {
+		var individuos = [];
+		for (var i = 0; i<=populacao; i++){
+			individuos.push(this._criarRotaAleatoria());
+		}
+	}
 
 grafo = new Grafo(false, false);
 

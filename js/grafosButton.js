@@ -370,3 +370,14 @@ function testePlanaridade() {
     }
     document.getElementById('resultadoPlanariade').innerHTML = resposta;
 }
+
+function caixeiroViajante()
+{
+	if (grafo.direcionado || !grafo.ponderado){
+		imprimeNotificacao("Utilize um grafo ponderado e não direcionado!", "warn"); 
+		return;
+	}
+	
+	var populacao = document.getElementById('populacao');
+	grafo.caixeiroViajante(populacao);
+}
