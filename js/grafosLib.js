@@ -1438,9 +1438,9 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
         
         return solucao;
     };
-
+// =======================================================================================================================
 	//caixeiro viajante
-	Grafo.prototype._criarRotaAleatoria()
+	Grafo.prototype._criarRotaAleatoria = function()
 	{
 		var caminho = [];
 		var cidades = this.vertices;
@@ -1452,13 +1452,20 @@ Grafo.prototype._dfsComDestino = function (origem,destino,g){
 		}
 		return caminho;
 	}
+	
+	var Individuo = function(){
+		this.alelos = [];
+		this.fitness = 0;
+	};
 	Grafo.prototype.caixeiroViajante = function(populacao) {
 		var individuos = [];
 		for (var i = 0; i<=populacao; i++){
-			individuos.push(this._criarRotaAleatoria());
+			var indiviuo = new Individuo();
+			individuo.alelos = this._criarRotaAleatoria();
+			individuos.push(individuo);
 		}
 	}
-
+// =======================================================================================================================
 grafo = new Grafo(false, false);
 
 //VÉRTICES
